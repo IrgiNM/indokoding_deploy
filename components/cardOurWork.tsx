@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function CardOurWork() {
-    
+    const tag =[]
   return (
     <button onClick={()=>(console.log('diklik'))} className='group relative flex flex-col justify-start items-start h-90 overflow-clip transition-all duration-700 '>
         <img src="/assets/image/porto1.avif" alt="" className='w-150 h-90 rounded-xl border-2 border-b-5 border-[#128900] object-cover'/>
