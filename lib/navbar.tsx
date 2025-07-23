@@ -79,7 +79,7 @@ export default function Navbar() {
   ];
 
   return (
-    <div className={`h-20 flex flex-row justify-center items-start gap-4 pt-7 fixed top-0 w-full z-50 transition-all duration-300
+    <div className={`h-20 flex flex-row justify-center items-start gap-4 pt-5 fixed top-0 w-full z-50 transition-all duration-300
       ${scrolled ? 'bg-white shadow-md' : 'bg-gradient-to-b from-white to-transparent'}`}>
       {nav.map((x, y) => (
         <NavLink key={y} warna={bgNav === x.isi ? x.active : x.warna} bg={x.bg} klik={x.link}>
