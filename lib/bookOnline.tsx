@@ -15,10 +15,6 @@ export function BookOnline() {
             <div className="absolute rounded-full left-150 top-70 -z-1 bg-[#D6FFDC] w-40 h-40"></div>
             <div className="absolute rounded-full -left-60 -top-65 -z-1 bg-[#D6E9FF] w-80 h-80"></div>
         </div>
-        <div className='w-300 flex flex-col gap-2'>
-            <p className='font-semibold text-[16px]'>what we do</p>
-            <h1 className='text-4xl text-[32px] font-bold tracking-wider text-[#005CB2]'>Our Services</h1>
-        </div>
         </>
     )
 }
