@@ -1,4 +1,4 @@
-import { Service } from "@/type";
+import { Service } from "@/type/Service";
 
 export function ServiceCard(props: Service) {
     console.log(props.id);

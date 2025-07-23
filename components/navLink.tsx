@@ -1,11 +1,5 @@
+import { NavLinkProps } from '@/type/navLinkProps'
 import React from 'react'
-
-type NavLinkProps = {
-    children: React.ReactNode;
-    warna: string;
-    bg: string;
-    klik?: () => void;
-};
 
 export default function NavLink(props: NavLinkProps) {
   return (
@@ -14,6 +8,4 @@ export default function NavLink(props: NavLinkProps) {
     </button>
   )
 }
-
-// type NavbarProps = {
   

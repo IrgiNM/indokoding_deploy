@@ -8,6 +8,7 @@ import Service from '@/lib/ourServices';
 import React from 'react'
 import Footer from '@/components/footer'
 import OurWork from '@/lib/ourWork'
+import OurSkills from '@/lib/ourSkills';
 
 export default function page() {
   return (
@@ -15,6 +16,7 @@ export default function page() {
       <Navbar/>
       <Home/>
       <OurWork/>
+      <OurSkills/>
       <Footer />
     </div>
   )
