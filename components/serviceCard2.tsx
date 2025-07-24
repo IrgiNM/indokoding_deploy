@@ -2,6 +2,7 @@ import { Service2 } from "@/type/Service";
 
 
 
+
 export function ServiceCard2(props: Service2) {
     console.log(props.id);
     return (

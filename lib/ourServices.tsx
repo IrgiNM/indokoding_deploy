@@ -1,5 +1,6 @@
+import { ServiceCard } from '@/components/serviceCard';
 import React, { useEffect, useState } from 'react'
-import { ServiceCard } from './serviceCard';
+import WebDev from '../public/webdev.svg'
 
 const services = [
     {
@@ -55,13 +56,12 @@ export default function Service() {
   return (
     <>
     <div className='flex flex-col relative items-center min-h-screen gap-2 mt-15'>
-        <img src="/assets/image/2line-yellow.png" alt="2line" className="absolute right-134 -top-6 w-10 h-10"/>
+        <img src="/assets/image/2line-yellow.png" alt="2line" className="absolute right-132 -top-6 w-10 h-10"/>
         <p className='text-[16px]'>what we do</p>
-        <h1 className='text-4xl text-[32px] font-bold tracking-wider text-[#005CB2]'>Our Services</h1>
+        <h1 className='text-4xl font-extrabold tracking-wider text-[#005CB2]'>Our Services</h1>
         <div className='flex flex-row items-start justify-center gap-15 w-full p-5'>
             {services.map((service) => (
-                <>
-                {/* {service.line && (<div className='w-[1px] h-[230px] bg-blue-500'></div>)} */}
+                <React.Fragment key={service.id}>
                 {service.id === 2 && <div className='w-0.5 h-[260px] bg-gray-300'></div>}
                 <div className={`${isAktif === "mobileApp" && service.id === 2 
                     ? "animate-spin" 
@@ -70,18 +70,12 @@ export default function Service() {
                     : isAktif === "troubleShoot" && service.id === 3 
                     ? "animate-bounce" 
                     : ""} flex flex-col items-center justify-center gap-4 p-4`}>
-                <ServiceCard id={service.id} title={service.title} warna={service.warna} description={service.description} />
+                <ServiceCard key={service.id} id={service.id} title={service.title} warna={service.warna} description={service.description}/>
                 </div>
                 {service.id === 2 && <div className='w-0.5 h-[260px] bg-gray-300'></div>}
-                {/* {service.line && (<div className='w-[1px] h-[230px] bg-blue-500'></div>)} */}
-                </>
+                </React.Fragment>
             ))}
         </div>
-
-    {/* <button className={`rounded-sm px-1 ${services[0].warna}`} onClick={() => setAktif("webDev")}>web dev</button>
-    <button className={`rounded-sm px-1 ${services[1].warna}`} onClick={() => setAktif("mobileApp")}>mobile app</button>
-    <button className={`rounded-sm px-1 ${services[2].warna}`} onClick={() => setAktif("troubleShoot")}>trouble shoot</button>
-    <button onClick={() => setAktif("")}>reset</button> */}
     </div>
     </>
 )

@@ -1,23 +1,17 @@
 "use client";
-import NavLink from '@/components/navLink'
-import Home from '@/lib/home'
 import { BookOnline } from '@/lib/bookOnline';
 import Navbar from '@/lib/navbar'
-import Service from '@/lib/ourServices';
 
 import React from 'react'
 import Footer from '@/components/footer'
-import OurWork from '@/lib/ourWork'
-import OurSkills from '@/lib/ourSkills';
+import { Service2 } from '@/lib/ourServices2';
 
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar page="Home"/>
-      <Home/>
-      <OurWork/>
-      <OurSkills/>
-      <Service/>
+      <Navbar page="Book Online"/>
+      <BookOnline/>
+      <Service2/>
       <Footer />
     </div>
   )
