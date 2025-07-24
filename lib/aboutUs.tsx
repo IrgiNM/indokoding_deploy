@@ -14,7 +14,8 @@ export default function AboutUs() {
       {/* <div className='absolute rounded-full  '></div> */}
       <div className="absolute rounded-full right-215 top-25 -z-1 bg-[#D6E9FF] w-135 h-135"></div>
       
-      <img src="/assets/image/golang.png" alt="golang" className='absolute -left-40 top-0 rotate-50 w-70' />
+      <img src="/assets/image/golang.png" alt="golang" className='absolute -left-40  rotate-50 w-70' />
+      <img src="/assets/image/3line-cyan.png" alt="3line-cyan" className='absolute left-55 top-65 rotate- w-15' />
     </div>
   )
 }

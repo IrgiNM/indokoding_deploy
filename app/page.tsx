@@ -9,6 +9,9 @@ import React from 'react'
 import Footer from '@/components/footer'
 import OurWork from '@/lib/ourWork'
 import OurSkills from '@/lib/ourSkills';
+import AboutUs from '@/lib/aboutUs';
+import ClientDetails from '@/lib/clientDetails';
+import ContactUs from '@/lib/contactUs';
 
 export default function page() {
   return (
@@ -16,6 +19,9 @@ export default function page() {
       <Navbar/>
       <Home/>
       <OurWork/>
+      <AboutUs/>
+      <ClientDetails />
+      <ContactUs />
       <OurSkills/>
       <Footer />
     </div>

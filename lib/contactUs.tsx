@@ -5,6 +5,7 @@ export default function ContactUs() {
     
     <div className='pl-20 pr-20'>
       <h1 className='text-4xl text-center font-bold text-[#4F006C]'>Contact Us</h1>
+    
    
     <div className="flex  justify-center items-center px-5 py-10">
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-3xl shadow-xl p-6 gap-10">

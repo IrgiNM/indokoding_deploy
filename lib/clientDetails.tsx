@@ -4,10 +4,11 @@ export default function ClientDetails() {
   return (
     <div className='pl-20 pr-20'>
       
-      <p className='mb-20'></p>
+      <p className='mb-50'></p>
       <h1 className='text-4xl font-bold text-[#00466C]'>Client Details</h1>
       <p className='mt-2 text-[#00466C]'>Tell Us a bit about Yourself</p>
-
+      <button className='absolute -mt-15 font-bold right-20  text-[#00466C]'> Back </button>
+      
       
       <div className='flex flex-row mt-5 gap-15 items-start'>
         
