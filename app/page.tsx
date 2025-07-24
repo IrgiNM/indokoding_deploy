@@ -20,10 +20,9 @@ export default function page() {
       <Home/>
       <OurWork/>
       <AboutUs/>
-      <ClientDetails />
-      <ContactUs />
       <OurSkills/>
       <Service/>
+      <ContactUs />
       <Footer />
     </div>
   )

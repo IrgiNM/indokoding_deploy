@@ -45,7 +45,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#008DC0]",
             warnaBg: "bg-[#D6E9FF]",
             rotate: "-rotate-7",
-            position: "top-120 left-170"
+            position: "top-110 left-100"
         },
         {
             id: 5,
@@ -56,11 +56,11 @@ export default function OurSkills() {
             warnaTitle: "text-[#534882]",
             warnaBg: "bg-[#DED6FF]",
             rotate: "-rotate-2",
-            position: "top-110 left-100"
+            position: "top-114 left-170"
         },
     ]
   return (
-    <div className='flex flex-col justify-center items-center relative w-full'>
+    <div className='flex flex-col justify-center items-center relative mt-35 w-full'>
         {/* ABSOLUTE */}
         <p className='text-4xl absolute -top-10 text-[#F3D130] font-semibold -rotate-30 left-120'>&lt;/&gt;</p>
         <img src="/assets/image/postgre.png" alt="gambar-postgre" className='w-55 absolute -top-10 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
