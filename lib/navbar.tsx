@@ -1,10 +1,13 @@
 "use client";
 import NavLink from '@/components/navLink'
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 
-export default function Navbar() {
-  const [bgNav, setBgNav] = useState("Home");
+
+export default function Navbar(props: { page: string }) {
+  const [bgNav, setBgNav] = useState(props.page);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   // Scroll effect
   useEffect(() => {
@@ -23,7 +26,8 @@ export default function Navbar() {
       bg: "hover:bg-[#D9C6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => (
         console.log("Home clicked"),
-        setBgNav("Home")
+        setBgNav("Home"),
+        router.push("/")
       )
     },
     {
@@ -73,7 +77,8 @@ export default function Navbar() {
       bg: "hover:bg-[#D9C6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => (
         console.log("Book Online clicked"),
-        setBgNav("Book Online")
+        setBgNav("Book Online"),
+        router.push("/bookOnline")
       )
     },
   ];
