@@ -44,8 +44,6 @@ export default function Service() {
             console.log("No service is active");
         }
 
-        console.log("twst");
-
     }, [isAktif]);
 
 
