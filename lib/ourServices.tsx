@@ -47,10 +47,6 @@ export default function Service() {
 
     }, [isAktif]);
 
-    const [color, setColor] = useState("bg-red-200")
-
-    const [isDelivery, setIsDelivery] = useState(false)
-
 
   return (
     <>
