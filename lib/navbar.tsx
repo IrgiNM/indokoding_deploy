@@ -34,7 +34,7 @@ export default function Navbar(props: { page: string }) {
       isi: "Our Work",
       warna: "text-[#128900]",
       active: "text-[#128900] bg-[#D4FFDB] font-bold",
-      bg: "hover:bg-[#D4FFDB] hover:font-bold active:bg-[#BFA4FF]",
+      bg: "hover:bg-[#D4FFDB] hover:font-bold active:bg-[#A4FFAA]",
       link: () => (
         console.log("Our Work clicked"),
         setBgNav("Our Work")
@@ -44,7 +44,7 @@ export default function Navbar(props: { page: string }) {
       isi: "About Us",
       warna: "text-[#004C6C]",
       active: "text-[#004C6C] bg-[#D4F6FF] font-bold",
-      bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#BFA4FF]",
+      bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#A4E2FF]",
       link: () => (
         console.log("About Us clicked"),
         setBgNav("About Us")
@@ -54,7 +54,7 @@ export default function Navbar(props: { page: string }) {
       isi: "Contact",
       warna: "text-[#6C4E00]",
       active: "text-[#6C4E00] bg-[#FEFFD4] font-bold",
-      bg: "hover:bg-[#FEFFD4] hover:font-bold active:bg-[#BFA4FF]",
+      bg: "hover:bg-[#FEFFD4] hover:font-bold active:bg-[#FFFAA4]",
       link: () => (
         console.log("Contact clicked"),
         setBgNav("Contact")
@@ -64,7 +64,7 @@ export default function Navbar(props: { page: string }) {
       isi: "Career",
       warna: "text-[#004C6C]",
       active: "text-[#004C6C] bg-[#D4F6FF] font-bold",
-      bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#BFA4FF]",
+      bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#A4E2FF]",
       link: () => (
         console.log("Career clicked"),
         setBgNav("Career")

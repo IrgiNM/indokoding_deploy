@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function CardSkill(props: TypeSkill) {
   return (
-    <div className={`w-60 h-70 bg-white rounded-xl absolute flex flex-col ${props.rotate} justify-start items-center pt-17 shadow-lg ${props.position}`}>
+    <div className={`w-60 pb-3 bg-white rounded-xl absolute flex flex-col ${props.rotate} justify-start items-center pt-17 shadow-lg ${props.position}`}>
         <img src={`/assets/image/${props.pin}`} alt="" className='w-12 absolute -top-3'/>
         <img src={props.image} alt="" className='w-15 absolute top-10 right-10'/>
         <div className={`w-55 ${props.warnaBg} rounded-xl p-4`}>
