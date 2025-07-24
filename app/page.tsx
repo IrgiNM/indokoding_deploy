@@ -16,13 +16,14 @@ import ContactUs from '@/lib/contactUs';
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar/>
+      <Navbar page="Home"/>
       <Home/>
       <OurWork/>
       <AboutUs/>
       <ClientDetails />
       <ContactUs />
       <OurSkills/>
+      <Service/>
       <Footer />
     </div>
   )
