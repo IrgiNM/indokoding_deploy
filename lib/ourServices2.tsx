@@ -53,7 +53,7 @@ export function Service2() {
             <Image width={140} height={140} src="/assets/image/pythonk.png" alt="pythonk" className="absolute rotate-22 -left-33 -top-6 w-37 h-37"/>
             <Image width={140} height={140} src="/assets/image/pythonb.png" alt="pythonb" className="absolute -rotate-24 -right-35 top-40 w-25 h-25 -scale-x-100"/>
             <h1 className='text-4xl font-extrabold tracking-wider text-[#4F006C]'>SERVICES DESCRIPTION</h1>
-            <p className='pl-5 text-[20px] text-[#4F006C]'>Free online consultation for a bespoke app development whether web or mobile apps, we are proud of making web apps for e commerce using django, PHP, node.js for various clients in US, Canada, UK, Kuwait, Australia and Indonesia. Don't forget to inform us about your contact and let us get back to you!</p>
+            <p className='pl-5 text-[20px] text-[#4F006C]'>Free online consultation for a bespoke app development whether web or mobile apps, we are proud of making web apps for e commerce using django, PHP, node.js for various clients in US, Canada, UK, Kuwait, Australia and Indonesia. Don&apos;t forget to inform us about your contact and let us get back to you!</p>
         </div>
     </div>
   )
