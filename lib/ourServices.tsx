@@ -1,6 +1,6 @@
 import { ServiceCard } from '@/components/serviceCard';
-import React, { useEffect, useState } from 'react'
-import WebDev from '../public/webdev.svg'
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
 const services = [
     {
@@ -50,7 +50,7 @@ export default function Service() {
   return (
     <>
     <div className='flex flex-col relative items-center min-h-screen gap-2 mt-15'>
-        <img src="/assets/image/2line-yellow.png" alt="2line" className="absolute right-118 -top-5 w-10 h-10"/>
+        <Image src="/assets/image/2line-yellow.png" alt="2line" className="absolute right-118 -top-5 w-10 h-10"/>
         <p className='text-[16px]'>what we do</p>
         <h1 className='text-4xl font-extrabold tracking-wider text-[#005CB2]'>Our Services</h1>
         <div className='flex flex-row items-start justify-center gap-7 w-full p-5'>

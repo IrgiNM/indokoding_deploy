@@ -1,6 +1,6 @@
-import CardOurWork from '@/components/cardOurWork'
-import { TypeOurWork } from '@/type/typeOurWork';
-import React, { useState } from 'react'
+import CardOurWork from '@/components/cardOurWork';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function OurWork() {
   const [isOpen, setIsOpen] = useState(1);
@@ -69,7 +69,7 @@ export default function OurWork() {
   const [selectData3, setSelectData3] = useState(data3[idData3]);
    
   return (
-    <div className='w-full pb-50 relative flex flex-col items-start justify-center'>
+    <div className='w-full pb-10 relative flex flex-col items-start justify-center'>
       <div className='w-full flex flex-col items-end justify-end'>
         <h1 className='text-4xl text-[#128900] font-extrabold mr-50'>Our Work</h1>
         <p className='mr-50'>A collection of website we've made with passion</p>
@@ -94,7 +94,7 @@ export default function OurWork() {
           }
           setSelectData3(data3[idData3 === 5 ? 0 : idData3 + 1]);
         }}>
-          <img src="/arrow.svg" alt="" className='w-5'/>
+          <Image src="/arrow.svg" alt="" className='w-5'/>
         </button>
         <button className='w-100 h-75 rounded-xl absolute hover:bg-gradient-to-l hover:from-[#128900] hover:to-transparent top-26 -left-7 transition-all duration-500 opacity-50 flex justify-end items-center pr-10' onClick={() => {
           console.log("Next clicked");
@@ -105,7 +105,7 @@ export default function OurWork() {
           }
           setSelectData3(data3[idData3 === 0 ? 5 : idData3 - 1]);
         }}>
-          <img src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
+          <Image src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
         </button>
     </div>
   )
