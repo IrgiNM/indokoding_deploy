@@ -1,3 +1,4 @@
+'use client';
 import { NavLinkProps } from '@/type/navLinkProps'
 import React from 'react'
 
