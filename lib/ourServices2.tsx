@@ -1,4 +1,5 @@
 import { ServiceCard2 } from '@/components/serviceCard2';
+import Image from 'next/image';
 import React from 'react'
 
 const services2 = [
@@ -34,7 +35,7 @@ const services2 = [
 export function Service2() {
   return (
     <div className='w-252 flex flex-col relative gap-1 mt-35'>
-        <Image src="/assets/image/2line-yellow.png" alt="2line" className="absolute left-23 -top-6 w-10 h-10"/>
+        <Image width={140} height={140} src="/assets/image/2line-yellow.png" alt="2line" className="absolute left-23 -top-6 w-10 h-10"/>
         <p className='font-semibold text-[16px]'>what we do</p>
         <h1 className='text-4xl font-extrabold tracking-wider text-[#005CB2]'>OUR SERVICES</h1>
         <div className='flex flex-row items-start justify-center gap-3 w-full p-5 mt-3'>
@@ -49,8 +50,8 @@ export function Service2() {
                 ))}
         </div>
         <div className='flex flex-col items-end text-right relative gap-5 mt-30 mb-20'>
-            <Image src="/assets/image/pythonk.png" alt="pythonk" className="absolute rotate-22 -left-33 -top-6 w-37 h-37"/>
-            <Image src="/assets/image/pythonb.png" alt="pythonb" className="absolute -rotate-24 -right-35 top-40 w-25 h-25 -scale-x-100"/>
+            <Image width={140} height={140} src="/assets/image/pythonk.png" alt="pythonk" className="absolute rotate-22 -left-33 -top-6 w-37 h-37"/>
+            <Image width={140} height={140} src="/assets/image/pythonb.png" alt="pythonb" className="absolute -rotate-24 -right-35 top-40 w-25 h-25 -scale-x-100"/>
             <h1 className='text-4xl font-extrabold tracking-wider text-[#4F006C]'>SERVICES DESCRIPTION</h1>
             <p className='pl-5 text-[20px] text-[#4F006C]'>Free online consultation for a bespoke app development whether web or mobile apps, we are proud of making web apps for e commerce using django, PHP, node.js for various clients in US, Canada, UK, Kuwait, Australia and Indonesia. Don't forget to inform us about your contact and let us get back to you!</p>
         </div>

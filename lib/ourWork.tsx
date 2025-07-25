@@ -94,7 +94,7 @@ export default function OurWork() {
           }
           setSelectData3(data3[idData3 === 5 ? 0 : idData3 + 1]);
         }}>
-          <Image src="/arrow.svg" alt="" className='w-5'/>
+          <Image width={140} height={140} src="/arrow.svg" alt="" className='w-5'/>
         </button>
         <button className='w-100 h-75 rounded-xl absolute hover:bg-gradient-to-l hover:from-[#128900] hover:to-transparent top-26 -left-7 transition-all duration-500 opacity-50 flex justify-end items-center pr-10' onClick={() => {
           console.log("Next clicked");
@@ -105,7 +105,7 @@ export default function OurWork() {
           }
           setSelectData3(data3[idData3 === 0 ? 5 : idData3 - 1]);
         }}>
-          <Image src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
+          <Image width={140} height={140} src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
         </button>
     </div>
   )

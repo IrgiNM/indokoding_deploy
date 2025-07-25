@@ -4,7 +4,7 @@ import React from 'react'
 export default function Home() {
   return (
     <div className='w-full h-200 relative flex flex-col pt-25 items-center justify-start '>
-        <Image src="/logo.svg" alt="" className='w-35 h-35'/>
+        <Image width={140} height={140} src="/logo.svg" alt=""/>
         <h1 className='text-6xl font-bold text-[#4F006C] mt-5'>BESPOKE SOFTWARE FOR</h1>
         <h1 className='text-6xl font-bold text-[#4F006C] mt-1 pl-80'>BUSINESSES</h1>
         <div className='flex flex-row justify-center items-center gap-4 mt-9'>
@@ -16,11 +16,11 @@ export default function Home() {
 
         {/* ABSOLUTE */}
         <p className='text-6xl font-bold italic text-[#4F006C] px-10 pt-3 pb-5 border-5 rounded-full border-[#AD48FF] backdrop-blur absolute left-67 top-80 -rotate-4'>Growing</p>
-        <Image src="/assets/image/3line_purple.png" alt="gambar-icon-3garis" className='w-17 -rotate-30 absolute left-52 top-83'/>
-        <Image src="/assets/image/pythonb.png" alt="gambar-pythonb" className='w-30 -rotate-10 absolute left-25 top-40'/>
-        <Image src="/assets/image/pythonk.png" alt="gambar-pythonk" className='w-35 rotate-25 blur-[2px] absolute right-30 top-25'/>
-        <Image src="/assets/image/golang.png" alt="gambar-golang" className='w-45 -rotate-30 absolute -right-10 top-95'/>
-        <Image src="/assets/image/postgre.png" alt="gambar-postgre" className='w-75 -rotate-25 absolute -left-10 top-95 blur-[2px]'/>
+        <Image width={140} height={140} src="/assets/image/3line_purple.png" alt="gambar-icon-3garis" className='w-17 -rotate-30 absolute left-52 top-83'/>
+        <Image width={140} height={140} src="/assets/image/pythonb.png" alt="gambar-pythonb" className='w-30 -rotate-10 absolute left-25 top-40'/>
+        <Image width={140} height={140} src="/assets/image/pythonk.png" alt="gambar-pythonk" className='w-35 rotate-25 blur-[2px] absolute right-30 top-25'/>
+        <Image width={140} height={140} src="/assets/image/golang.png" alt="gambar-golang" className='w-45 -rotate-30 absolute -right-10 top-95'/>
+        <Image width={140} height={140} src="/assets/image/postgre.png" alt="gambar-postgre" className='w-75 -rotate-25 absolute -left-10 top-95 blur-[2px]'/>
 
         {/* CIRCLE */}
         <div className='absolute -left-20 -top-20 w-130 h-130 rounded-full bg-[#F1D6FF] -z-1'></div>

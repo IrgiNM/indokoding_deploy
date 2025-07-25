@@ -23,7 +23,7 @@ export default function CardOurWork(props: TypeOurWork) {
     ]
   return (
     <button onClick={props.onClick} className={`group relative flex flex-col justify-start items-start overflow-clip transition-all duration-700 ${props.class}`}>
-        <Image src={props.image} alt="" className='w-120 rounded-xl border-2 border-b-5 border-[#128900] object-cover'/>
+        <Image width={480} height={480} src={props.image} alt="" className='w-120 rounded-xl border-2 border-b-5 border-[#128900] object-cover'/>
         <div className='w-120 h-76 rounded-xl border-2 border-b-5 border-[#128900] bg-[#128900] absolute top-0 opacity-0 group-hover:opacity-20 transition-all duration-200'></div>
         <div className='flex flex-row justify-center items-end gap-2 mt-2'>
             <h2 className='text-xl font-bold mt-5 text-[#128900] mr-3'>{props.title}</h2>

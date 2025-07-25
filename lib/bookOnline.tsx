@@ -4,7 +4,7 @@ export function BookOnline() {
     return (
         <>
         <div className="flex flex-row relative items-center gap-12 mt-35">
-            <Image src="/assets/image/consule.png" alt="consule" className="w-90 h-90" />
+            <Image width={140} height={140} src="/assets/image/consule.png" alt="consule" className="w-90 h-90" />
             <div className="flex flex-col items-start justify-center">
                 <h1 className="text-6xl font-extrabold text-[#00466C] mb-4">BOOK ONLINE</h1>
                 <p className="font-semibold text-[#00466C] text-[18px]">Free Online Consultation</p>
