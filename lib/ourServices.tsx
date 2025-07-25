@@ -1,12 +1,12 @@
 import { ServiceCard } from '@/components/serviceCard';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const services = [
     {
         id: 1,
         title: "Full Stack WebDev",
-        description: "We’ll help you develop your website from scratch, front end, back end and even set up server. We can do it all.",
+        description: "We&apos;ll help you develop your website from scratch, front end, back end and even set up server. We can do it all.",
         warna: "text-[#128900]",
         line: false
     },
@@ -14,14 +14,14 @@ const services = [
         id: 2,
         // title: "",
         title: "Mobile App",
-        description: "Whether it’s Android or iOS our professional team of mobile developer can help you make mobile app that’s easy to use.",
+        description: "Whether it&apos;s Android or iOS our professional team of mobile developer can help you make mobile app that&apos;s easy to use.",
         warna: "text-[#004F6C]",
         line: true
     },
     {
         id: 3,
         title: "Trouble Shooting",
-        description: "Having trouble with your app? Don’t call Ghostbuster. Call our Bugbuster team instead. We can help you fix it in no time.",
+        description: "Having trouble with your app? Don&apos;t call Ghostbuster. Call our Bugbuster team instead. We can help you fix it in no time.",
         warna: "text-[#6C4E00]",
         line: false
     },
