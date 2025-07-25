@@ -1,17 +1,13 @@
 "use client";
-import NavLink from '@/components/navLink'
-import Home from '@/lib/home'
-import { BookOnline } from '@/lib/bookOnline';
-import Navbar from '@/lib/navbar'
+import Home from '@/lib/home';
+import Navbar from '@/lib/navbar';
 import Service from '@/lib/ourServices';
 
-import React from 'react'
-import Footer from '@/components/footer'
-import OurWork from '@/lib/ourWork'
-import OurSkills from '@/lib/ourSkills';
+import Footer from '@/components/footer';
 import AboutUs from '@/lib/aboutUs';
-import ClientDetails from '@/lib/clientDetails';
 import ContactUs from '@/lib/contactUs';
+import OurSkills from '@/lib/ourSkills';
+import OurWork from '@/lib/ourWork';
 
 export default function page() {
   return (

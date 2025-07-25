@@ -1,12 +1,8 @@
-import CardOurWork from '@/components/cardOurWork'
-import { TypeOurWork } from '@/type/typeOurWork';
-import React, { useState } from 'react'
+import CardOurWork from '@/components/cardOurWork';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function OurWork() {
-  const [isOpen, setIsOpen] = useState(1);
-  const handleClick = (id: number) => {
-    setIsOpen(id);
-  }
   const dataCard = [
     {
       id: 1,
@@ -14,7 +10,7 @@ export default function OurWork() {
       description: 'Kami pernah mengembangkan Equusbook, marketplace berbasis Next.js dan Tailwind CSS untuk jual beli kuda, horsebox, dan properti equestrian di Inggris. Platform ini mendukung iklan gratis dan navigasi yang mudah bagi komunitas berkuda.',
       image: '/assets/image/ourwork/porto1.avif',
       tags: ['next js', 'tailwindcss', 'market place'],
-      onClick: () => handleClick(1),
+      onClick: () => console.log("diklik"),
     },
     {
       id: 2,
@@ -22,7 +18,7 @@ export default function OurWork() {
       description: 'Kami pernah mengembangkan Home and Gift Center, sebuah platform e-commerce berbasis Next.js dan Tailwind CSS yang dirancang untuk menjual produk dekorasi rumah dan hadiah. Toko online ini menawarkan fitur pencarian produk, kategori, filter harga, serta tampilan galeri yang ramah pengguna.',
       image: '/assets/image/ourwork/porto2.avif',
       tags: ['next js', 'tailwindcss', 'e-commerce'],
-      onClick: () => handleClick(2),
+      onClick: () => console.log("diklik"),
     },
     {
       id: 3,
@@ -30,7 +26,7 @@ export default function OurWork() {
       description: 'Kami pernah mengembangkan Thirsty Camel, sebuah platform katalog produk dan sistem pemesanan internal berbasis Next.js dan Tailwind CSS. Platform ini memungkinkan pengguna untuk melihat detail produk seperti ukuran, harga, dan stok secara real-time, serta mempermudah proses pemesanan barang seperti seragam atau merchandise.',
       image: '/assets/image/ourwork/porto3.avif',
       tags: ['next js', 'tailwindcss', 'product catalog'],
-      onClick: () => handleClick(3),
+      onClick: () => console.log("diklik"),
     },
     {
       id: 4,
@@ -38,7 +34,7 @@ export default function OurWork() {
       description: 'Kami pernah membangun Greene King Venue Finder, sebuah platform pencarian lokasi pub dan restoran di Inggris. Dibuat dengan Next.js dan Tailwind CSS, sistem ini memungkinkan pengguna mencari venue berdasarkan lokasi saat ini, radius jarak, dan ukuran grup. Platform ini terintegrasi dengan Google Maps untuk pengalaman pencarian yang interaktif dan mudah digunakan.',
       image: '/assets/image/ourwork/porto4.avif',
       tags: ['next js', 'tailwindcss', 'map integration'],
-      onClick: () => handleClick(4),
+      onClick: () => console.log("diklik"),
     },
     {
       id: 5,
@@ -46,7 +42,7 @@ export default function OurWork() {
       description: 'Kami turut mengembangkan situs program Artist-in-Residence untuk Sheikh Abdullah Al-Salem Cultural Centre di Kuwait. Platform ini dibangun dengan Next.js dan Tailwind CSS, dirancang untuk memfasilitasi pendaftaran dan penyebaran informasi program residensi seni. Situs ini menyediakan informasi fasilitas studio, tujuan program, dan akses pendaftaran daring yang mudah.',
       image: '/assets/image/ourwork/porto5.avif',
       tags: ['next js', 'tailwindcss', 'culture', 'residency'],
-      onClick: () => handleClick(5),
+      onClick: () => console.log("diklik"),
     },
     {
       id: 6,
@@ -54,7 +50,7 @@ export default function OurWork() {
       description: 'Kami pernah mengembangkan proyek interaktif untuk Thermo Fisher Scientific berjudul “Who The One?”. Dalam proyek ini, pengguna dapat mengunggah foto dan melihat diri mereka dipadukan dengan ilmuwan terkenal secara humoris. Aplikasi berbasis Next.js dan Tailwind CSS ini bertujuan untuk membangun keterlibatan audiens secara kreatif dan menyenangkan.',
       image: '/assets/image/ourwork/porto6.avif',
       tags: ['next js', 'tailwindcss', 'interactive', 'science'],
-      onClick: () => handleClick(6),
+      onClick: () => console.log("diklik"),
     },
   ]
   const data3 = [
@@ -69,10 +65,10 @@ export default function OurWork() {
   const [selectData3, setSelectData3] = useState(data3[idData3]);
    
   return (
-    <div className='w-full pb-50 relative flex flex-col items-start justify-center'>
+    <div className='w-full pb-10 relative flex flex-col items-start justify-center'>
       <div className='w-full flex flex-col items-end justify-end'>
         <h1 className='text-4xl text-[#128900] font-extrabold mr-50'>Our Work</h1>
-        <p className='mr-50'>A collection of website we've made with passion</p>
+        <p className='mr-50'>A collection of website we&apos;ve made with passion</p>
       </div>
         
       <div className='w-full px-50 pl-0 flex flex-row gap-8 justify-start mt-10 overflow-hidden hide-scrollbar'>
@@ -94,7 +90,7 @@ export default function OurWork() {
           }
           setSelectData3(data3[idData3 === 5 ? 0 : idData3 + 1]);
         }}>
-          <img src="/arrow.svg" alt="" className='w-5'/>
+          <Image width={140} height={140} src="/arrow.svg" alt="" className='w-5'/>
         </button>
         <button className='w-100 h-75 rounded-xl absolute hover:bg-gradient-to-l hover:from-[#128900] hover:to-transparent top-26 -left-7 transition-all duration-500 opacity-50 flex justify-end items-center pr-10' onClick={() => {
           console.log("Next clicked");
@@ -105,7 +101,7 @@ export default function OurWork() {
           }
           setSelectData3(data3[idData3 === 0 ? 5 : idData3 - 1]);
         }}>
-          <img src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
+          <Image width={140} height={140} src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
         </button>
     </div>
   )

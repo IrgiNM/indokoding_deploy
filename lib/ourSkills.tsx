@@ -1,4 +1,5 @@
 import CardSkill from '@/components/cardSkill'
+import Image from 'next/image'
 import React from 'react'
 
 export default function OurSkills() {
@@ -63,8 +64,8 @@ export default function OurSkills() {
     <div className='flex flex-col justify-center items-center relative mt-35 w-full'>
         {/* ABSOLUTE */}
         <p className='text-4xl absolute -top-10 text-[#F3D130] font-semibold -rotate-30 left-120'>&lt;/&gt;</p>
-        <img src="/assets/image/postgre.png" alt="gambar-postgre" className='w-55 absolute -top-10 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
-        <img src="/assets/image/pythonb.png" alt="gambar-postgre" className='w-40 absolute -bottom-12 rotate-20 -left-10 z-2'/>
+        <Image width={140} height={140} src="/assets/image/postgre.png" alt="gambar-postgre" className='w-55 absolute -top-10 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
+        <Image width={140} height={140} src="/assets/image/pythonb.png" alt="gambar-postgre" className='w-40 absolute -bottom-12 rotate-20 -left-10 z-2'/>
         {/* NORMAL */}
         <h1 className='text-[#005CB2] text-4xl font-extrabold'>Our Skills</h1>
         <div className='w-full mt-8 h-220 bg-[#D9DFFC] flex flex-row gap-5 justify-center items-center relative'>
