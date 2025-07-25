@@ -15,7 +15,7 @@ export default function Home() {
         <button className='px-12 py-3 text-xl text-white font-semibold mt-13 rounded-full bg-[#AD48FF] hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] hover:font-bold transition duration-200'>Start Book Now</button>
 
         {/* ABSOLUTE */}
-        <p className='text-6xl font-bold italic text-[#4F006C] px-10 pt-3 pb-5 border-5 rounded-full border-[#AD48FF] backdrop-blur absolute left-67 top-80 -rotate-4'>Growing</p>
+        <p className='text-6xl font-bold italic text-[#4F006C] px-10 pt-3 pb-5 border-5 rounded-full border-[#AD48FF] backdrop-blur absolute left-67 top-73 -rotate-4'>Growing</p>
         <Image width={140} height={140} src="/assets/image/3line_purple.png" alt="gambar-icon-3garis" className='w-17 -rotate-30 absolute left-52 top-83'/>
         <Image width={140} height={140} src="/assets/image/pythonb.png" alt="gambar-pythonb" className='w-30 -rotate-10 absolute left-25 top-40'/>
         <Image width={140} height={140} src="/assets/image/pythonk.png" alt="gambar-pythonk" className='w-35 rotate-25 blur-[2px] absolute right-30 top-25'/>
