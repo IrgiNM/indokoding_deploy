@@ -6,7 +6,7 @@ const services2 = [
     {
         id: 1,
         title: "Full Stack WebDev",
-        description: "We&apos;ll help you develop your website from scratch, front end, back end and even set up server. We can do it all.",
+        description: "We'll help you develop your website from scratch, front end, back end and even set up server. We can do it all.",
         warna: "text-[#128900]",
         border: "border-[#128900]",
         bg: "bg-[#EFFFF2]",
@@ -15,7 +15,7 @@ const services2 = [
     {
         id: 2,
         title: "Mobile App",
-        description: "Whether it&apos;s Android or iOS our professional team of mobile developer can help you make mobile app that&apos;s easy to use.",
+        description: "Whether it's Android or iOS our professional team of mobile developer can help you make mobile app that's easy to use.",
         warna: "text-[#004F6C]",
         border: "border-[#004F6C]",
         bg: "bg-[#EFF8FF]",
@@ -24,7 +24,7 @@ const services2 = [
     {
         id: 3,
         title: "Trouble Shooting",
-        description: "Having trouble with your app? Don&apos;t call Ghostbuster. Call our Bugbuster team instead. We can help you fix it in no time.",
+        description: "Having trouble with your app? Don't call Ghostbuster. Call our Bugbuster team instead. We can help you fix it in no time.",
         warna: "text-[#6C4E00]",
         border: "border-[#6C4E00]",
         bg: "bg-[#FFFEEF]",
@@ -49,11 +49,11 @@ export function Service2() {
                 </React.Fragment>
                 ))}
         </div>
-        <div className='flex flex-col items-end text-right relative gap-5 mt-30 mb-20'>
-            <Image width={140} height={140} src="/assets/image/pythonk.png" alt="pythonk" className="absolute rotate-22 -left-33 -top-6 w-37 h-37"/>
-            <Image width={140} height={140} src="/assets/image/pythonb.png" alt="pythonb" className="absolute -rotate-24 -right-35 top-40 w-25 h-25 -scale-x-100"/>
+        <div className='flex flex-col items-end text-right relative gap-5 mt-30 mb-50'>
+            <Image width={140} height={140} src="/assets/image/pythonk.png" alt="pythonk" className="absolute rotate-22 -left-40 -top-15 w-37 h-37"/>
+            <Image width={140} height={140} src="/assets/image/pythonb.png" alt="pythonb" className="absolute -rotate-24 -right-40 top-40 w-25 h-25 -scale-x-100"/>
             <h1 className='text-4xl font-extrabold tracking-wider text-[#4F006C]'>SERVICES DESCRIPTION</h1>
-            <p className='pl-5 text-[20px] text-[#4F006C]'>Free online consultation for a bespoke app development whether web or mobile apps, we are proud of making web apps for e commerce using django, PHP, node.js for various clients in US, Canada, UK, Kuwait, Australia and Indonesia. Don&apos;t forget to inform us about your contact and let us get back to you!</p>
+            <p className='pl-5 text-lg text-justify text-[#4F006C]'>Free online consultation for a bespoke app development whether web or mobile apps, we are proud of making web apps for e commerce using django, PHP, node.js for various clients in US, Canada, UK, Kuwait, Australia and Indonesia. Don&apos;t forget to inform us about your contact and let us get back to you!</p>
         </div>
     </div>
   )

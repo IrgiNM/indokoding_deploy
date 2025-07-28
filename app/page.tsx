@@ -12,7 +12,7 @@ import OurWork from '@/lib/ourWork';
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar page="Home"/>
+      {/* <Navbar page="Home"/> */}
       <Home/>
       <OurWork/>
       <AboutUs/>

@@ -103,6 +103,15 @@ export default function OurWork() {
         }}>
           <Image width={140} height={140} src="/arrow.svg" alt="" className='w-5 scale-x-[-1]'/>
         </button>
+
+
+        {/* FIXED */}
+        {/* <div className='fixed top-0 w-full h-200 bg-[#4F006C] opacity-50 z-5'></div>
+        <Image width={140} height={140} src="/assets/image/3line_purple.png" alt="gambar-icon-3garis" className='fixed w-17 -rotate-10 left-42 top-23 z-6'/>
+        <div className='ml-100 bg-white fixed top-27 z-6 flex justify-center items-center rounded-lg shadow-lg p-5'>
+          <Image width={140} height={140} src="/assets/image/ourwork/porto1.avif" alt="gambar-icon-3garis" className='w-130 left-72 top-37 z-6'/>
+        </div> */}
+        
     </div>
   )
 }

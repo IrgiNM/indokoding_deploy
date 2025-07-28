@@ -4,10 +4,10 @@ import React from 'react';
 export default function ContactUs() {
   return (
     
-    <div className='w-full pl-20 mb-60 relative flex flex-col justify-center items-center pr-20'>
+    <div className='w-full pl-20 mb-60 mt-50 relative flex flex-col justify-center items-center pr-20'>
       <div className='w-full h-50 bg-gradient-to-b from-[#D6FFD8] to-[#A0FDFF] absolute -top-20 -z-1'></div>
       <Image width={140} height={140} src="/all_mascot.svg" alt="" className='absolute w-100 -top-52 right-20' />
-      <a href="https://maps.app.goo.gl/1XpcLZoMr6bhypjw6" className='absolute w-317 h-65 right-0 -bottom-60'></a>
+      <a href="https://maps.app.goo.gl/1XpcLZoMr6bhypjw6" className='absolute w-317 h-65 left-0 -bottom-60'></a>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1450.0329966036097!2d110.30648249266326!3d-7.785142307915073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af70009a10b4b%3A0x2a213bb1df2a7745!2sCV%20Indokoding%20Sukses%20Makmur!5e0!3m2!1sen!2sid!4v1753343284581!5m2!1sen!2sid" className='absolute w-317 h-80 right-0 -bottom-60 -z-1'></iframe>
       
 
