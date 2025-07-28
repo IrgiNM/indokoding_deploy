@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from "@mui/material";
+import { Button, Dialog, DialogTitle, Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import Image from "next/image";
 import React from "react";
@@ -85,7 +85,7 @@ export function BookOnline() {
              }}>
                 <p className="text-3xl font-extrabold">Schedule Your Services</p>
                 <button onClick={handleClose} className="w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]">
-                    <img src="/close.svg" alt="" className="w-3" />
+                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3" />
                 </button>
              </DialogTitle>
              <p className="text-md pl-6 pb-6">Check out our availability and book the date and time that works for you</p>
