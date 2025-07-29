@@ -3,8 +3,8 @@ import NavLink from '@/components/navLink';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function Navbar() {
-  const [bgNav, setBgNav] = useState("Home");
+export default function Navbar(props: { page: string }) {
+  const [bgNav, setBgNav] = useState(props.page);
   const router = useRouter(); // <-- ini ditambahkan
 
   const nav = [
@@ -68,6 +68,7 @@ export default function Navbar() {
       link: () => {
         console.log("Book Online clicked");
         setBgNav("Book Online");
+        router.push("/bookOnline"); // <-- navigasi ke halaman book online
       },
     },
   ];
