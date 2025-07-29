@@ -1,9 +1,9 @@
-import React from "react";
-import Navbar from '@/lib/navbar';
 import Footer from "@/components/footer";
-import JoinUs from "@/components/JoinUs";
 import JobCard from "@/components/JobCard";
+import JoinUs from "@/components/JoinUs";
 import NavbarCarrier from "@/lib/navbarCarrier";
+import Image from "next/image";
+import React from "react";
 
 const CareerPage: React.FC = () => {
   return (
@@ -11,11 +11,11 @@ const CareerPage: React.FC = () => {
        <section className="relative z-20 px-12 md:px-20 py-10">
   <h3 className="text-4xl font-bold text-[#2C507A] mb-4 font-poppins absolute right-48 top-1 ">Our Skills</h3>
   <div className="flex flex-row flex-wrap gap-11 w-70 place-items-center absolute right-19 top-15 z-5">
-    <img src="/go.svg" alt="Go" className="w-13"/> 
-    <img src="/postgresql.svg" alt="PostgreSQL" className="w-13" />
-    <img src="/python.svg" alt="Python" className="w-13" />
-    <img src="/java.svg" alt="Java" className="w-13" />
-    <img src="/mysql.svg" alt="MySQL" className="w-13" />
+    <Image width={140} height={140} src="/go.svg" alt="Go" className="w-13"/> 
+    <Image width={140} height={140} src="/postgresql.svg" alt="PostgreSQL" className="w-13" />
+    <Image width={140} height={140} src="/python.svg" alt="Python" className="w-13" />
+    <Image width={140} height={140} src="/java.svg" alt="Java" className="w-13" />
+    <Image width={140} height={140} src="/mysql.svg" alt="MySQL" className="w-13" />
   </div>
 </section>
 

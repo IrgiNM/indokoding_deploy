@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const Footer: React.FC = () => {
@@ -7,7 +8,7 @@ const Footer: React.FC = () => {
     {/* Bagian Kiri */}
     <div className="flex flex-col gap-4 md:w-1/2">
       <div className="flex items-center gap-4">
-        <img src="/indokoding-polos.svg" alt="indokoding" className="w-16 h-16" />
+        <Image width={140} height={140} src="/indokoding-polos.svg" alt="indokoding" className="w-16 h-16" />
         <div>
           <span className="text-2xl font-bold block">&lt;indokoding/&gt;</span>
           <span className="text-xs font-light block">IT Service</span>
@@ -17,9 +18,9 @@ const Footer: React.FC = () => {
         We are a boutique software development company that started from a band of developers who excel in developing apps with great flexibility and always listen to client needs.
       </p>
       <div className="flex space-x-4">
-        <img src="/fb.svg" alt="Facebook" className="w-6 h-6" />
-        <img src="/ig.svg" alt="Instagram" className="w-6 h-6" />
-        <img src="/x.svg" alt="Twitter" className="w-6 h-6" />
+        <Image width={140} height={140} src="/fb.svg" alt="Facebook" className="w-6 h-6" />
+        <Image width={140} height={140} src="/ig.svg" alt="Instagram" className="w-6 h-6" />
+        <Image width={140} height={140} src="/x.svg" alt="Twitter" className="w-6 h-6" />
       </div>
     </div>
 

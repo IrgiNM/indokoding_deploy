@@ -1,8 +1,8 @@
 "use client";
 import NavLink from '@/components/navLink';
-import React, { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Footer from '@/components/footer';
+import { useState } from 'react';
 
 export default function NavbarCarrier() {
   const [bgNav, setBgNav] = useState("Career");
@@ -82,7 +82,7 @@ export default function NavbarCarrier() {
           router.push("/");
         }}
         >
-        <img src="/indokoding-warna.svg" alt="indokoding" className="w-10 h-10" />
+        <Image width={140} height={140} src="/indokoding-warna.svg" alt="indokoding" className="w-10 h-10" />
         <span className="text-xl font-bold text-black">&lt;indokoding/&gt;</span>
       </div>
 
