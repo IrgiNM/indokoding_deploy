@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Footer: React.FC = () => {
+const FooterSm: React.FC = () => {
   return (
     <footer className="bg-purple-900 text-white py-6 px-75">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-start">
         {/* Logo dan Deskripsi */}
         <div className="mb-6 md:mb-0">
-          <div className="flex items-center mb-2">
-            <span className="text-2xl font-bold">indokoding/</span>
+          <div className="flex  text-xl mb-5">
+            <span className=" font-bold">indokoding/</span>
           </div>
           <p className="text-sm max-w-xs">
             We are an IT Service software development started from a band of developers that excel in developing apps with great flexibility and always listen to client needs.
@@ -53,4 +53,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default FooterSm;
