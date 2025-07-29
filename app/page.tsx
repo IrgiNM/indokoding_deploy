@@ -23,10 +23,6 @@ export default function page() {
       {/* <ContactUs /> */}
       <ContactUsSm />
       <Footer />
-<<<<<<< HEAD
-      {/* <FooterSm /> */}
-=======
->>>>>>> 4a38eb7fa1eb70068ccc0eeadc8e06045d285c31
     </div>
   )
 }
