@@ -22,8 +22,8 @@ export default function page() {
       <Service/>
       {/* <ContactUs /> */}
       <ContactUsSm />
-      {/* <Footer /> */}
-      <FooterSm />
+      <Footer />
+      {/* <FooterSm /> */}
     </div>
   )
 }
