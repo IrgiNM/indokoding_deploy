@@ -61,7 +61,7 @@ export default function OurSkills() {
         },
     ]
   return (
-    <div className='flex flex-col justify-center items-center relative mt-35 w-full'>
+    <div className='flex flex-col justify-center items-center relative mt-50 w-full'>
         {/* ABSOLUTE */}
         <p className='text-4xl absolute -top-10 text-[#F3D130] font-semibold -rotate-30 left-120'>&lt;/&gt;</p>
         <Image width={140} height={140} src="/assets/image/postgre.png" alt="gambar-postgre" className='w-55 absolute -top-10 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
