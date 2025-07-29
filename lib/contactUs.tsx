@@ -4,7 +4,7 @@ import React from 'react';
 export default function ContactUs() {
   return (
     
-    <div className='w-full pl-20 mb-60 relative flex flex-col justify-center items-center pr-20'>
+    <div className='w-full pl-20 mt-25 mb-60 relative flex flex-col justify-center items-center pr-20'>
       <div className='w-full h-50 bg-gradient-to-b from-[#D6FFD8] to-[#A0FDFF] absolute -top-20 -z-1'></div>
       <Image width={140} height={140} src="/assets/image/turu.png" alt="" className='absolute w-100 -top-52 right-20' />
       <a href="https://maps.app.goo.gl/1XpcLZoMr6bhypjw6" className='absolute w-317 h-65 right-0 -bottom-60'></a>
