@@ -58,7 +58,6 @@ const Footer: React.FC = () => {
         <Image width={140} height={140} src="/ig.svg" alt="Instagram" className="w-6 h-6" />
         <Image width={140} height={140} src="/x.svg" alt="Twitter" className="w-6 h-6" />
       </div>
-    </div>
 
     {/* Bagian Kanan (Links) */}
     <div className="flex flex-wrap md:space-x-12 mt-10 md:mt-0">
@@ -89,7 +88,6 @@ const Footer: React.FC = () => {
         </ul>
       </div>
     </div>
-  </div>
 </footer>
 
 
