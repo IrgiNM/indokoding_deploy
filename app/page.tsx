@@ -9,7 +9,6 @@ import ContactUs from '@/lib/contactUs';
 import OurSkills from '@/lib/ourSkills';
 import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
-import FooterSm from '@/lib/mobile/footerSm';
 
 export default function page() {
   return (
@@ -22,8 +21,7 @@ export default function page() {
       <Service/>
       {/* <ContactUs /> */}
       <ContactUsSm />
-      {/* <Footer /> */}
-      <FooterSm />
+      <Footer />
     </div>
   )
 }
