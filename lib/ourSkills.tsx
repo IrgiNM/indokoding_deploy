@@ -13,7 +13,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#BFAF3D]",
             warnaBg: "bg-[#FFFAD6]",
             rotate: "rotate-5",
-            position: "top-30 left-0"
+            position: "lg:top-30 lg:left-0 top-20 left-20"
         },
         {
             id: 2,
@@ -24,7 +24,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#DB380E]",
             warnaBg: "bg-[#FFDED6]",
             rotate: "rotate-2",
-            position: "top-30 left-70"
+            position: "lg:top-30 lg:left-70 top-85 left-20"
         },
         {
             id: 3,
@@ -35,7 +35,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#007714]",
             warnaBg: "bg-[#D6FFF1]",
             rotate: "-rotate-5",
-            position: "top-40 left-140"
+            position: "lg:top-40 lg:left-140 top-151 left-20"
         },
         {
             id: 4,
@@ -46,7 +46,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#008DC0]",
             warnaBg: "bg-[#D6E9FF]",
             rotate: "-rotate-7",
-            position: "top-110 left-30"
+            position: "lg:top-110 lg:left-30 top-218 left-20"
         },
         {
             id: 5,
@@ -57,23 +57,23 @@ export default function OurSkills() {
             warnaTitle: "text-[#534882]",
             warnaBg: "bg-[#DED6FF]",
             rotate: "-rotate-2",
-            position: "top-114 left-100"
+            position: "lg:top-114 lg:left-100 top-289 left-22"
         },
     ]
   return (
     <div className='flex flex-col justify-center items-center relative mt-50 w-full'>
         {/* ABSOLUTE */}
         <div className='relative'>
-            <h1 className='text-[#005CB2] mb-8 text-4xl font-extrabold'>Our Skills</h1>
-            <p className='text-4xl absolute -top-10 text-[#F3D130] font-semibold -rotate-30 -left-20'>&lt;/&gt;</p>
+            <h1 className='text-[#005CB2] mb-8 lg:text-4xl text-xl font-extrabold'>Our Skills</h1>
+            <p className='lg:text-4xl text-xl absolute lg:-top-10 -top-5 text-[#F3D130] font-semibold -rotate-30 lg:-left-20 -left-10'>&lt;/&gt;</p>
         </div>
         
-        <Image width={140} height={140} src="/assets/image/postgre.png" alt="gambar-postgre" className='w-55 absolute -top-10 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
-        <Image width={140} height={140} src="/assets/image/pythonb.png" alt="gambar-postgre" className='w-40 absolute -bottom-12 rotate-20 -left-10 z-2'/>
+        <Image width={140} height={140} src="/assets/image/postgre.png" alt="gambar-postgre" className='lg:w-55 w-30 absolute lg:-top-10 top-0 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
+        <Image width={140} height={140} src="/assets/image/pythonb.png" alt="gambar-postgre" className='lg:w-40 w-30 absolute lg:-bottom-12 -bottom-9 rotate-20 -left-10 z-2'/>
+
         {/* NORMAL */}
-        
-        <div className='w-full bg-[#D9DFFC] relative overflow-visible flex justify-center items-center'>
-            <div className='w-200 h-220 flex flex-row gap-5 justify-center items-center relative'>
+        <div className='w-full lg:h-210 h-400 bg-[#D9DFFC] relative overflow-visible flex justify-center items-center'>
+            <div className='lg:w-200 w-87 lg:h-210 h-400 flex flex-row gap-5 justify-center items-center relative'>
                 {dataSkill.map((skill, index) => (
                     <CardSkill
                         key={index}

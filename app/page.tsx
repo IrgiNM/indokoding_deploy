@@ -18,7 +18,7 @@ export default function page() {
       <Navbar page="Home"/>
       <Home/>
       <OurWork/>
-      <CenterMode />
+      {/* <CenterMode /> */}
       <AboutUs/>
       <OurSkills/>
       <Service/>
