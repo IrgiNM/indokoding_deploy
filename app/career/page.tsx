@@ -1,4 +1,4 @@
-import Footer from "@/components/footer";
+import Footer from "@/lib/footer";
 import JobCard from "@/components/JobCard";
 import JoinUs from "@/components/JoinUs";
 import NavbarCarrier from "@/lib/navbarCarrier";
