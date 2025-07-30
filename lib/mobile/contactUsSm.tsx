@@ -49,24 +49,24 @@ export default function ContactUsSm() {
         
         <div className="mt-6 flex flex-col gap-3 text-[#4F006C] text-sm">
           <div className="flex items-center gap-3 bg-[#D9DFFC] px-4 py-3 rounded-xl">
-            <Image src="/icon-jam.svg" width={24} height={24} alt="Jam" />
-            <div>
+            <Image src="/icon-jam.svg" width={14} height={14} alt="Jam" />
+            <div className='text-[10px]'>
               <p className="font-semibold">Monday - Friday</p>
               <p>7 AM - 6 PM</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 bg-[#D9DFFC] px-4 py-3 rounded-xl">
-            <Image src="/icon-phone.svg" width={24} height={24} alt="Phone" />
-            <div>
+            <Image src="/icon-phone.svg" width={14} height={14} alt="Phone" />
+            <div className='text-[10px]'>
               <p className="font-semibold">+62274 540448</p>
               <p>+622745306395</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 bg-[#D9DFFC] px-4 py-3 rounded-xl">
-            <Image src="/icon-email.svg" width={24} height={24} alt="Email" />
-            <p>info@indokoding.com</p>
+          <div className="flex items-center gap-3 bg-[#D9DFFC] px-6 py-5 rounded-xl">
+            <Image src="/icon-email.svg" width={14} height={14} alt="Email" />
+            <p className='text-[10px]' >info@indokoding.com</p>
           </div>
         </div>
 

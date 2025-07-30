@@ -3,7 +3,7 @@ import Home from '@/lib/home';
 import Navbar from '@/lib/navbar';
 import Service from '@/lib/ourServices';
 
-import Footer from '@/components/footer';
+import Footer from '@/lib/footer';
 import AboutUs from '@/lib/aboutUs';
 import ContactUs from '@/lib/contactUs';
 import OurSkills from '@/lib/ourSkills';
@@ -23,6 +23,7 @@ export default function page() {
       {/* <ContactUs /> */}
       <ContactUsSm />
       <Footer />
+      {/* <FooterSm /> */}
     </div>
   )
 }
