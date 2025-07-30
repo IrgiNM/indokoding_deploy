@@ -13,7 +13,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#BFAF3D]",
             warnaBg: "bg-[#FFFAD6]",
             rotate: "rotate-5",
-            position: "top-30 left-60"
+            position: "top-30 left-0"
         },
         {
             id: 2,
@@ -24,7 +24,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#DB380E]",
             warnaBg: "bg-[#FFDED6]",
             rotate: "rotate-2",
-            position: "top-30 left-130"
+            position: "top-30 left-70"
         },
         {
             id: 3,
@@ -35,7 +35,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#007714]",
             warnaBg: "bg-[#D6FFF1]",
             rotate: "-rotate-5",
-            position: "top-40 left-200"
+            position: "top-40 left-140"
         },
         {
             id: 4,
@@ -46,7 +46,7 @@ export default function OurSkills() {
             warnaTitle: "text-[#008DC0]",
             warnaBg: "bg-[#D6E9FF]",
             rotate: "-rotate-7",
-            position: "top-110 left-100"
+            position: "top-110 left-30"
         },
         {
             id: 5,
@@ -57,33 +57,40 @@ export default function OurSkills() {
             warnaTitle: "text-[#534882]",
             warnaBg: "bg-[#DED6FF]",
             rotate: "-rotate-2",
-            position: "top-114 left-170"
+            position: "top-114 left-100"
         },
     ]
   return (
     <div className='flex flex-col justify-center items-center relative mt-50 w-full'>
         {/* ABSOLUTE */}
-        <p className='text-4xl absolute -top-10 text-[#F3D130] font-semibold -rotate-30 left-120'>&lt;/&gt;</p>
+        <div className='relative'>
+            <h1 className='text-[#005CB2] mb-8 text-4xl font-extrabold'>Our Skills</h1>
+            <p className='text-4xl absolute -top-10 text-[#F3D130] font-semibold -rotate-30 -left-20'>&lt;/&gt;</p>
+        </div>
+        
         <Image width={140} height={140} src="/assets/image/postgre.png" alt="gambar-postgre" className='w-55 absolute -top-10 -rotate-20 -right-10 z-2 scale-x-[-1]'/>
         <Image width={140} height={140} src="/assets/image/pythonb.png" alt="gambar-postgre" className='w-40 absolute -bottom-12 rotate-20 -left-10 z-2'/>
         {/* NORMAL */}
-        <h1 className='text-[#005CB2] text-4xl font-extrabold'>Our Skills</h1>
-        <div className='w-full mt-8 h-220 bg-[#D9DFFC] flex flex-row gap-5 justify-center items-center relative'>
-            {dataSkill.map((skill, index) => (
-                <CardSkill 
-                    key={index} 
-                    id={skill.id}
-                    image={skill.image}
-                    pin={skill.pin}
-                    title={skill.title}
-                    description={skill.description}
-                    warnaTitle={skill.warnaTitle}
-                    warnaBg={skill.warnaBg}
-                    rotate={skill.rotate}
-                    position={skill.position} 
-                />
-            ))}
+        
+        <div className='w-full bg-[#D9DFFC] relative overflow-visible flex justify-center items-center'>
+            <div className='w-200 h-220 flex flex-row gap-5 justify-center items-center relative'>
+                {dataSkill.map((skill, index) => (
+                    <CardSkill 
+                        key={index} 
+                        id={skill.id}
+                        image={skill.image}
+                        pin={skill.pin}
+                        title={skill.title}
+                        description={skill.description}
+                        warnaTitle={skill.warnaTitle}
+                        warnaBg={skill.warnaBg}
+                        rotate={skill.rotate}
+                        position={skill.position} 
+                    />
+                ))}
+            </div>
         </div>
+        
     </div>
   )
 }

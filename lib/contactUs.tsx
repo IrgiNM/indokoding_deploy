@@ -11,7 +11,7 @@ export default function ContactUs() {
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1450.0329966036097!2d110.30648249266326!3d-7.785142307915073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af70009a10b4b%3A0x2a213bb1df2a7745!2sCV%20Indokoding%20Sukses%20Makmur!5e0!3m2!1sen!2sid!4v1753343284581!5m2!1sen!2sid" className='absolute w-317 h-80 right-0 -bottom-60 -z-1'></iframe>
       
 
-      <h1 className='w-180 text-4xl text-left font-bold text-[#4F006C]'>Contact Us</h1>
+      <h1 className=' w-180 text-4xl text-left font-bold text-[#4F006C]'>Contact Us</h1>
     
       <div className="flex justify-center w-250 items-center px-5 py-5">
         <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white border-[1px] border-[#97BED7] rounded-3xl shadow-xl p-6 gap-10">

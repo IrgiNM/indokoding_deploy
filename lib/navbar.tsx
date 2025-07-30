@@ -2,10 +2,12 @@
 import NavLink from '@/components/navLink';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Navbar(props: { page: string }) {
   const [bgNav, setBgNav] = useState(props.page);
-  const router = useRouter(); // <-- ini ditambahkan
+  const router = useRouter();
+  const [isClick, setIsClick] = useState(false);
 
   const nav = [
     {
@@ -16,7 +18,7 @@ export default function Navbar(props: { page: string }) {
       link: () => {
         console.log("Home clicked");
         setBgNav("Home");
-        router.push("/"); // <-- navigasi ke halaman home
+        router.push("/");
       },
     },
     {
@@ -74,12 +76,27 @@ export default function Navbar(props: { page: string }) {
   ];
     
   return (
-    <div className="h-20 flex flex-row justify-center items-start gap-4 pt-7 fixed top-0 w-full z-5 bg-gradient-to-b from-white to-transparent">
-      {nav.map((x, y) => (
-        <NavLink key={y} warna={bgNav === x.isi ? x.active : x.warna} bg={x.bg} klik={x.link}>
-          {x.isi}
-        </NavLink>
-      ))}
+    <>
+    <div className='w-full h-20 bg-gradient-to-b fixed top-0 from-white z-5 to-transparent'>
+      <div className="hidden h-20 lg:flex flex-row justify-center items-start gap-4 pt-7 w-full  ">
+        {nav.map((x, y) => (
+          <NavLink key={y} warna={bgNav === x.isi ? x.active : x.warna} bg={x.bg} klik={x.link}>
+            {x.isi}
+          </NavLink>
+        ))}
+      </div>
+      {/* <div className='lg:hidden flex'>
+        <button className='w-12 h-12 flex justify-center items-center bg-[#AD48FF] rounded-full absolute top-5 right-5 active:bg-gradient-to-b active:from-[#AD48FF] active:to-[#6f09c3] active:font-bold z-5'>
+          {isClick ?
+          <Image width={140} height={140} src="/close.svg" alt="" className='w-5'/>
+          :
+          <Image width={140} height={140} src="/2line-navbar.svg" alt="" className='w-5'/>
+          }
+        </button>
+        <div className='flex flex-col justify-start items-end h-200 w-50 absolute z-3 right-0 top-0 bg-[#4F006C]'></div>
+        <div className='w-200 h-200 bg-black opacity-65 absolute z-2 blur-xl'>ssc</div>
+      </div> */}
     </div>
+    </>
   );
 }

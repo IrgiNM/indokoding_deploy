@@ -10,6 +10,7 @@ import OurSkills from '@/lib/ourSkills';
 import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
 import FooterSm from '@/lib/mobile/footerSm';
+import App from '@/components/aboutPhoto';
 
 export default function page() {
   return (
