@@ -37,11 +37,11 @@ export default function Service() {
         <div className='lg:flex flex-row items-start justify-center gap-7 w-full p-5 hidden '>
             {services.map((service) => (
                 <React.Fragment key={service.id}>
-                {service.id === 2 && <div className='w-0.5 h-50 bg-gray-300'></div>}
+                {service.id === 2 && <div className='w-0.5 h-70 bg-gray-300'></div>}
                 <div className={` flex flex-col items-center justify-center gap-4 p-4`}>
                 <ServiceCard key={service.id} id={service.id} title={service.title} warna={service.warna} description={service.description}/>
                 </div>
-                {service.id === 2 && <div className='w-0.5 h-50 bg-gray-300'></div>}
+                {service.id === 2 && <div className='w-0.5 h-70 bg-gray-300'></div>}
                 </React.Fragment>
             ))}
         </div>

@@ -75,8 +75,8 @@ export default function OurSkills() {
         <div className='w-full bg-[#D9DFFC] relative overflow-visible flex justify-center items-center'>
             <div className='w-200 h-220 flex flex-row gap-5 justify-center items-center relative'>
                 {dataSkill.map((skill, index) => (
-                    <CardSkill 
-                        key={index} 
+                    <CardSkill
+                        key={index}
                         id={skill.id}
                         image={skill.image}
                         pin={skill.pin}
@@ -85,7 +85,7 @@ export default function OurSkills() {
                         warnaTitle={skill.warnaTitle}
                         warnaBg={skill.warnaBg}
                         rotate={skill.rotate}
-                        position={skill.position} 
+                        position={skill.position}
                     />
                 ))}
             </div>

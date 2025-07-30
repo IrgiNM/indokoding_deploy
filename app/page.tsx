@@ -10,7 +10,7 @@ import OurSkills from '@/lib/ourSkills';
 import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
 import FooterSm from '@/lib/mobile/footerSm';
-import App from '@/components/aboutPhoto';
+import CenterMode from '@/lib/ourWorkCenter';
 
 export default function page() {
   return (
@@ -18,6 +18,7 @@ export default function page() {
       <Navbar page="Home"/>
       <Home/>
       <OurWork/>
+      <CenterMode />
       <AboutUs/>
       <OurSkills/>
       <Service/>
