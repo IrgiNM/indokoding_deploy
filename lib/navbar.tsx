@@ -1,13 +1,21 @@
 "use client";
 import NavLink from '@/components/navLink';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 export default function Navbar(props: { page: string }) {
   const [bgNav, setBgNav] = useState(props.page);
   const router = useRouter();
-  const [isClick, setIsClick] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const nav = [
     {
@@ -77,7 +85,7 @@ export default function Navbar(props: { page: string }) {
     
   return (
     <>
-    <div className='w-full h-20 bg-gradient-to-b fixed top-0 from-white z-5 to-transparent'>
+    <div className={`w-full h-20 bg-gradient-to-b fixed top-0 from-white z-20 to-transparent ${scrolled ? 'bg-white shadow-md' : 'bg-gradient-to-b from-white to-transparent'}`}>
       <div className="hidden h-20 lg:flex flex-row justify-center items-start gap-4 pt-7 w-full  ">
         {nav.map((x, y) => (
           <NavLink key={y} warna={bgNav === x.isi ? x.active : x.warna} bg={x.bg} klik={x.link}>
