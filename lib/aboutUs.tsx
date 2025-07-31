@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function AboutUs() {
   return (
-    <div className='lg:mt-60 lg:flex lg:flex-row lg:justify-center lg:items-center lg:w-full lg:relative flex flex-col justify-center items-center relative w-full gap-y-10'>
+    <div className='lg:mt-100 lg:flex lg:flex-row lg:justify-center lg:items-center lg:w-full lg:relative flex flex-col justify-center items-center relative w-full gap-y-10'>
       <div className='lg:w-270 lg:pl-25 w-70'>
         <div className='relative'>
           <h1 className='lg:text-4xl lg:font-extrabold lg:mb-5 lg:text-[#005CB2] text-xl font-extrabold mb-5 text-[#005CB2]'>About Us</h1>
