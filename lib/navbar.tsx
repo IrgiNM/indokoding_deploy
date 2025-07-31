@@ -72,7 +72,7 @@ export default function Navbar(props: { page: string }) {
       },
     },
   ];
-    
+  
   return (
     <div className="h-20 flex flex-row justify-center items-start gap-4 pt-7 fixed top-0 w-full z-5 bg-gradient-to-b from-white to-transparent">
       {nav.map((x, y) => (
