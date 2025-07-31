@@ -11,8 +11,6 @@ import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
 import FooterSm from '@/lib/mobile/footerSm';
 import CenterMode from '@/lib/ourWorkCenter';
-import ProjectSwiper from '@/lib/awoWok';
-import ExampleCarousel from '@/lib/awoWok';
 
 export default function page() {
   return (
