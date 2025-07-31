@@ -3,12 +3,14 @@ import Home from '@/lib/home';
 import Navbar from '@/lib/navbar';
 import Service from '@/lib/ourServices';
 
-import Footer from '@/components/footer';
+import Footer from '@/lib/footer';
 import AboutUs from '@/lib/aboutUs';
 import ContactUs from '@/lib/contactUs';
 import OurSkills from '@/lib/ourSkills';
 import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
+import FooterSm from '@/lib/mobile/footerSm';
+import CenterMode from '@/lib/ourWorkCenter';
 
 export default function page() {
   return (
@@ -16,12 +18,14 @@ export default function page() {
       <Navbar page="Home"/>
       <Home/>
       <OurWork/>
+      {/* <CenterMode /> */}
       <AboutUs/>
       <OurSkills/>
       <Service/>
       {/* <ContactUs /> */}
       <ContactUsSm />
       <Footer />
+      {/* <FooterSm /> */}
     </div>
   )
 }

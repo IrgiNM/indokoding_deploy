@@ -31,17 +31,19 @@ export default function Service() {
   return (
     <>
     <div className='lg:flex lg:flex-col lg:relative lg:items-center lg:min-h-screen lg:gap-2 lg:mt-15 flex flex-col relative items-center min-h-screen mt-15'>
-        <Image width={140} height={140} src="/assets/image/2line-yellow.png" alt="2line" className="lg:absolute lg:right-118 lg:-top-5 lg:w-10 lg:h-10 absolute right-33 -top-3 w-7 h-7"/>
-        <p className='lg:text-[16px] text-[12px]'>what we do</p>
+        <div className='relative'>
+            <Image width={140} height={140} src="/assets/image/2line-yellow.png" alt="2line" className="lg:absolute lg:-right-10 lg:-top-5 lg:w-10 lg:h-10 absolute -right-7 -top-3 w-7 h-7"/>
+            <p className='lg:text-[16px] text-[12px]'>what we do</p>
+        </div>
         <h1 className='lg:text-4xl lg:font-extrabold lg:tracking-wider lg:text-[#005CB2] text-xl font-extrabold tracking-wider text-[#005CB2] mb-6'>Our Services</h1>
         <div className='lg:flex flex-row items-start justify-center gap-7 w-full p-5 hidden '>
             {services.map((service) => (
                 <React.Fragment key={service.id}>
-                {service.id === 2 && <div className='w-0.5 h-50 bg-gray-300'></div>}
+                {service.id === 2 && <div className='w-0.5 h-70 bg-gray-300'></div>}
                 <div className={` flex flex-col items-center justify-center gap-4 p-4`}>
                 <ServiceCard key={service.id} id={service.id} title={service.title} warna={service.warna} description={service.description}/>
                 </div>
-                {service.id === 2 && <div className='w-0.5 h-50 bg-gray-300'></div>}
+                {service.id === 2 && <div className='w-0.5 h-70 bg-gray-300'></div>}
                 </React.Fragment>
             ))}
         </div>
