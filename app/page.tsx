@@ -8,17 +8,17 @@ import AboutUs from '@/lib/aboutUs';
 import ContactUs from '@/lib/contactUs';
 import OurSkills from '@/lib/ourSkills';
 import OurWork from '@/lib/ourWork';
-import ContactUsSm from '@/lib/mobile/contactUsSm';
-import FooterSm from '@/lib/mobile/footerSm';
 import CenterMode from '@/lib/ourWorkCenter';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import OurWorkCenter from '@/lib/ourWorkCenter';
 
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
       <Navbar page="Home"/>
       <Home/>
-      <OurWork/>
-      <CenterMode />
+      <OurWorkCenter/>
       {/* <ExampleCarousel /> */}
       <AboutUs/>
       <OurSkills/>

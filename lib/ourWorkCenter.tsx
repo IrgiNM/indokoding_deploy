@@ -74,7 +74,7 @@ const dataCard = [
         },
     ]
 
-export default function ExampleCarousel() {
+export default function OurWorkCenter() {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
