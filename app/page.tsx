@@ -22,8 +22,8 @@ export default function page() {
       <AboutUs/>
       <OurSkills/>
       <Service/>
-      {/* <ContactUs /> */}
-      <ContactUsSm />
+      <ContactUs/>
+      {/* <ContactUsSm /> */}
       <Footer />
       {/* <FooterSm /> */}
     </div>

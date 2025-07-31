@@ -2,11 +2,20 @@
 import NavLink from '@/components/navLink';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Navbar(props: { page: string }) {
   const [bgNav, setBgNav] = useState(props.page);
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [isClick, setIsClick] = useState(false);
+  const handleClick = () => {
+    if (isClick === true) {
+      setIsClick(false);
+    } else if( isClick === false) {
+      setIsClick(true);
+    }
+  }
 
   // Scroll effect
   useEffect(() => {
@@ -85,7 +94,7 @@ export default function Navbar(props: { page: string }) {
     
   return (
     <>
-    <div className={`w-full h-20 bg-gradient-to-b fixed top-0 from-white z-20 to-transparent ${scrolled ? 'bg-white shadow-md' : 'bg-gradient-to-b from-white to-transparent'}`}>
+    <div className={`w-full lg:h-20 h-40 bg-gradient-to-b fixed top-0 from-white z-20 to-transparent ${scrolled ? 'lg:bg-white lg:shadow-md' : 'lg:bg-gradient-to-b lg:from-white lg:to-transparent'}`}>
       <div className="hidden h-20 lg:flex flex-row justify-center items-start gap-4 pt-7 w-full  ">
         {nav.map((x, y) => (
           <NavLink key={y} warna={bgNav === x.isi ? x.active : x.warna} bg={x.bg} klik={x.link}>
@@ -93,17 +102,27 @@ export default function Navbar(props: { page: string }) {
           </NavLink>
         ))}
       </div>
-      {/* <div className='lg:hidden flex'>
-        <button className='w-12 h-12 flex justify-center items-center bg-[#AD48FF] rounded-full absolute top-5 right-5 active:bg-gradient-to-b active:from-[#AD48FF] active:to-[#6f09c3] active:font-bold z-5'>
+      <div className='lg:hidden w-full fixed right-0 flex'>
+        <button onClick={handleClick} className='w-12 h-12 flex justify-center items-center bg-[#AD48FF] rounded-full absolute top-5 right-5 active:bg-gradient-to-b active:from-[#AD48FF] active:to-[#6f09c3] active:font-bold z-21'>
           {isClick ?
           <Image width={140} height={140} src="/close.svg" alt="" className='w-5'/>
           :
           <Image width={140} height={140} src="/2line-navbar.svg" alt="" className='w-5'/>
           }
         </button>
-        <div className='flex flex-col justify-start items-end h-200 w-50 absolute z-3 right-0 top-0 bg-[#4F006C]'></div>
-        <div className='w-200 h-200 bg-black opacity-65 absolute z-2 blur-xl'>ssc</div>
-      </div> */}
+        {isClick && <><div className='flex flex-col justify-start gap-3 items-start pl-5 pt-30 h-200 w-60 absolute z-20 right-0 top-0 bg-[#412E57]'>
+          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Home</button>
+          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Our Work</button>
+          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>About Us</button>
+          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Contact Us</button>
+          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Career</button>
+          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Book Online</button>
+        </div>
+        <div className='w-200 h-200 bg-white opacity-70 absolute right-0 z-19 blur-xl'>ssc</div></>
+        }
+        <Image width={140} height={140} src="/logo.svg" alt="" className={`lg:hidden absolute w-15 left-5 top-5 ${scrolled && 'hidden'}`}/>
+        
+      </div>
     </div>
     </>
   );
