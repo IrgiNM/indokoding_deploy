@@ -1,3 +1,4 @@
+'use client';
 import CardOurWork from '@/components/cardOurWork';
 import Image from 'next/image';
 import { useState } from 'react';
