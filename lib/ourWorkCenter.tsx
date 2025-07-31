@@ -44,28 +44,28 @@ export default function ExampleCarousel() {
         className="mySwiper"
       >
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto1.avif" />
+          <img src="/assets/image/ourwork/porto1.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto2.avif" />
+          <img src="/assets/image/ourwork/porto2.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto3.avif" />
+          <img src="/assets/image/ourwork/porto3.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto4.avif" />
+          <img src="/assets/image/ourwork/porto4.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto5.avif" />
+          <img src="/assets/image/ourwork/porto5.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto6.avif" />
+          <img src="/assets/image/ourwork/porto6.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+          <img src="https://swiperjs.com/demos/images/nature-7.jpg" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+          <img src="https://swiperjs.com/demos/images/nature-8.jpg" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
       </Swiper>
     </>
