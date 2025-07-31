@@ -11,6 +11,8 @@ import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
 import FooterSm from '@/lib/mobile/footerSm';
 import CenterMode from '@/lib/ourWorkCenter';
+import ProjectSwiper from '@/lib/awoWok';
+import ExampleCarousel from '@/lib/awoWok';
 
 export default function page() {
   return (
@@ -18,7 +20,8 @@ export default function page() {
       <Navbar page="Home"/>
       <Home/>
       <OurWork/>
-      {/* <CenterMode /> */}
+      <CenterMode />
+      {/* <ExampleCarousel /> */}
       <AboutUs/>
       <OurSkills/>
       <Service/>
