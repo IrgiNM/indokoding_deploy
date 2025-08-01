@@ -11,14 +11,15 @@ import OurWork from '@/lib/ourWork';
 import ContactUsSm from '@/lib/mobile/contactUsSm';
 import FooterSm from '@/lib/mobile/footerSm';
 import CenterMode from '@/lib/ourWorkCenter';
+import OurWorkCenter from '@/lib/ourWorkCenter';
 
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
       <Navbar page="Home"/>
       <Home/>
-      <OurWork/>
-      <CenterMode />
+      {/* <OurWork/> */}
+      <OurWorkCenter/>
       {/* <ExampleCarousel /> */}
       <AboutUs/>
       <OurSkills/>

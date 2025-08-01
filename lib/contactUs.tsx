@@ -49,17 +49,16 @@ export default function ContactUs() {
             <div className=" lg:bg-[#D9DFFC] lg:flex lg:flex-row lg:items-center lg:p-4 lg:pl-7 lg:rounded-2xl bg-[#D9DFFC] flex flex-row items-center p-4 pl-7 rounded-xl w-full">
               <Image width={140} height={140} src="/icon-jam.svg" alt="" className=' lg:w-8 lg:mr-5 w-6 mr-5'/>
               <div>
-                <p className="font-semibold text-[12px] text-[#4F006C]">Monday - Friday</p>
-                <p className="lg:text-sm text-[12px]">7 AM - 6 PM</p>
+                <p className="font-semibold text-[12px] text-[#181F38]">Monday - Friday</p>
+                <p className="lg:text-sm text-[12px] text-[#181F38]">7 AM - 6 PM</p>
               </div>
             </div>
-
             
             <div className=" lg:bg-[#D9DFFC] lg:flex lg:flex-row lg:items-center lg:p-4 lg:pl-7 lg:rounded-2xl bg-[#D9DFFC] flex flex-row items-center p-4 pl-7 rounded-xl w-full">
               <Image width={140} height={140} src="/icon-phone.svg" alt="" className=' lg:w-8 lg:mr-5 w-6 mr-5'/>
               <div>
-                <p className="lg:font-semibold font-semibold text-[12px]">+62274 540448</p>
-                <p className="lg:text-sm text-[12px]">+622745306395</p>
+                <p className="lg:font-semibold font-semibold text-[12px] text-[#181F38]">+62274 540448</p>
+                <p className="lg:text-sm text-[12px] text-[#181F38]">+622745306395</p>
               </div>
             </div>
 
@@ -67,7 +66,7 @@ export default function ContactUs() {
             <div className=" lg:bg-[#D9DFFC] lg:flex lg:flex-row lg:items-center lg:p-4 lg:pl-7 lg:rounded-2xl bg-[#D9DFFC] flex flex-row items-center p-4 pl-7 rounded-xl w-full">
               <Image width={140} height={140} src="/icon-email.svg" alt="" className=' lg:w-8 lg:mr-5 w-6 mr-5'/>
               <div>
-                <p className="lg:text-sm text-[12px]">info@indokoding.com</p>
+                <p className="lg:text-sm text-[12px] text-[#181F38]">info@indokoding.com</p>
               </div>
             </div>
 
