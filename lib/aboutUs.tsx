@@ -1,7 +1,26 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function AboutUs() {
+  const imgList = [
+      'aboutus-main.jpg',
+      'aboutus-2.jpg',
+      'aboutus-3.jpg',
+  ]
+  const jumlahGambar = imgList.length;
+  const [selectImg, setSelectImg] = React.useState(0);
+  const handleClick = () => {
+    if (selectImg === jumlahGambar - 2) {
+      setSelectImg(0);
+    } else {
+      setSelectImg(selectImg + 1);
+    }
+  }
+  useEffect(() => {
+      console.log(`gambar 3 diganti ke `,selectImg);
+  }, [selectImg]);
+
+
   return (
     <div className='lg:mt-100 lg:flex lg:flex-row lg:justify-center lg:items-center lg:w-full lg:relative flex flex-col justify-center items-center relative w-full gap-y-10'>
       <div className='lg:w-270 lg:pl-25 w-70'>
@@ -16,9 +35,15 @@ export default function AboutUs() {
       </div>
 
       <div className='relative'>
-        <Image width={140} height={140} src="/assets/image/aboutus-main.jpg" alt="golang" className=' lg:w-[800px] lg:rounded-xl w-[300px] rounded-xl' />
-        <Image width={140} height={140} src="/assets/image/aboutus-2.jpg" alt="golang" className=' lg:w-[170px] lg:rounded-xl lg:absolute lg:z-2 lg:-bottom-10 lg:-right-10 lg:hover:w-[180px] lg:hover:-right-5 lg:transition-all lg:duration-200 lg:hover:shadow-lg w-[100px] rounded-xl absolute z-2 -bottom-10 -right-5 hover:w-[180px] hover:-right-5 transition-all duration-200 hover:shadow-lg' />
-        <Image width={140} height={140} src="/assets/image/aboutus-3.jpg" alt="golang" className=' lg:w-[200px] lg:rounded-xl lg:absolute lg:z-2 lg:bottom-30 lg:-right-70 w-[150px] rounded-xl absolute z-2 bottom-20 -right-50' />
+        <Image width={140} height={140} src={`/assets/image/${imgList[selectImg]}`} alt="golang" className=' lg:w-[800px] lg:h-[360px] lg:rounded-xl w-[300px] rounded-xl object-cover' />
+        <button onClick={handleClick}>
+          <Image width={140} height={140} src={`/assets/image/${imgList[selectImg+1]}`} alt="golang" className=' lg:w-[170px] lg:rounded-xl lg:absolute lg:z-2 lg:-bottom-10 lg:-right-10 lg:hover:w-[180px] lg:hover:-right-5 lg:transition-all lg:duration-200 lg:hover:shadow-lg w-[100px] rounded-xl absolute z-2 -bottom-10 -right-5 hover:w-[180px] hover:-right-5 transition-all duration-200 hover:shadow-lg object-cover
+          
+          active:lg:w-[800px] active:lg:h-[360px] bg-cover active:rounded-xl active:lg:bottom-0 active:lg:right-0 active:lg:opacity-0 active:lg:transition-all active:lg:duration-100
+          ' />
+        </button>
+        
+        <Image width={140} height={140} src={`/assets/image/${imgList[selectImg+2]}`} alt="golang" className=' lg:w-[200px] lg:rounded-xl lg:absolute lg:z-2 lg:bottom-30 lg:-right-70 w-[150px] rounded-xl absolute z-2 bottom-20 -right-50 object-cover' />
         <div className=' lg:-z-1 lg:bg-[#D6E9FF] lg:w-[840px] lg:h-[370px] lg:-rotate-5 lg:absolute lg:-top-5 lg:-left-5 lg:rounded-xl -z-1 bg-[#D6E9FF] w-[840px] h-[230px] -rotate-5 absolute -top-5 -left-5 rounded-xl'></div>
       </div>
 

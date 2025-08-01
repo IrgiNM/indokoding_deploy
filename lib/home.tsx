@@ -6,7 +6,7 @@ import React from 'react'
 export default function Home() {
   const router = useRouter();
   return (
-    <div className='lg:w-full lg:h-200 lg:relative lg:flex lg:flex-col lg:pt-25 lg:items-center lg:justify-start w-full h-200 relative flex flex-col pt-25 pl-10 items-start justify-start'>
+    <div className='lg:w-full lg:h-200 lg:relative lg:flex lg:flex-col lg:pt-25 lg:items-center lg:justify-start w-full h-140 relative flex flex-col pt-25 pl-10 items-start justify-start'>
 
 
         <div className='flex flex-row justify-center items-center gap-4 mt-9 lg:hidden'>
