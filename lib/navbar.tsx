@@ -120,7 +120,7 @@ export default function Navbar(props: { page: string }) {
         </div>
         <div className='w-200 h-200 bg-white opacity-70 absolute right-0 z-19 blur-xl'>ssc</div></>
         }
-        <Image width={140} height={140} src="/logo.svg" alt="" className={`lg:hidden absolute w-15 left-5 top-5 ${scrolled && 'hidden'}`}/>
+        <Image width={140} height={140} src="/logo2.svg" alt="" className={`lg:hidden absolute w-15 left-5 top-5 ${scrolled && 'hidden'}`}/>
         
       </div>
     </div>
