@@ -5,14 +5,17 @@ import Service from '@/lib/ourServices';
 
 import Footer from '@/lib/footer';
 import AboutUs from '@/lib/aboutUs';
+import React from 'react';
 import ContactUs from '@/lib/contactUs';
 import OurSkills from '@/lib/ourSkills';
 import OurWorkCenter from '@/lib/ourWorkCenter';
 import { useRef } from "react";
 
 
-export default function page() {
+export default function Page() {
   const ourWorkRef = useRef<HTMLDivElement>(null);
+  const aboutUsRef = useRef<HTMLDivElement>(null);
+  const contactUsRef = useRef<HTMLDivElement>(null);
 
   const scrollToRef = (ref: React.RefObject<HTMLElement | null>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -24,14 +27,16 @@ export default function page() {
         page="home"
         onNavClick={{
           ourWork: () => scrollToRef(ourWorkRef),
+          aboutUs: () => scrollToRef(aboutUsRef),
+          contactUs: () => scrollToRef(contactUsRef),
         }}
       />
-      <Home />
+      <Home/>
       <OurWorkCenter ref={ourWorkRef}/>
-      <AboutUs  />
+      <AboutUs ref={aboutUsRef}/>
       <OurSkills  />
       <Service  />
-      <ContactUs  />
+      <ContactUs ref={contactUsRef} />
       <Footer />
     </div>
   )
