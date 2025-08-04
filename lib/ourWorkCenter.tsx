@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 // import required modules
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import "./styles.css";
+import Image from "next/image";
 
 const dataCard = [
     {
@@ -74,16 +75,16 @@ const dataCard = [
         },
     ]
 
-export default function ExampleCarousel() {
+export default function OurWorkCenter() {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <>
-    <div className='w-full  relative flex flex-col items-start justify-center'>
-      <div className='w-full flex flex-col items-end justify-end'>
-        <h1 className='text-4xl text-[#128900] font-extrabold mr-50'>Our Work</h1>
-        <p className='mr-50'>A collection of website we&apos;ve made with passion</p>
+    <div className=' lg:w-full lg:relative lg:flex lg:flex-col lg:items-start lg:justify-center w-full relative flex flex-col items-start justify-center mt-0'>
+      <div className=' lg:w-full lg:flex lg:flex-col lg:items-end lg:justify-end w-full flex flex-col items-end justify-end'>
+        <h1 className=' lg:text-4xl lg:text-[#128900] lg:font-extrabold lg:mr-50 text-xl text-[#128900] font-extrabold mr-10'>Our Work</h1>
+        <p className='lg:mr-50 mr-10 text-right lg:text-[16px] text-[12px]'>A collection of website we&apos;ve made with passion</p>
       </div>
     </div>
       <Swiper
@@ -113,32 +114,31 @@ export default function ExampleCarousel() {
         modules={[EffectCoverflow, Pagination, Autoplay]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img src="/assets/image/ourwork/porto1.avif" className="rounded border-2 border-[#128900]"/>
-          
+        <SwiperSlide className="w-50">
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto1.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto2.avif" className="rounded border-2 border-[#128900]"/>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto2.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto3.avif" className="rounded border-2 border-[#128900]"/>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto3.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto4.avif" className="rounded border-2 border-[#128900]"/>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto4.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto5.avif" className="rounded border-2 border-[#128900]"/>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto5.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/assets/image/ourwork/porto6.avif" className="rounded border-2 border-[#128900]"/>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto6.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
       </Swiper>
-      <div className="flex flex-col relative w-120 bottom-5">
+      <div className="flex flex-col relative lg:w-120 w-70 mb-100 bottom-5">
         {
           dataCard.map((item, index) => (
             <div key={index} className={`absolute transition-opacity duration-500 ease-in-out ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`}>
-              <h2 className="text-xl font-bold mb-3 text-[#128900]">{item.title}</h2>
-              <div className="flex flex-row justify-start items-end gap-2 mb-3">
+              <h2 className="lg:text-xl text-md font-bold mb-3 text-[#128900]">{item.title}</h2>
+              <div className="flex flex-row flex-wrap justify-start items-end gap-2 mb-3">
                 {
                   item.tags.map((tag, tagIndex) => (
                     <p key={tagIndex} className={`py-1 px-4
@@ -148,12 +148,12 @@ export default function ExampleCarousel() {
                           tag === 'market place' ? warnaTag[0].bg :
                           warnaTag[3].bg
                       }
-                      rounded-full text-[12px] font-semibold`}>{tag}</p>
+                      rounded-full lg:text-[12px] text-[8px] font-semibold`}>{tag}</p>
                   ))
                 }
               </div>
               
-              <p className="text-sm mt-3 text-justify text-gray-700">{item.description}</p>
+              <p className="lg:text-sm text-[12px] mt-3 text-justify text-gray-700">{item.description}</p>
             </div>
           ))
         }
