@@ -82,17 +82,17 @@ body {
 }
 
 
-
-@keyframes fade-in {
+@keyframes slide-up {
   from {
+    transform: translateY(20px);
     opacity: 0;
-    transform: scale(0.98);
   }
   to {
+    transform: translateY(0);
     opacity: 1;
-    transform: scale(1);
   }
 }
-.animate-fade-in {
-  animation: fade-in 0.4s ease-out forwards;
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
 }

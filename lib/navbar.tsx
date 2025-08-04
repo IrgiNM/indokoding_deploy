@@ -4,8 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-export default function Navbar(props: { page: string }) {
-  const [bgNav, setBgNav] = useState(props.page);
+export default function Navbar({
+  page,
+  onNavClick,
+}: {
+  page: string;
+  onNavClick: {
+    ourWork?: () => void;
+    aboutUs?: () => void;
+    contact?: () => void;
+  };
+}) {
+  const [bgNav, setBgNav] = useState(page);
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [isClick, setIsClick] = useState(false);
@@ -46,6 +56,7 @@ export default function Navbar(props: { page: string }) {
       link: () => {
         console.log("Our Work clicked");
         setBgNav("Our Work");
+        onNavClick.ourWork?.(); 
       },
     },
     {
@@ -56,6 +67,7 @@ export default function Navbar(props: { page: string }) {
       link: () => {
         console.log("About Us clicked");
         setBgNav("About Us");
+        onNavClick.aboutUs?.();
       },
     },
     {
@@ -95,13 +107,22 @@ export default function Navbar(props: { page: string }) {
   return (
     <>
     <div className={`w-full lg:h-20 h-40 bg-gradient-to-b fixed top-0 from-white z-20 to-transparent ${scrolled ? 'lg:bg-white lg:shadow-md' : 'lg:bg-gradient-to-b lg:from-white lg:to-transparent'}`}>
-      <div className="hidden h-20 lg:flex flex-row justify-center items-start gap-4 pt-7 w-full  ">
+
+      <div className="hidden h-20 lg:flex flex-row justify-center relative items-start gap-4 pt-7 w-full  ">
         {nav.map((x, y) => (
           <NavLink key={y} warna={bgNav === x.isi ? x.active : x.warna} bg={x.bg} klik={x.link}>
             {x.isi}
           </NavLink>
         ))}
+        {bgNav !== "Home" && 
+          <div className='flex flex-row justify-start items-center gap-4 absolute top-6 left-10 w-50 z-20'>
+            <Image width={140} height={140} src="/logo2.svg" alt="" className='hidden w-10 lg:flex'/>
+          </div>
+        }
+        
       </div>
+
+      
       <div className='lg:hidden w-full fixed right-0 flex'>
         <button onClick={handleClick} className='w-12 h-12 flex justify-center items-center bg-[#AD48FF] rounded-full absolute top-5 right-5 active:bg-gradient-to-b active:from-[#AD48FF] active:to-[#6f09c3] active:font-bold z-21'>
           {isClick ?
@@ -110,6 +131,7 @@ export default function Navbar(props: { page: string }) {
           <Image width={140} height={140} src="/2line-navbar.svg" alt="" className='w-5'/>
           }
         </button>
+
         {isClick && <><div className='flex flex-col justify-start gap-3 items-start pl-5 pt-30 h-200 w-60 absolute z-20 right-0 top-0 bg-[#412E57]'>
           <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Home</button>
           <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Our Work</button>

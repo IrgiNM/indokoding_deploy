@@ -12,21 +12,31 @@ import CenterMode from '@/lib/ourWorkCenter';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import OurWorkCenter from '@/lib/ourWorkCenter';
+import { useRef } from "react";
+
 
 export default function page() {
+  const ourWorkRef = useRef<HTMLDivElement>(null);
+
+  const scrollToRef = (ref: React.RefObject<HTMLElement | null>) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar page="Home"/>
-      <Home/>
-      <OurWorkCenter/>
-      {/* <ExampleCarousel /> */}
-      <AboutUs/>
-      <OurSkills/>
-      <Service/>
-      <ContactUs/>
-      {/* <ContactUsSm /> */}
+      <Navbar
+        page="home"
+        onNavClick={{
+          ourWork: () => scrollToRef(ourWorkRef),
+        }}
+      />
+      <Home />
+      <OurWorkCenter ref={ourWorkRef}/>
+      <AboutUs  />
+      <OurSkills  />
+      <Service  />
+      <ContactUs  />
       <Footer />
-      {/* <FooterSm /> */}
     </div>
   )
 }

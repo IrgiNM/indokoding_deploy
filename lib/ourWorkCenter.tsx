@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -75,12 +75,13 @@ const dataCard = [
         },
     ]
 
-export default function OurWorkCenter() {
+ function OurWorkCenterComponent(props: any, ref: React.Ref<HTMLDivElement>) {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <>
+    <div ref={ref} className="relative -top-30 right-0"></div>
     <div className=' lg:w-full lg:relative lg:flex lg:flex-col lg:items-start lg:justify-center w-full relative flex flex-col items-start justify-center mt-0'>
       <div className=' lg:w-full lg:flex lg:flex-col lg:items-end lg:justify-end w-full flex flex-col items-end justify-end'>
         <h1 className=' lg:text-4xl lg:text-[#128900] lg:font-extrabold lg:mr-50 text-xl text-[#128900] font-extrabold mr-10'>Our Work</h1>
@@ -166,3 +167,6 @@ export default function OurWorkCenter() {
     </>
   );
 }
+
+const OurWorkCenter = forwardRef(OurWorkCenterComponent);
+export default OurWorkCenter;
