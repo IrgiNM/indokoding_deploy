@@ -1,8 +1,7 @@
 import CardCareer from '@/components/cardCareer'
 import React, { useState } from 'react'
 
-export default function 
-() {
+export default function CareerApply() {
     const [diKlik, setDiKlik] = useState('Django Developer');
     const dataCareer = [
         {
