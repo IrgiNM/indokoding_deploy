@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -7,9 +7,9 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 // import "./styles.css";
 // import required modules
-import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
-import "./styles.css";
 import Image from "next/image";
+import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
+import "./styles.css";
 
 const dataCard = [
     {
@@ -75,7 +75,9 @@ const dataCard = [
         },
     ]
 
- function OurWorkCenterComponent(props: any, ref: React.Ref<HTMLDivElement>) {
+    type OurWorkProps = {};
+    
+ function OurWorkCenterComponent(props: OurWorkProps, ref: React.Ref<HTMLDivElement>) {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
