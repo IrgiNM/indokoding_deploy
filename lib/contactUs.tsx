@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import React, { forwardRef } from 'react';
 
-type ContactUsProps = {};
-
-function ContactUsComponent(props: ContactUsProps, ref: React.Ref<HTMLDivElement>) {
+function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
     <div ref={ref} className="relative top-20 right-0"></div>
