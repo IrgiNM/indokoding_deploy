@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { CardCareerProps } from "@/type/typeCardCareer";
 
-export default function CardCareer(props: any) {
+export default function CardCareer(props: CardCareerProps) {
     const listData = props.list || [];
     const isActive = props.isActive || 'null';
     const title = props.title || 'null';

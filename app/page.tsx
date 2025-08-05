@@ -3,17 +3,14 @@ import Home from '@/lib/home';
 import Navbar from '@/lib/navbar';
 import Service from '@/lib/ourServices';
 
-import Footer from '@/lib/footer';
 import AboutUs from '@/lib/aboutUs';
-import React from 'react';
 import ContactUs from '@/lib/contactUs';
+import Footer from '@/lib/footer';
 import OurSkills from '@/lib/ourSkills';
-import OurWork from '@/lib/ourWork';
-import CenterMode from '@/lib/ourWorkCenter';
+import OurWorkCenter from '@/lib/ourWorkCenter';
+import React, { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
-import OurWorkCenter from '@/lib/ourWorkCenter';
-import { useRef } from "react";
 
 
 export default function Page() {
