@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-export default function ContactUs() {
+function ContactUsComponent(props: any, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
-    <div className=' lg:w-full lg:pl-20 lg:mb-0 lg:mt-50 lg:relative lg:flex lg:flex-col lg:justify-center lg:items-center lg:pr-20 w-full px-5 mb-0 mt-0 relative flex flex-col justify-center items-center'>
+    <div ref={ref} className="relative top-20 right-0"></div>
+    <div className=' lg:w-full lg:pl-20 lg:mb-0 lg:mt-50 lg:relative lg:flex lg:flex-col lg:justify-center lg:items-center lg:pr-20 w-full px-5 mb-0 mt-50 relative flex flex-col justify-center items-center'>
       <div className=' lg:w-full lg:h-50 lg:bg-gradient-to-b lg:from-[#D6FFD8] lg:to-[#A0FDFF] lg:absolute lg:-top-20 lg:-z-1 w-full h-30 bg-gradient-to-b from-[#D6FFD8] to-[#A0FDFF] absolute -top-10 -z-1'></div>
       <div className='lg:relative relative z-3 flex flex-row lg:w-200 w-70'>
         <h1 className='lg:w-180 lg:text-4xl lg:text-left lg:font-bold lg:text-[#4F006C] w-180 text-xl text-left font-bold -mb-2 text-[#4F006C]'>Contact Us</h1>
@@ -93,3 +94,6 @@ export default function ContactUs() {
     </>
   );
 }
+
+const ContactUs = forwardRef(ContactUsComponent);
+export default ContactUs;

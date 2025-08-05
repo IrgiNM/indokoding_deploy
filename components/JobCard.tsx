@@ -11,7 +11,7 @@ const JobCard: React.FC<JobCardProps> = ({ title, shortDesc, longDesc }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="w-[300px] bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between min-h-[180px]">
+    <div className="w-[300px] bg-white p-4 rounded-xl shadow-lg flex flex-col justify-between min-h-[180px] border-1 border-[#007924]">
       <div>
         <h3 className="text-lg font-bold text-purple-900 mb-2">{title}</h3>
         <div className="text-sm text-purple-900">

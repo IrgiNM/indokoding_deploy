@@ -9,7 +9,7 @@ export default function JoinUs() {
           </div>
           <p className="mb-6 relative font-poppins top-[-120px] right-[-10px] z-20">Join with our passionate team and together shape the world.</p>
           <div className="flex justify-center items-center h-screen"> 
-            <div className="w-[869px] h-90 bg-blue-100 rounded-[20px] shadow-[6px_4px_4px_0px_rgba(44,80,122,0.25)] outline outline-1 outline-slate-400/70 absolute left-[-100px] top-43 z-7" />
+            <div className="w-[869px] h-90 bg-blue-100 rounded-[20px] shadow-[6px_4px_4px_0px_rgba(44,80,122,0.25)] outline-1 outline-slate-400/70 absolute left-[-100px] top-43 z-7" />
             <div className="w-[869px] h-90 bg-[#A3D7FF] rounded-[20px] shadow-[6px_4px_4px_0px_rgba(44,80,122,0.25)] absolute left-[-93px] top-43 z-5 rotate-6" />
               <div className="relative z-21 top-[-300px] right-[250px] space-y-4 ">
                   <div className="flex space-x-2">

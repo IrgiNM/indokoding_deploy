@@ -12,12 +12,16 @@ import CenterMode from '@/lib/ourWorkCenter';
 import OurWorkCenter from '@/lib/ourWorkCenter';
 import JoinUs from '@/components/JoinUs';
 import JoinUsPage from '@/lib/joinUs';
+import CareerApply from '@/lib/careerApply';
 
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar page="Home"/>
+      <Navbar page="Career" 
+        onNavClick={{
+        }}/>
       <JoinUsPage/>
+      <CareerApply />
       <Footer />
     </div>
   )

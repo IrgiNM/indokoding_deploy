@@ -12,7 +12,7 @@ export default function Navbar({
   onNavClick: {
     ourWork?: () => void;
     aboutUs?: () => void;
-    contact?: () => void;
+    contactUs?: () => void;
   };
 }) {
   const [bgNav, setBgNav] = useState(page);
@@ -78,6 +78,7 @@ export default function Navbar({
       link: () => {
         console.log("Contact clicked");
         setBgNav("Contact");
+        onNavClick.contactUs?.();
       },
     },
     {
@@ -88,7 +89,7 @@ export default function Navbar({
       link: () => {
         console.log("Career clicked");
         setBgNav("Career");
-        router.push("/career"); // <-- navigasi ke halaman career
+        router.push("/career");
       },
     },
     {
@@ -99,7 +100,7 @@ export default function Navbar({
       link: () => {
         console.log("Book Online clicked");
         setBgNav("Book Online");
-        router.push("/bookOnline"); // <-- navigasi ke halaman book online
+        router.push("/bookOnline");
       },
     },
   ];
@@ -114,10 +115,12 @@ export default function Navbar({
             {x.isi}
           </NavLink>
         ))}
-        {bgNav !== "Home" && 
-          <div className='flex flex-row justify-start items-center gap-4 absolute top-6 left-10 w-50 z-20'>
+        {bgNav !== "Home" && scrolled === true ?
+          <div className={`flex flex-row justify-start items-center gap-4 absolute top-6 left-10 w-50 z-20`}>
             <Image width={140} height={140} src="/logo2.svg" alt="" className='hidden w-10 lg:flex'/>
           </div>
+          :
+          <div></div>
         }
         
       </div>
