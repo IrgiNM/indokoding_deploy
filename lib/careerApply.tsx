@@ -1,6 +1,4 @@
 import CardCareer from '@/components/cardCareer'
-import JobCard from '@/components/JobCard'
-import Image from 'next/image'
 import React from 'react'
 
 export default function 

@@ -1,4 +1,3 @@
-import JoinUs from '@/components/JoinUs'
 import Image from 'next/image'
 import React from 'react'
 
