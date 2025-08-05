@@ -59,7 +59,7 @@ export default function CareerApply() {
             <h1 className='text-3xl w-100 text-left font-bold text-[#007924]'>
                 Available Career Opportunities
             </h1>
-            <p className='text-sm mt-5 w-60 text-justify'>We are on the lookout for passionate and talented individuals to join our growing team. If you're ready to take the next step in your career and make a meaningful impact, explore the open positions below and apply today!</p>
+            <p className='text-sm mt-5 w-60 text-justify'>We are on the lookout for passionate and talented individuals to join our growing team. If you are ready to take the next step in your career and make a meaningful impact, explore the open positions below and apply today!</p>
         </div>
         <div className='absolute -top-10 left-145 -mr-80 ml-10 flex flex-row justify-start items-start gap-4 mt-10'>
             {dataCareer.map((career, index) => (
