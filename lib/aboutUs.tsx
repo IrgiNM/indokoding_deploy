@@ -1,9 +1,8 @@
 import Image from 'next/image'
 import React, { forwardRef, useEffect } from 'react'
 
-type AboutUsProps = {};
 
-function AboutUsComponent(props: AboutUsProps, ref: React.Ref<HTMLDivElement>) {
+function AboutUsComponent(ref: React.Ref<HTMLDivElement>) {
   const imgList = [
       'about-1.jpeg',
       'about-2.jpeg',
