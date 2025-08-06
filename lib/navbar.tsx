@@ -115,12 +115,12 @@ export default function Navbar({
             {x.isi}
           </NavLink>
         ))}
-        {bgNav !== "Home" && scrolled === true ?
+        {(bgNav === "Book Online" || bgNav === "Career" || scrolled === true) && bgNav !== "Home" ?
           <div className={`flex flex-row justify-start items-center gap-4 absolute top-6 left-10 w-50 z-20`}>
             <Image width={140} height={140} src="/logo2.svg" alt="" className='hidden w-10 lg:flex'/>
           </div>
           :
-          <div></div>
+          <div className='absolute top-6 left-10 w-50'></div>
         }
         
       </div>

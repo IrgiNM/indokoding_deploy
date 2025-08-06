@@ -75,7 +75,7 @@ const dataCard = [
         },
     ]
 
- function OurWorkCenterComponent(props: any, ref: React.Ref<HTMLDivElement>) {
+ function OurWorkCenterComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
   const [activeIndex, setActiveIndex] = useState(0);
 

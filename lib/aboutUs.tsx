@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React, { forwardRef } from 'react'
 
-function AboutUsComponent(props: any, ref: React.Ref<HTMLDivElement>) {
+function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
     <div ref={ref} className="relative top-60 right-0"></div>
