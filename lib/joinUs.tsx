@@ -3,6 +3,7 @@ import Image from 'next/image';
 import * as React from 'react';
 
 export default function JoinUsPage() {
+  return (
     <div className=' lg:w-full lg:flex lg:flex-row lg:justify-center lg:items-center lg:relative lg:gap-20 lg:h-100 lg:mt-40 lg:mb-30 w-full flex flex-col justify-center items-center relative gap-20 h-300 mt-20 mb-30'>
       <div className='relative top-0'>
         <div className=' lg:p-8 lg:pt-8 lg:flex lg:flex-col lg:justify-center lg:items-start lg:gap-y-4 lg:bg-white lg:rounded-[20px] lg:border-[1px] lg:mt-0 lg:-ml-20 lg:border-[#307CFF] lg:w-193 p-5 pt-10 w-70 flex flex-col mt-0 justify-center items-start gap-y-4 bg-white rounded-[20px] border-[1px] ml-0  border-[#307CFF]'>
@@ -56,4 +57,5 @@ export default function JoinUsPage() {
       </div>
       <Image width={140} height={140} src="/assets/image/pythonk.png" alt="gambar-pythonb" className='lg:w-35 lg:-rotate-20 lg:absolute lg:-right-6 lg:-bottom-25 w-10 rotate-10 scale-x-[-1] absolute -right-10 -bottom-20'/>
     </div>
+  )
 }
