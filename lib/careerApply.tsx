@@ -59,7 +59,7 @@ export default function CareerApply() {
             <h1 className=' lg:text-3xl lg:w-100 lg:text-left lg:font-bold lg:text-[#007924] text-2xl w-70 text-left font-bold text-[#007924]'>
                 Available Career Opportunities
             </h1>
-            <p className=' lg:text-sm lg:mt-5 lg:w-60 lg:text-justify text-[12px] mt-5 w-60 text-justify'>We’re on the lookout for passionate and talented individuals to join our growing team. If you're ready to take the next step in your career and make a meaningful impact, explore the open positions below and apply today!</p>
+            <p className=' lg:text-sm lg:mt-5 lg:w-60 lg:text-justify text-[12px] mt-5 w-60 text-justify'>We are on the lookout for passionate and talented individuals to join our growing team. If you are ready to take the next step in your career and make a meaningful impact, explore the open positions below and apply today!</p>
         </div>
         <div className='lg:w-200 lg:absolute lg:-top-10 lg:left-145 lg:-mr-80 lg:ml-10 lg:flex lg:flex-row lg:justify-start lg:items-start lg:gap-4 lg:mt-10 pt-5 lg:pl-0 w-120 absolute top-60 -left-40 mr-0 ml-0 flex flex-row justify-start items-start gap-4 mt-10 hide-scrollbar overflow-auto pl-45'>
             {dataCareer.map((career, index) => (

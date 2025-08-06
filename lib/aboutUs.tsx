@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { forwardRef, useEffect } from 'react';
 
 type AboutUsProps = {
-  null: String
+  null: string
 };
 
 function AboutUsComponent(props: AboutUsProps, ref: React.Ref<HTMLDivElement>) {
