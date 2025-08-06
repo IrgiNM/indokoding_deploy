@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import React, { forwardRef, useEffect } from 'react';
 
-function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
+type AboutUsProps = {
+  null: String
+};
+
+function AboutUsComponent(props: AboutUsProps, ref: React.Ref<HTMLDivElement>) {
   const imgList = [
       'about-1.jpeg',
       'about-2.jpeg',
@@ -22,11 +26,9 @@ function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
       console.log(`gambar 3 diganti ke `,selectImg);
   }, [selectImg]);
 
-
-function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
-    <div ref={ref} className="relative top-60 right-0"></div>
+    <div ref={ref} className="relative top-60 right-0">{props.null}</div>
     <div className='lg:mt-100 lg:flex lg:flex-row lg:justify-center lg:items-center lg:w-full lg:relative flex flex-col justify-center items-center relative w-full gap-y-10'>
       <div className='lg:w-270 lg:pl-25 w-70'>
         <div className='relative'>
@@ -58,6 +60,7 @@ function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     </>
   )
 }
+
 
 const AboutUs = forwardRef(AboutUsComponent);
 export default AboutUs;

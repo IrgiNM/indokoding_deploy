@@ -3,7 +3,6 @@ import Home from '@/lib/home';
 import Navbar from '@/lib/navbar';
 import Service from '@/lib/ourServices';
 
-import AboutUs from '@/lib/aboutUs';
 import ContactUs from '@/lib/contactUs';
 import Footer from '@/lib/footer';
 import OurSkills from '@/lib/ourSkills';
@@ -11,6 +10,7 @@ import OurWorkCenter from '@/lib/ourWorkCenter';
 import React, { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
+import AboutUs from '@/lib/aboutUs';
 
 
 export default function Page() {
@@ -34,7 +34,7 @@ export default function Page() {
       />
       <Home/>
       <OurWorkCenter ref={ourWorkRef}/>
-      <AboutUs ref={aboutUsRef}/>
+      <AboutUs null='' ref={aboutUsRef}/>
       <OurSkills  />
       <Service  />
       <ContactUs ref={contactUsRef} />
