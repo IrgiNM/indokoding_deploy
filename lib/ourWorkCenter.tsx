@@ -74,7 +74,6 @@ const dataCard = [
             bg: 'bg-[#F1D6FF] text-[#4F006C]'
         },
     ]
-    
  function OurWorkCenterComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
   const [activeIndex, setActiveIndex] = useState(0);

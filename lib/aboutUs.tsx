@@ -23,6 +23,7 @@ function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   }, [selectImg]);
 
 
+function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
     <div ref={ref} className="relative top-60 right-0"></div>
