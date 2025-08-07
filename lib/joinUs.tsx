@@ -45,7 +45,7 @@ export default function JoinUsPage() {
             </div>
           <button className=" lg:mt-3 lg:w-[705px] lg:py-3 lg:bg-[#181F38] lg:text-sm lg:font-bold lg:text-white lg:rounded-full mt-3 w-[240px] py-3 bg-[#181F38] text-sm font-bold text-white rounded-full">Submit</button>
         </div>
-        <div className=' lg:w-[1400px] lg:h-90 lg:bg-gradient-to-b lg:from-[#aae8ff] lg:to-[#498cff] lg:rounded-[20px] lg:absolute lg:-z-1 lg:rotate-3 lg:top-0 lg:-left-45 w-[1400px] h-270 bg-gradient-to-b from-[#aae8ff] to-[#498cff] rounded-[20px] absolute -z-1 rotate-3 top-10 -left-45'/>
+        <div className=' lg:w-[930px] lg:h-90 lg:bg-gradient-to-b lg:from-[#aae8ff] lg:to-[#498cff] lg:rounded-[20px] lg:absolute lg:-z-1 lg:rotate-3 lg:top-0 lg:-left-45 w-[1400px] h-270 bg-gradient-to-b from-[#aae8ff] to-[#498cff] rounded-[20px] absolute -z-1 rotate-3 top-10 -left-45'/>
         
       </div>
       

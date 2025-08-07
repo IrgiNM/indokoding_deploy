@@ -66,7 +66,7 @@ export default function CareerApply() {
                 <CardCareer key={index} onClick={career.onClick} title={career.title} description={career.description} isActive={diKlik} list={career.list} id={career.id} />
             ))}
         </div>
-        <div className=' lg:w-[850px] lg:absolute lg:-z-1 lg:right-40 lg:h-200 lg:bg-gradient-to-b lg:mt-10 lg:from-[#81ff88] lg:to-[#4afcff] lg:rounded-t-4xl w-[850px] absolute -z-1 -right-150 top-53 h-200 bg-gradient-to-b mt-10 from-[#81ff88] to-[#4afcff] rounded-t-xl'></div>
+        <div className=' lg:w-[850px] lg:absolute lg:-z-1 lg:right-20 lg:-top-15 lg:h-200 lg:bg-gradient-to-b lg:mt-10 lg:from-[#81ff88] lg:to-[#4afcff] lg:rounded-t-[100px] w-[850px] absolute -z-1 -right-150 top-53 h-200 bg-gradient-to-b mt-10 from-[#81ff88] to-[#4afcff] rounded-t-xl'></div>
         
     </div>
   )
