@@ -1,14 +1,23 @@
+import { roRO } from '@mui/material/locale';
 import Image from 'next/image';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const Footer: React.FC = () => {
+  const router = useRouter();
+
+  const onHandleClick = () => {
+    router.push('/admin'); // Ganti '/loginAdmin' sesuai tujuan kamu
+  };
+
   return (
 <footer className=" lg:bg-[#412E57] lg:text-white lg:py-12 lg:px-6 lg:w-full bg-[#412E57] text-white py-12 px-0 w-full">
   <div className=" lg:max-w-screen-xl lg:mx-auto lg:px-25 lg:flex lg:flex-col lg:md:flex-row lg:md:justify-between lg:gap-10 px-10 flex flex-col md:flex-row md:justify-between gap-10">
     {/* Bagian Kiri */}
     <div className =" lg:flex lg:flex-col lg:gap-4 lg:md:w-1/2 flex flex-col  gap-4 md:w-1/2">
       <div className=" lg:flex lg:items-center lg:gap-4 flex items-center gap-4">
-        <Image width={140} height={140} src="/indokoding-polos.svg" alt="indokoding" className=" lg:w-16 lg:h-16 w-8 h-8 " />
+        <Image onClick={onHandleClick}
+        width={140} height={140} src="/indokoding-polos.svg" alt="indokoding" className=" lg:w-16 lg:h-16 w-8 h-8 " />
         <div>
           <span className=" lg:text-2xl lg:font-bold lg:block text-xm   font-bold block">&lt;indokoding/&gt;</span>
           <span className=" lg:text-xs lg:font-light lg:block text-xs font-light block">IT Service</span>
