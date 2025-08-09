@@ -12,7 +12,7 @@ export default function AdminDashboard() {
             {/* PROFILE */}
             <div className='flex flex-row justify-start items-center p-5 bg-white relative'>
                 <Image width={140} height={140} src="/assets/image/photo2.jpeg" alt="golang" className='w-20 h-20 rounded-full' />
-                <button className='h-7 w-7 absolute left-19 top-17 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff]'>
+                <button className='cursor-pointer h-7 w-7 absolute left-19 top-17 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff]'>
                     <Image width={30} height={30} src='/edit.svg' alt="Dashboard" className='w-3 h-3'/>
                 </button>
                 <div className='flex flex-col ml-5'>
@@ -45,8 +45,8 @@ export default function AdminDashboard() {
                         <p className='text-[10px] rounded-full font-bold text-white p-1 px-2 pr-3 bg-[#76bfff]'>+0</p>
                         <p className='text-[10px] text-[#2475bb]'>/ today</p>
                     </div>
-                    <button className='w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#4372ff] flex flex-row justify-end items-center bg-white hover:bg-[#d2ecff] rounded-b-lg text-[#0c0093]'>view more</button>
-                    <button className='h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#0c0093] border-[1px] border-[#0c0093] hover:bg-[#d2ecff]'>
+                    <button className='cursor-pointer w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#4372ff] flex flex-row justify-end items-center bg-white hover:bg-[#d2ecff] rounded-b-lg text-[#0c0093]'>view more</button>
+                    <button className='cursor-pointer h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#0c0093] border-[1px] border-[#0c0093] hover:bg-[#d2ecff]'>
                         <Image width={30} height={30} src='/arrow-blue.svg' alt="Dashboard" className='w-4 rotate-45 h-4'/>
                     </button>
                 </div>
@@ -60,8 +60,8 @@ export default function AdminDashboard() {
                         <p className='text-[10px] rounded-full font-bold text-white p-1 px-2 pr-3 bg-[#dd76ff]'>+0</p>
                         <p className='text-[10px] text-[#ae24bb]'>/ today</p>
                     </div>
-                    <button className='w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#b743ff] flex flex-row justify-end items-center bg-white hover:bg-[#f7d2ff] rounded-b-lg text-[#780093]'>view more</button>
-                    <button className='h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#780093] border-[1px] border-[#780093] hover:bg-[#f7d2ff]'>
+                    <button className='cursor-pointer w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#b743ff] flex flex-row justify-end items-center bg-white hover:bg-[#f7d2ff] rounded-b-lg text-[#780093]'>view more</button>
+                    <button className='cursor-pointer h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#780093] border-[1px] border-[#780093] hover:bg-[#f7d2ff]'>
                         <Image width={30} height={30} src='/arrow-blue.svg' alt="Dashboard" className='w-4 rotate-45 h-4'/>
                     </button>
                 </div>
@@ -75,8 +75,8 @@ export default function AdminDashboard() {
                         <p className='text-[10px] rounded-full font-bold text-white p-1 px-2 pr-3 bg-[#4ceb44]'>+0</p>
                         <p className='text-[10px] text-[#4ceb44]'>/ today</p>
                     </div>
-                    <button className='w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#69eb62] flex flex-row justify-end items-center bg-white hover:bg-[#d2fff5] rounded-b-lg text-[#00938c]'>view more</button>
-                    <button className='h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#00938c] border-[1px] border-[#00938c] hover:bg-[#d2fff5]'>
+                    <button className='cursor-pointer w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#69eb62] flex flex-row justify-end items-center bg-white hover:bg-[#d2fff5] rounded-b-lg text-[#00938c]'>view more</button>
+                    <button className='cursor-pointer h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#00938c] border-[1px] border-[#00938c] hover:bg-[#d2fff5]'>
                         <Image width={30} height={30} src='/arrow-blue.svg' alt="Dashboard" className='w-4 rotate-45 h-4'/>
                     </button>
                 </div>
@@ -90,8 +90,8 @@ export default function AdminDashboard() {
                         <p className='text-[10px] rounded-full font-bold text-white p-1 px-2 pr-3 bg-[#76bfff]'>+0</p>
                         <p className='text-[10px] text-[#2475bb]'>/ today</p>
                     </div>
-                    <button className='w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#4372ff] flex flex-row justify-end items-center bg-white hover:bg-[#d2ecff] rounded-b-lg text-[#0c0093]'>view more</button>
-                    <button className='h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#0c0093] border-[1px] border-[#0c0093] hover:bg-[#d2ecff]'>
+                    <button className='cursor-pointer w-full text-[12px] pr-10 p-1 border-t-[1px] border-[#4372ff] flex flex-row justify-end items-center bg-white hover:bg-[#d2ecff] rounded-b-lg text-[#0c0093]'>view more</button>
+                    <button className='cursor-pointer h-8 w-8 absolute -right-2 top-19 flex justify-center items-center rounded-full bg-white text-[#0c0093] border-[1px] border-[#0c0093] hover:bg-[#d2ecff]'>
                         <Image width={30} height={30} src='/arrow-blue.svg' alt="Dashboard" className='w-4 rotate-45 h-4'/>
                     </button>
                 </div>

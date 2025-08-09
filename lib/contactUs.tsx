@@ -45,7 +45,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
               placeholder="Message"
             ></textarea>
 
-            <button className=" lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
+            <button className="cursor-pointer lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
               Send
             </button>
           </div>
@@ -81,13 +81,13 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
             <div className="lg:mt-4 mt-4 flex flex-col justify-center items-center">
               <p className=" lg:mb-2 lg:text-extrabold mb-2 text-extrabold text-[12px]">Follow our social media</p>
               <div className=" lg:flex lg:gap-4 flex gap-4">
-                <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/fb-black.svg" alt="" className=' lg:w-3 w-3'/>
                 </div>
-                <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/ig-black.svg" alt="" className='lg:w-5 w-5'/>
                 </div>
-                <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/x-black.svg" alt="" className='lg:w-4 w-4'/>
                 </div>
               </div>

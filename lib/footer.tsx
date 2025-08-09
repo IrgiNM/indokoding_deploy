@@ -27,9 +27,9 @@ const Footer: React.FC = () => {
         We are a boutique software development company that started from a band of developers who excel in developing apps with great flexibility and always listen to client needs.
       </p>
       <div className=" lg:flex lg:space-x-4 flex space-x-4 -mt-2">
-        <Image width={140} height={140} src="/fb.svg" alt="Facebook" className="lg:w-6lg:h-6 w-6 h-6" />
-        <Image width={140} height={140} src="/ig.svg" alt="Instagram" className=" lg:w-6 lg:h-6 w-6 h-6" />
-        <Image width={140} height={140} src="/x.svg" alt="Twitter" className=" lg:w-6 lg:h-6 w-6 h-6" />
+        <Image width={140} height={140} src="/fb.svg" alt="Facebook" className="cursor-pointer lg:w-6lg:h-6 w-6 h-6" />
+        <Image width={140} height={140} src="/ig.svg" alt="Instagram" className=" cursor-pointer lg:w-6 lg:h-6 w-6 h-6" />
+        <Image width={140} height={140} src="/x.svg" alt="Twitter" className=" cursor-pointer lg:w-6 lg:h-6 w-6 h-6" />
       </div>
     </div>
 
