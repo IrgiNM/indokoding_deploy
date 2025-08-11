@@ -35,9 +35,9 @@ export default function JoinUsPage() {
             </div>
             <textarea placeholder="Some more words, maybe?" className=" lg:bg-[#d9ebfc] lg:text-sm lg:text-[#00296c] lg:px-6 lg:py-3 lg: lg:rounded-[10px] lg:w-[260px] lg:h-[119px] bg-[#d9ebfc] text-sm text-[#00296c] px-6 py-3  rounded-[10px] w-[240px] h-[119px] border focus:border-[#498cff]" />
             </div>
-          <button className=" lg:mt-3 lg:w-[705px] lg:py-3 lg:bg-[#181F38] lg:text-sm lg:font-bold lg:text-white lg:rounded-full mt-3 w-[240px] py-3 bg-[#181F38] text-sm font-bold text-white rounded-full">Submit</button>
+          <button className="cursor-pointer lg:mt-3 lg:w-[705px] lg:py-3 lg:bg-[#181F38] lg:text-sm lg:font-bold lg:text-white lg:rounded-full mt-3 w-[240px] py-3 bg-[#181F38] text-sm font-bold text-white rounded-full">Submit</button>
         </div>
-        <div className=' lg:w-[1400px] lg:h-90 lg:bg-gradient-to-b lg:from-[#aae8ff] lg:to-[#498cff] lg:rounded-[20px] lg:absolute lg:-z-1 lg:rotate-3 lg:top-0 lg:-left-45 w-[1400px] h-270 bg-gradient-to-b from-[#aae8ff] to-[#498cff] rounded-[20px] absolute -z-1 rotate-3 top-10 -left-45'/>
+        <div className=' lg:w-[930px] lg:h-90 lg:bg-gradient-to-b lg:from-[#aae8ff] lg:to-[#498cff] lg:rounded-[20px] lg:absolute lg:-z-1 lg:rotate-3 lg:top-0 lg:-left-45 w-[1400px] h-270 bg-gradient-to-b from-[#aae8ff] to-[#498cff] rounded-[20px] absolute -z-1 rotate-3 top-10 -left-45'/>
         
       </div>
       
