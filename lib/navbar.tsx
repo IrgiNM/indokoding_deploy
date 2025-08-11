@@ -10,7 +10,7 @@ export default function Navbar({
 }: {
   page: string;
   onNavClick: {
-    ourWork?: () => void;
+    ourWork?: () => void; 
     aboutUs?: () => void;
     contactUs?: () => void;
   };
@@ -122,7 +122,6 @@ export default function Navbar({
           :
           <div className='absolute top-6 left-10 w-50'></div>
         }
-        
       </div>
 
       
@@ -136,12 +135,31 @@ export default function Navbar({
         </button>
 
         {isClick && <><div className='flex flex-col justify-start gap-3 items-start pl-5 pt-30 h-200 w-60 absolute z-20 right-0 top-0 bg-[#412E57]'>
-          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Home</button>
-          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Our Work</button>
-          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>About Us</button>
-          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Contact Us</button>
-          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Career</button>
-          <button className='font-semibold text-white py-2 pl-5 border border-[#76559c] rounded-md w-50 text-left'>Book Online</button>
+          <button onClick={() => {
+            console.log("Home clicked");
+            setBgNav("Home");
+            router.push("/");
+          }}
+          className='font-semibold text-white py-2 pl-5 border border-[#76559c] flex flex-row justify-between pr-4 rounded-md w-50 text-left'>
+            Home
+            <Image width={140} height={140} src="/home.svg" alt="" className='w-4'/>
+          </button>
+          <button onClick={() => {
+            console.log("Career clicked");
+            setBgNav("Career");
+            router.push("/career");
+          }}
+          className='font-semibold text-white py-2 pl-5 border border-[#76559c] flex flex-row justify-between rounded-md w-50 text-left pr-4'>Career
+            <Image width={140} height={140} src="/suitcase.svg" alt="" className='w-4'/>
+          </button>
+          <button onClick={() => {
+            console.log("Book Online clicked");
+            setBgNav("Book Online");
+            router.push("/bookOnline");
+          }}
+          className='font-semibold text-white py-2 pl-5 border border-[#76559c] flex flex-row justify-between rounded-md w-50 text-left pr-2'>Book Online
+            <Image width={140} height={140} src="/date.svg" alt="" className='w-7'/>
+          </button>
         </div>
         <div className='w-200 h-200 bg-white opacity-70 absolute right-0 z-19 blur-xl'>ssc</div></>
         }

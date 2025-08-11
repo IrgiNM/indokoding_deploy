@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <>
     <div ref={ref} className="relative top-20 right-0"></div>
@@ -17,11 +19,13 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
           <div className=" lg:w-full lg:md:w-2/3 lg:flex lg:flex-col lg:gap-4 w-full md:w-2/3 flex flex-col justify-center items-center gap-4">
             <div className=" lg:flex lg:flex-col lg:md:flex-row lg:gap-4 w-full flex flex-col md:flex-row gap-4">
               <input
+                onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="email"
                 placeholder="Name"
               />
               <input
+                onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="text"
                 placeholder="Email"
@@ -29,17 +33,19 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
             </div>
 
             <input
+              onClick={() => setShowPopup(true)}
               className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
               type="text"
               placeholder="Subject"
             />
 
             <textarea
+              onClick={() => setShowPopup(true)}
               className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-4 lg:text-[#4F006C] lg:h-40 lg:w-full lg:resize-none bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-4 text-[#4F006C] h-40 w-full resize-none"
               placeholder="Message"
             ></textarea>
 
-            <button className=" lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
+            <button className="cursor-pointer lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
               Send
             </button>
           </div>
@@ -75,13 +81,13 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
             <div className="lg:mt-4 mt-4 flex flex-col justify-center items-center">
               <p className=" lg:mb-2 lg:text-extrabold mb-2 text-extrabold text-[#181F38] text-[12px]">Follow our social media</p>
               <div className=" lg:flex lg:gap-4 flex gap-4">
-                <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/fb-black.svg" alt="" className=' lg:w-3 w-3'/>
                 </div>
-                <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/ig-black.svg" alt="" className='lg:w-5 w-5'/>
                 </div>
-                <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/x-black.svg" alt="" className='lg:w-4 w-4'/>
                 </div>
               </div>
@@ -91,6 +97,17 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
       </div>
     </div>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1450.0329966036097!2d110.30648249266326!3d-7.785142307915073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af70009a10b4b%3A0x2a213bb1df2a7745!2sCV%20Indokoding%20Sukses%20Makmur!5e0!3m2!1sen!2sid!4v1753343284581!5m2!1sen!2sid" className=' lg:w-full lg:h-80 lg:-mt-10 w-full h-80 -mt-10'></iframe>
+    
+
+    <div className={`fixed z-3 h-35 left-0 right-0 top-0 bg-[#2c48ac] blur-2xl ${showPopup ? 'translate-x-0 opacity-50' : 'translate-x-10 opacity-0 pointer-events-none'}`}>aa</div>
+    <div className={`fixed z-4 w-100 p-3 rounded-md border-[1px] border-[#97BED7] bg-white top-25 flex flex-row justify-center items-center gap-3 ${showPopup ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
+      <Image width={140} height={140} src="/warning-purple.svg" alt="" className="w-5"/>
+      <p className='text-[10px] text-[#4F006C]'>Oops! You need to log in first before filling out the form.</p>
+      <button className='text-[10px] font-bold text-blue-600'>Log In</button>
+    </div>
+    <button onClick={() => setShowPopup(false)} className={`fixed z-5 top-[100.5px] right-103 w-7 h-11 rounded-r-md bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]  ${showPopup ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0 pointer-events-none'}`}>
+        <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+    </button>
     </>
   );
 }
