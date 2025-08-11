@@ -73,7 +73,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
             
             <div className="lg:mt-4 mt-4 flex flex-col justify-center items-center">
-              <p className=" lg:mb-2 lg:text-extrabold mb-2 text-extrabold text-[12px]">Follow our social media</p>
+              <p className=" lg:mb-2 lg:text-extrabold mb-2 text-extrabold text-[#181F38] text-[12px]">Follow our social media</p>
               <div className=" lg:flex lg:gap-4 flex gap-4">
                 <div className=" lg:bg-[#D9DFFC] lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                   <Image width={140} height={140} src="/fb-black.svg" alt="" className=' lg:w-3 w-3'/>
