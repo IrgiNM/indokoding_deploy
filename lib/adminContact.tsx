@@ -30,76 +30,110 @@ export default function AdminUsers() {
 
     const listUsers = [
         {
-          nama: "IrgiNM",
-          emal: "irginazwamustofa@gmail.com",
-          tanggal: "01/08/2024",
+          subjek: "Permintaan Penawaran",
+          nama: "Andi Saputra",
+          email: "andi@example.com",
+          tanggal: "2025-08-11",
+          isi: "Halo, saya ingin menanyakan harga untuk pemesanan 100 kaos custom.",
+          dibacaOleh: ["admin1", "admin2"],
+          status: "dibaca",
         },
         {
-          nama: "Tantriiii",
-          emal: "handa.r@example.com",
-          tanggal: "02/08/2024",
+          subjek: "Revisi Desain",
+          nama: "Budi Hartono",
+          email: "budi@example.com",
+          tanggal: "2025-08-10",
+          isi: "Tolong revisi desain bagian depan dengan warna biru navy.",
+          dibacaOleh: ["admin2"],
+          status: "dibaca",
         },
         {
-          nama: "Budi Santoso",
-          emal: "budi.santoso@example.com",
-          tanggal: "03/08/2024",
+          subjek: "Konfirmasi Pembayaran",
+          nama: "Citra Lestari",
+          email: "citra@example.com",
+          tanggal: "2025-08-09",
+          isi: "Saya sudah melakukan pembayaran via transfer BCA, mohon konfirmasinya.",
+          dibacaOleh: [],
+          status: "bdibaca",
         },
         {
-          nama: "Citra Ayu",
-          emal: "citra.ayu@example.com",
-          tanggal: "04/08/2024",
+          subjek: "Permintaan Desain Baru",
+          nama: "Dian Pratama",
+          email: "dian@example.com",
+          tanggal: "2025-08-08",
+          isi: "Saya ingin memesan kaos dengan desain khusus bertema retro.",
+          dibacaOleh: ["admin1"],
+          status: "dibaca",
         },
         {
-          nama: "Dewi Lestari",
-          emal: "dewi.lestari@example.com",
-          tanggal: "05/08/2024",
+          subjek: "Pengiriman Terlambat",
+          nama: "Eka Wulandari",
+          email: "eka@example.com",
+          tanggal: "2025-08-07",
+          isi: "Pesanan saya belum sampai, padahal sudah lewat estimasi pengiriman.",
+          dibacaOleh: ["admin3"],
+          status: "bdibaca",
         },
         {
-          nama: "Eka Pratama",
-          emal: "eka.pratama@example.com",
-          tanggal: "06/08/2024",
+          subjek: "Pertanyaan Tentang Bahan",
+          nama: "Fajar Nugroho",
+          email: "fajar@example.com",
+          tanggal: "2025-08-06",
+          isi: "Bahan cotton combed 30s dan 24s bedanya apa ya?",
+          dibacaOleh: [],
+          status: "dibaca",
         },
         {
-          nama: "Fajar Nugraha",
-          emal: "fajar.nugraha@example.com",
-          tanggal: "07/08/2024",
+          subjek: "Pembatalan Pesanan",
+          nama: "Gita Anggraini",
+          email: "gita@example.com",
+          tanggal: "2025-08-05",
+          isi: "Saya ingin membatalkan pesanan karena ada perubahan kebutuhan.",
+          dibacaOleh: ["admin1", "admin2"],
+          status: "dibaca",
         },
         {
-          nama: "Gilang Saputra",
-          emal: "gilang.saputra@example.com",
-          tanggal: "08/08/2024",
+          subjek: "Permintaan Diskon",
+          nama: "Hadi Santoso",
+          email: "hadi@example.com",
+          tanggal: "2025-08-04",
+          isi: "Apakah ada diskon untuk pembelian di atas 50 pcs?",
+          dibacaOleh: [],
+          status: "dibaca",
         },
         {
-          nama: "Hani Putri",
-          emal: "hani.putri@example.com",
-          tanggal: "09/08/2024",
+          subjek: "Perubahan Alamat Pengiriman",
+          nama: "Indah Permata",
+          email: "indah@example.com",
+          tanggal: "2025-08-03",
+          isi: "Alamat pengiriman saya berubah, mohon update ke alamat baru.",
+          dibacaOleh: ["admin2"],
+          status: "dibaca",
         },
         {
-          nama: "Indra Wijaya",
-          emal: "indra.wijaya@example.com",
-          tanggal: "10/08/2024",
-        },
-        {
-          nama: "Joko Purnomo",
-          emal: "joko.purnomo@example.com",
-          tanggal: "11/08/2024",
-        },
-        {
-          nama: "Kirana Salsabila",
-          emal: "kirana.salsabila@example.com",
-          tanggal: "12/08/2024",
+          subjek: "Testimoni Positif",
+          nama: "Joko Susanto",
+          email: "joko@example.com",
+          tanggal: "2025-08-02",
+          isi: "Kaosnya bagus sekali, jahitan rapi dan bahan nyaman dipakai!",
+          dibacaOleh: ["admin1", "admin3"],
+          status: "dibaca",
         },
       ];
       
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
+    function truncateTextByChar(text: string, charLimit: number): string {
+        if (text.length <= charLimit) return text;
+        return text.slice(0, charLimit) + '...';
+    }
     
   return (
     <>
         <div className='w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]'>
             {/* TITLE */}
             <div className='fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
-                <h1 className='font-semibold text-sm text-[#710093]'>Users List</h1>
+                <h1 className='font-semibold text-sm text-[#710093]'>Contact Inbox List</h1>
                 <p className='font-light text-[12px] text-[#00930f]'>today : <span className='font-bold'>{formattedDate}</span></p>
             </div>
 
@@ -125,6 +159,9 @@ export default function AdminUsers() {
                         </div>
                     }
                     <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Reset</button>
+                    <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#7e8bec] text-[#001893] flex flex-row gap-2 rounded-lg bg-[#e6edff] hover:bg-[#7e8bec] hover:text-white active:bg-[#001893] cursor-pointer'>
+                        <Image width={30} height={30} src='/email-dibuka-blue.svg' alt="Dashboard" className='w-3 h-3 mt-[.5px]'/>
+                        Dibaca semua</button>
                     <button onClick={() => {
                         setHapus(true);
                     }} 
@@ -133,34 +170,24 @@ export default function AdminUsers() {
             </div>
 
             {/* LIST USERS */}
-            <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-30'>
+            <div className='flex flex-row flex-wrap gap-x-5 gap-y-1 p-5 pt-30'>
                 {listUsers.map((user, index) => (
-                    <div key={index} className='w-80 flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
-                    <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.nama.charAt(0)}</div>
+                    <div key={index} className='w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
                         <div className='flex flex-col'>
-                            <p className='text-[13px] font-bold text-[#710093]'>{user.nama} <span className='font-light text-[10px] ml-2'>{user.tanggal}</span></p>
-                            <p className='text-[12px] font-light'>{user.emal}</p>
+                            <p className='text-[13px] font-bold text-[#710093]'>{truncateTextByChar(user.subjek,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.tanggal}</span></p>
+                            <p className='text-[12px] font-light'>from 
+                                <span className='text-[#004793]'> {user.nama} -</span>
+                                <span className='text-[#004793]'> {user.email} -</span>
+                                <span> {user.isi}</span>
+                            </p>
                         </div>
-                        <button
-                        onClick={() => {
-                            if (edit === 'none' || edit !== user.nama) {
-                                setEdit(user.nama);
-                            }else {
-                                setEdit('none');
-                            }
-                        }}
-                        className='h-8 w-8 absolute -right-3 top-2 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
-                            <Image width={30} height={30} src='/arrow-solid.svg' alt="Dashboard" className={`w-2 h-2 ${edit === user.nama ? '-rotate-90' : 'rotate-180' }`}/>
-                        </button>
-                        <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                        <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                             <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                         </button>
-                        { edit === user.nama &&
-                        <div className='absolute z-2 p-2 border-[1.5px] rounded-lg border-[#cb48f3] -top-3 right-7 backdrop-blur-xl flex flex-col justify-center items-center gap-2 px-4'>
-                            <button className=' w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7ea8ec] text-[#002593] rounded-lg bg-[#e6f5ff] hover:bg-[#7ea8ec] hover:text-white active:bg-[#002593] flex flex-row justify-between'>Message <span className='font-bold'>0</span></button>
-                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] flex flex-row justify-between'>JoinUs <span className='font-bold'>0</span></button>
-                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7eec8e] text-[#00934c] rounded-lg bg-[#e6ffee] hover:bg-[#7eec8e] hover:text-white active:bg-[#00934c] flex flex-row justify-between'>Career <span className='font-bold'>0</span></button>
-                        </div>
+                        {user.status === 'bdibaca' ?
+                        <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
+                        :
+                        <Image width={30} height={30} src='/email-dibuka.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
                         }
                     </div>
                 ))}
