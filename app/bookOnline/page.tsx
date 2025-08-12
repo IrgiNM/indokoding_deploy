@@ -9,7 +9,11 @@ import { Service2 } from '@/lib/ourServices2';
 export default function page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar page="Book Online"/>
+      <Navbar 
+        page="Book Online" 
+        onNavClick={{
+        }}
+      />
       <BookOnline/>
       <Service2/>
       <Footer />

@@ -6,7 +6,7 @@ import React from 'react'
 export default function Home() {
   const router = useRouter();
   return (
-    <div className='lg:w-full lg:h-200 lg:relative lg:flex lg:flex-col lg:pt-25 lg:items-center lg:justify-start w-full h-200 relative flex flex-col pt-25 pl-10 items-start justify-start'>
+    <div className='lg:w-full lg:h-200 lg:relative lg:flex lg:flex-col lg:pt-25 lg:items-center lg:justify-start w-full h-140 relative flex flex-col pt-25 pl-10 items-start justify-start'>
 
 
         <div className='flex flex-row justify-center items-center gap-4 mt-9 lg:hidden'>
@@ -33,7 +33,7 @@ export default function Home() {
             <div className='lg:w-[2px] lg:h-5 lg:bg-[#4F006C]'></div>
             <p className='lg:text-sm lg:text-[#4F006C]'>IT Services</p>
         </div>
-        <button className='lg:px-12 lg:py-3 lg:text-xl lg:text-white lg:font-semibold lg:mt-13 lg:rounded-full lg:bg-[#AD48FF] lg:hover:bg-gradient-to-b lg:hover:from-[#AD48FF] lg:hover:to-[#6f09c3] lg:hover:font-bold lg:transition lg:duration-200 px-6 py-2 text-sm text-white font-semibold mt-7 rounded-full bg-[#AD48FF] hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] hover:font-bold transition duration-200' onClick={()=>(
+        <button className=' cursor-pointer lg:px-12 lg:py-3 lg:text-xl lg:text-white lg:font-semibold lg:mt-13 lg:rounded-full lg:bg-[#AD48FF] lg:hover:bg-gradient-to-b lg:hover:from-[#AD48FF] lg:hover:to-[#6f09c3] lg:hover:font-bold lg:transition lg:duration-200 px-6 py-2 text-sm text-white font-semibold mt-7 rounded-full bg-[#AD48FF] hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] hover:font-bold transition duration-200' onClick={()=>(
           router.push("/bookOnline")
         )}>Start Book Now</button>
 
