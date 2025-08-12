@@ -18,6 +18,9 @@ export default function AdminDashboard() {
                 <div className='flex flex-col ml-5'>
                     <div className='flex flex-row gap-2'>
                         <h1 className='font-bold text-lg'>NicoRobin</h1>
+                        <button className='cursor-pointer h-7 w-7 flex justify-center items-center rounded-full bg-white text-[#710093] border-[1px] border-[#daadff] hover:bg-[#deb6ff]'>
+                            <Image width={30} height={30} src='/edit.svg' alt="Dashboard" className='w-3 h-3'/>
+                        </button>
                         <p className='text-[12px] rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#f2c6ff] py-1 px-5 font-semibold'>Admin basic</p>
                     </div>
                     <div className='flex flex-row gap-10 mt-5'>

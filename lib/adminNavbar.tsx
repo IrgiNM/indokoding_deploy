@@ -22,18 +22,18 @@ export default function AdminNavbar(props: AdminNavbarProps) {
         </button>
         {(navActive === 'customer' || navActive === 'admin') &&
           <div className={`w-full mb-2 flex flex-col bg-[#fbeffe]`}>
-            <button className='w-full pl-11 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
+            <button onClick={() => {router.push("/admin/users")}} className='w-full pl-11 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
               <Image width={30} height={30} src={navActive === 'customer' ? `/user2-active.svg` : '/user2.svg'} alt="Dashboard" className='w-3 h-3'/>
               <p className={`text-[12px] ${navActive === 'customer' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>Customers</p>
             </button>
-            <button className='w-full pl-11 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
+            <button onClick={() => {router.push("/admin/users/admins")}} className='w-full pl-11 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
               <Image width={30} height={30} src={navActive === 'admin' ? `/user2-active.svg` : '/user2.svg'} alt="Dashboard" className='w-3 h-3'/>
               <p className={`text-[12px] ${navActive === 'admin' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>Admins</p>
             </button>
           </div>
         }
         <div className='w-full h-[1px] bg-[#48a7ff] my-2'/>
-        <button className='w-full px-7 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
+        <button onClick={() => {router.push("/admin/contact")}} className='w-full px-7 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
             <Image width={30} height={30} src={navActive === 'message' ? `/message-active.svg` : '/message.svg'} alt="Dashboard" className='w-3 h-3'/>
             <p className={`text-[12px] ${navActive === 'message' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>Contact List</p>
         </button>
