@@ -4,12 +4,16 @@ import React, { useState } from 'react'
 export default function AdminUsers() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
+    const [detail, setDetail] = useState(false);
     const [hapusNama, setHapusNama] = useState("none");
 
     const [urutan, setUrutan] = useState("A - Z");
     const [urutanActive, setUrutanActive] = useState(false);
     const diKlik = () => {
         setUrutanActive(!urutanActive);
+    }
+    const klikDetail = () => {
+        setDetail(!detail);
     }
     const az = () => {
         setUrutan("A - Z");
@@ -151,7 +155,7 @@ export default function AdminUsers() {
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
                     </button>
                     { urutanActive && 
-                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-43 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
+                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-82 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
                             <button onClick={az} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>A - Z</button>
                             <button onClick={za} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Z - A</button>
                             <button onClick={newklik} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>New</button>
@@ -172,33 +176,54 @@ export default function AdminUsers() {
             {/* LIST USERS */}
             <div className='flex flex-row flex-wrap gap-x-5 gap-y-1 p-5 pt-30'>
                 {listUsers.map((user, index) => (
-                    <div key={index} className='w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
-                        <div className='flex flex-col'>
-                            <p className='text-[13px] font-bold text-[#710093]'>{truncateTextByChar(user.subjek,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.tanggal}</span></p>
-                            <p className='text-[12px] font-light'>from 
-                                <span className='text-[#004793]'> {user.nama} -</span>
-                                <span className='text-[#004793]'> {user.email} -</span>
-                                <span> {user.isi}</span>
-                            </p>
+                    <button key={index} onClick={klikDetail} className='w-full flex items-start justify-start'>
+                        <div className={`w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] hover:bg-purple-50 shadow-md gap-2 relative`}>
+                            <div className='flex flex-col items-start'>
+                                <p className={`text-[13px] font-bold text-[#710093] ${user.dibacaOleh.length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.subjek,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.tanggal}</span></p>
+                                <p className='text-[12px] font-light'>from 
+                                    <span className='text-[#004793]'> {user.nama} -</span>
+                                    <span className='text-[#004793]'> {user.email} -</span>
+                                    <span> {user.isi}</span>
+                                </p>
+                            </div>
+                            <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                                <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
+                            </button>
+                            {user.status === 'bdibaca' ?
+                            <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
+                            :
+                            <Image width={30} height={30} src='/email-dibuka.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
+                            }
+                            {user.dibacaOleh.length > 0 && user.dibacaOleh.map((admin, idx) => (
+                                <button onClick={() => {
+                                    if (edit === 'none' || edit !== user.nama) {
+                                        setEdit(user.nama);
+                                    }else {
+                                        setEdit('none');
+                                    }
+                                }}>
+                                    <Image width={30} height={30} src='/eye.svg' alt="Dashboard" className='w-4 h-4 absolute right-24 top-6 cursor-pointer'/>
+                                </button>
+                            ))}
+                            {user.dibacaOleh.length > 0  && edit === user.nama ?
+                                <div className='absolute z-1 w-30 border-[1.5px] rounded-lg border-[#cb48f3] top-4 right-30 backdrop-blur-md flex flex-col justify-center items-center gap-2 py-4'>
+                                    {user.dibacaOleh.map((admin, idx) => (
+                                        <p key={idx} className='text-[12px] font-semibold text-[#710093]'>{admin}</p>
+                                    ))}
+                                </div>
+                            : null}
+                            
                         </div>
-                        <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
-                            <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
-                        </button>
-                        {user.status === 'bdibaca' ?
-                        <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
-                        :
-                        <Image width={30} height={30} src='/email-dibuka.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
-                        }
-                    </div>
+                    </button>
                 ))}
             </div>
 
             {/* EDIT USER */}
-            {hapus || hapusNama !== "none" ?
+            {hapus || hapusNama !== "none" || detail ?
             <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'>n</div>
             : null
             }
-            {hapus || hapusNama !== "none" ?
+            {hapus || hapusNama !== "none" || detail ?
             <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'>n</div>
             : null
             }
@@ -222,11 +247,12 @@ export default function AdminUsers() {
                 </button>
             </div>
             }
-            {/* <div className='fixed z-6 top-30 p-5 border-1 rounded-lg border-[#710093] bg-white flex flex-col gap-3'>
-                <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
-                <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
-                <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
-            </div> */}
+            {detail &&
+                <div className='fixed z-6 top-37 right-133 w-8 h-8 rounded-md bg-white'>
+                    ss
+                </div>
+            }
+            
         </div>
     </>
   )

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 
-export default function AdminAdmins() {
+export default function AdminAboutUs() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
     const [hapusNama, setHapusNama] = useState("none");
@@ -104,7 +104,7 @@ export default function AdminAdmins() {
         <div className='w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]'>
             {/* TITLE */}
             <div className='fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
-                <h1 className='font-semibold text-sm text-[#710093]'>Admins List</h1>
+                <h1 className='font-semibold text-sm text-[#710093]'>About Us Photo List</h1>
                 <p className='font-light text-[12px] text-[#00930f]'>today : <span className='font-bold'>{formattedDate}</span></p>
             </div>
 
