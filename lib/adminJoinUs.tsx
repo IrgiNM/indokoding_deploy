@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 
-export default function AdminUsers() {
+export default function AdminJoinUs() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
     const [detail, setDetail] = useState(false);
@@ -32,103 +32,124 @@ export default function AdminUsers() {
         setUrutanActive(false);
     }
 
-    const [pickSubjek, setPickSubjek] = useState('none');
     const [pickNama, setPickNama] = useState('none');
     const [pickEmail, setPickEmail] = useState('none@gmail.com');
     const [pickTanggal, setPickTanggal] = useState('0-0-2025');
-    const [pickIsi, setPickIsi] = useState('none');
+    const [pickPesan, setPickPesan] = useState('none');
+    const [pickGaji, setPickGaji] = useState(200.321);
+    const [pickPosition, setPickPosition] = useState('Web Frontend');
 
     const listUsers = [
         {
-          subjek: "Permintaan Penawaran",
           nama: "Andi Saputra",
-          email: "andi@example.com",
           tanggal: "2025-08-11",
-          isi: "Halo, saya ingin menanyakan harga untuk pemesanan 100 kaos custom.",
+          email: "andi@example.com",
+          from: "Jakarta",
+          Position: "Web Frontend",
+          gaji: 500,
+          pesan: "Mengajukan kenaikan gaji karena penambahan tanggung jawab.",
           dibacaOleh: ["admin1", "admin2"],
-          status: "dibaca",
+          status: "baru",
         },
         {
-          subjek: "Revisi Desain",
           nama: "Budi Hartono",
-          email: "budi@example.com",
           tanggal: "2025-08-10",
-          isi: "Tolong revisi desain bagian depan dengan warna biru navy.",
+          email: "budi@example.com",
+          from: "Bandung",
+          Position: "Web Backend",
+          gaji: 433.33,
+          pesan: "Meminta izin cuti selama 5 hari untuk keperluan keluarga.",
           dibacaOleh: ["admin2"],
-          status: "dibaca",
+          status: "proses",
         },
         {
-          subjek: "Konfirmasi Pembayaran",
-          nama: "Citra Lestari",
-          email: "citra@example.com",
+          nama: "Velly Rhis Faulina",
           tanggal: "2025-08-09",
-          isi: "Saya sudah melakukan pembayaran via transfer BCA, mohon konfirmasinya.",
+          email: "citra@example.com",
+          from: "Surabaya",
+          Position: "Web Frontend",
+          gaji: 533.33,
+          pesan: "Memberikan laporan progres proyek terakhir. Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ullam tenetur unde doloribus, tempore repudiandae accusantium perferendis nemo ducimus iusto architecto at laudantium! Voluptate tempora, earum, consequatur atque aperiam nesciunt possimus facilis officia assumenda veritatis dolorum, illum beatae dolorem. Numquam, doloremque quisquam! A odit magnam nobis! Impedit fugiat consequuntur libero odio, reiciendis alias doloremque optio, a modi, quasi beatae? In veniam ipsum quam adipisci, suscipit numquam aliquid debitis neque earum quo at voluptas? Voluptatem et porro, aliquam natus at, repellendus eum nihil velit culpa sed quos enim aspernatur illum fugit doloribus fugiat eligendi eaque ut? Modi esse sed libero voluptas. iusto architecto at laudantium! Voluptate tempora, earum, consequatur atque aperiam nesciunt possimus facilis officia assumenda veritatis dolorum, illum beatae dolorem. Numquam, doloremque quisquam! A odit magnam nobis! Impedit fugiat consequuntur libero odio, reiciendis alias doloremque optio, a modi, quasi beatae? In veniam ipsum quam adipisci, suscipit numquam aliquid debitis neque earum quo at voluptas? Voluptatem et porro, aliquam natus at, repellendus eum nihil velit culpa sed quos enim aspernatur illum fugit doloribus fugiat eligendi eaque ut? Modi esse sed libero voluptas.",
           dibacaOleh: [],
-          status: "bdibaca",
+          status: "selesai",
         },
         {
-          subjek: "Permintaan Desain Baru",
-          nama: "Dian Pratama",
-          email: "dian@example.com",
+          nama: "Kireisa Hana Mustofa",
           tanggal: "2025-08-08",
-          isi: "Saya ingin memesan kaos dengan desain khusus bertema retro.",
+          email: "dian@example.com",
+          from: "Yogyakarta",
+          Position: "Django Developer",
+          gaji: 466.67,
+          pesan: "Mengajukan permintaan pelatihan tambahan.",
           dibacaOleh: ["admin1"],
-          status: "dibaca",
+          status: "baru",
         },
         {
-          subjek: "Pengiriman Terlambat",
           nama: "Eka Wulandari",
-          email: "eka@example.com",
           tanggal: "2025-08-07",
-          isi: "Pesanan saya belum sampai, padahal sudah lewat estimasi pengiriman.",
+          email: "eka@example.com",
+          from: "Semarang",
+          Position: "Android Developer",
+          gaji: 480,
+          pesan: "Melaporkan keterlambatan proyek karena faktor cuaca.",
           dibacaOleh: ["admin3"],
-          status: "bdibaca",
+          status: "proses",
         },
         {
-          subjek: "Pertanyaan Tentang Bahan",
           nama: "Fajar Nugroho",
-          email: "fajar@example.com",
           tanggal: "2025-08-06",
-          isi: "Bahan cotton combed 30s dan 24s bedanya apa ya?",
+          email: "fajar@example.com",
+          from: "Makassar",
+          Position: "Android Developer",
+          gaji: 460,
+          pesan: "Meminta upgrade laptop kerja untuk menunjang performa.",
           dibacaOleh: [],
-          status: "dibaca",
+          status: "baru",
         },
         {
-          subjek: "Pembatalan Pesanan",
           nama: "Gita Anggraini",
-          email: "gita@example.com",
           tanggal: "2025-08-05",
-          isi: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium nemo dignissimos blanditiis deleniti iste nostrum porro voluptas a? Dolorem, perspiciatis. Ullam cumque, dolorum odio temporibus tempora quam exercitationem ab, non esse nesciunt cum inventore eum corrupti omnis accusamus vero similique architecto iste? Velit et laboriosam delectus, aperiam tenetur tempore? Eaque corporis ad veniam vel animi inventore deserunt nesciunt dolores, quam sint impedit laborum sit officia iure cum ab cumque dolorem rerum maxime velit molestiae. Natus doloribus perspiciatis quam, architecto tempore, magni esse atque enim ad sapiente veritatis eum quasi voluptatibus neque, voluptatum distinctio explicabo saepe est. Nemo molestiae quam laudantium nam ipsum molestias alias hic dignissimos rerum! Eos voluptate impedit dolore quia suscipit! Corporis sequi provident fugiat, expedita ullam cupiditate! quam exercitationem ab, non esse nesciunt cum inventore eum corrupti omnis accusamus vero similique architecto iste? Velit et laboriosam delectus, aperiam tenetur tempore? Eaque corporis ad veniam vel animi inventore deserunt nesciunt dolores, quam sint impedit laborum sit officia iure cum ab cumque dolorem rerum maxime velit molestiae. Natus doloribus perspiciatis quam, architecto tempore, magni esse atque enim ad sapiente veritatis eum quasi voluptatibus neque, voluptatum distinctio explicabo saepe est. Nemo molestiae quam laudantium nam ipsum molestias alias hic dignissimos rerum! Eos voluptate impedit dolore quia suscipit! Corporis sequi provident fugiat, expedita ullam cupiditate!",
+          email: "gita@example.com",
+          from: "Medan",
+          Position: "IOS Developer",
+          gaji: 513.33,
+          pesan: "Memberikan testimoni positif atas kerja sama tim.",
           dibacaOleh: ["admin1", "admin2"],
-          status: "dibaca",
+          status: "selesai",
         },
         {
-          subjek: "Permintaan Diskon",
           nama: "Hadi Santoso",
-          email: "hadi@example.com",
           tanggal: "2025-08-04",
-          isi: "Apakah ada diskon untuk pembelian di atas 50 pcs?",
+          email: "hadi@example.com",
+          from: "Bali",
+          Position: "Web Frontend",
+          gaji: 500,
+          pesan: "Mengajukan perubahan jam kerja.",
           dibacaOleh: [],
-          status: "dibaca",
+          status: "baru",
         },
         {
-          subjek: "Perubahan Alamat Pengiriman",
           nama: "Indah Permata",
-          email: "indah@example.com",
           tanggal: "2025-08-03",
-          isi: "Alamat pengiriman saya berubah, mohon update ke alamat baru.",
+          email: "indah@example.com",
+          from: "Palembang",
+          Position: "Django Developer",
+          gaji: 486.67,
+          pesan: "Meminta klarifikasi terkait proyek baru.",
           dibacaOleh: ["admin2"],
-          status: "dibaca",
+          status: "proses",
         },
         {
-          subjek: "Testimoni Positif",
           nama: "Joko Susanto",
-          email: "joko@example.com",
           tanggal: "2025-08-02",
-          isi: "Kaosnya bagus sekali, jahitan rapi dan bahan nyaman dipakai!",
+          email: "joko@example.com",
+          from: "Lampung",
+          Position: "Administrator",
+          gaji: 520,
+          pesan: "Memberikan laporan akhir bulan.",
           dibacaOleh: ["admin1", "admin3"],
-          status: "dibaca",
-        },
+          status: "selesai",
+        },          
       ];
       
     const today = new Date();
@@ -143,7 +164,7 @@ export default function AdminUsers() {
         <div className='w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]'>
             {/* TITLE */}
             <div className='fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
-                <h1 className='font-semibold text-sm text-[#710093]'>Contact Inbox List</h1>
+                <h1 className='font-semibold text-sm text-[#710093]'>JoinUs Inbox List</h1>
                 <p className='font-light text-[12px] text-[#00930f]'>today : <span className='font-bold'>{formattedDate}</span></p>
             </div>
 
@@ -156,6 +177,9 @@ export default function AdminUsers() {
                     </button>
                 </div>
                 <div className='relative flex flex-row gap-2'>
+                    <button className='hover:bg-purple-50 p-2 hover:border hover:border-[#e079ff] rounded-full'>
+                        <Image width={140} height={140} src="/love.svg" alt="MySQL" className="w-4" />
+                    </button>
                     <input type="date" className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
                     <button onClick={diKlik} className='cursor-pointer bg-white text-[#710093] font-semibold flex flex-row text-[12px] px-4 py-2 rounded-full hover:bg-[#f9e6ff] transition duration-200'>{urutan}
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
@@ -184,21 +208,29 @@ export default function AdminUsers() {
                 {listUsers.map((user, index) => (
                     
                         <div className={`w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] hover:bg-purple-50 shadow-md gap-2 relative`}>
+                            <Image width={30} height={30} src={
+                                user.Position === 'Web Frontend' ? '/code.svg' :
+                                user.Position === 'Web Backend' ? '/server.svg' :
+                                user.Position === 'Django Developer' ? '/django.svg' :
+                                user.Position === 'Android Developer' ? '/android.svg' :
+                                user.Position === 'IOS Developer' ? '/apple.svg' :
+                                user.Position === 'Administrator' ? '/admin.svg' :
+                                '/code.svg'
+                            } alt="Dashboard" className='w-8 border-1 border-purple-300 rounded-full h-8 p-2 absolute'/>
                             <button key={index} onClick={() => {
                                 klikDetail();
                                 setPickNama(user.nama);
-                                setPickSubjek(user.subjek);
                                 setPickEmail(user.email);
                                 setPickTanggal(user.tanggal);
-                                setPickIsi(user.isi);
+                                setPickPesan(user.pesan);
                                 user.status = 'dibaca';
-                            }} className='w-full flex items-start justify-start'>
+                            }} className='w-full flex items-start justify-start pl-10'>
                                 <div className='flex flex-col items-start'>
-                                    <p className={`text-[13px] font-bold text-[#710093] ${user.dibacaOleh.length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.subjek,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.tanggal}</span></p>
+                                    <p className={`text-[13px] font-bold text-[#710093] ${user.dibacaOleh.length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.nama,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.tanggal}</span></p>
                                     <p className='text-[12px] font-light'>from 
-                                        <span className='text-[#004793]'> {user.nama} -</span>
+                                        <span className='text-[#004793]'> {truncateTextByChar(user.from,10)} -</span>
                                         <span className='text-[#004793]'> {user.email} -</span>
-                                        <span> {truncateTextByChar(user.isi,100)}</span>
+                                        <span> {truncateTextByChar(user.pesan,70)}</span>
                                     </p>
                                 </div>
                             </button>
@@ -228,7 +260,14 @@ export default function AdminUsers() {
                                     ))}
                                 </div>
                             : null}
-                            
+                            <p className='text-[12px] font-bold text-[#009351] absolute w-20 border border-[#009351] bg-[#effff4] flex flex-row gap-2 p-2 right-32 top-4 rounded-md'>
+                                <Image width={140} height={140} src="/dollar-green.svg" alt="MySQL" className="w-2" />
+                                {user.gaji.toFixed(2)}
+                            </p>
+                            <p className='absolute top-1 right-37 text-[12px] text-[#710093] p-0 px-2 rounded-md bg-purple-100'>Rate</p>
+                            <button className='absolute top-4 right-55 p-2 hover:border hover:border-[#e079ff] rounded-full'>
+                                <Image width={140} height={140} src="/love.svg" alt="MySQL" className="w-4" />
+                            </button>
                         </div>
                     
                 ))}
@@ -265,16 +304,35 @@ export default function AdminUsers() {
             }
             {detail &&
                 <div className='fixed w-150 z-6 top-20 left-90 p-7 border-1 rounded-lg border-[#930062] bg-white flex flex-col justify-center items-start'>
-                    <h1 className='text-xl font-bold text-[#710093]'>{pickSubjek}</h1>
-                    <h1 className='text-sm font-semibold text-[#710093] mb-2'>{pickTanggal}</h1>
+                    
                     <div className='flex flex-row gap-2 mb-7 items-center'>
-                        <div className='w-10 h-10 bg-blue-100 flex justify-center items-center rounded-full font-bold text-md text-blue-700'>{pickNama.charAt(0)}</div>
+                        <div className='w-13 h-13 bg-blue-100 flex justify-center items-center rounded-full font-bold text-[25px] text-blue-700'>{pickNama.charAt(0)}</div>
                         <div className='flex flex-col'>
-                            <p className='text-[12px] text-[#710093]'>{pickNama}</p>
+                            <p className='text-[20px] text-[#710093] gap-2 font-bold flex flex-row items-center'>{pickNama} <h1 className='text-[12px] mt-1 font-semibold text-[#710093]'>{pickTanggal}</h1></p>
                             <p className='text-[12px] text-[#710093]'>{pickEmail}</p>
                         </div>
                     </div>
-                    <p className='max-h-50 pr-5 overflow-auto text-[12px] text-justify'>{pickIsi}</p>
+                    <div className='flex flex-row gap-2 items-center'>
+                        <div className='p-2 pl-3 gap-2 border-2 border-[#c77fd6] text-[12px] text-[#710093] font-bold flex flex-row items-center w-101 bg-[#ffffff] rounded-md'>
+                            <Image width={30} height={30} src={
+                                pickPosition === 'Web Frontend' ? '/code.svg' :
+                                pickPosition === 'Web Backend' ? '/server.svg' :
+                                pickPosition === 'Django Developer' ? '/django.svg' :
+                                pickPosition === 'Android Developer' ? '/android.svg' :
+                                pickPosition === 'IOS Developer' ? '/apple.svg' :
+                                pickPosition === 'Administrator' ? '/admin.svg' :
+                                '/code.svg'
+                            } alt="Dashboard" className='w-8 border-1 border-purple-300 rounded-full h-8 p-2'/>
+                            {pickPosition}
+                        </div>
+                        <div className='p-3 gap-2 border-2 border-[#7fd6af] text-[#007541] font-bold flex flex-row bg-[#effff4] rounded-md'>
+                            <Image width={140} height={140} src="/dollar-green.svg" alt="MySQL" className="w-2" />
+                            {pickGaji.toFixed(2)}
+                        </div>
+                    </div>
+                    
+                    <p className='max-h-50 pr-5 mt-3 overflow-auto text-[12px] text-justify'><span className='text-[#710093] font-semibold'>Pesan : </span>{pickPesan}</p>
+
                     <button onClick={() => klikDetail()} className={`fixed z-6 top-16 right-73 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                     </button>
