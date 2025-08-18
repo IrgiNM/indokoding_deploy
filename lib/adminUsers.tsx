@@ -1,10 +1,24 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
+interface User {
+  id: string;
+  username?: string;
+  email?: string;
+  role?: string;
+  createdAt?: string;
+  total_join: number;
+  total_career: number;
+  total_contact: number;
+}
 
 export default function AdminUsers() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
+    const [id, setId] = useState("");
     const [hapusNama, setHapusNama] = useState("none");
+    const [isLoading, setIsLoading] = useState(false);
+    
 
     const [urutan, setUrutan] = useState("A - Z");
     const [urutanActive, setUrutanActive] = useState(false);
@@ -27,72 +41,64 @@ export default function AdminUsers() {
         setUrutan("Old");
         setUrutanActive(false);
     }
-
-    const listUsers = [
-        {
-          nama: "IrgiNM",
-          emal: "irginazwamustofa@gmail.com",
-          tanggal: "01/08/2024",
-        },
-        {
-          nama: "Tantriiii",
-          emal: "handa.r@example.com",
-          tanggal: "02/08/2024",
-        },
-        {
-          nama: "Budi Santoso",
-          emal: "budi.santoso@example.com",
-          tanggal: "03/08/2024",
-        },
-        {
-          nama: "Citra Ayu",
-          emal: "citra.ayu@example.com",
-          tanggal: "04/08/2024",
-        },
-        {
-          nama: "Dewi Lestari",
-          emal: "dewi.lestari@example.com",
-          tanggal: "05/08/2024",
-        },
-        {
-          nama: "Eka Pratama",
-          emal: "eka.pratama@example.com",
-          tanggal: "06/08/2024",
-        },
-        {
-          nama: "Fajar Nugraha",
-          emal: "fajar.nugraha@example.com",
-          tanggal: "07/08/2024",
-        },
-        {
-          nama: "Gilang Saputra",
-          emal: "gilang.saputra@example.com",
-          tanggal: "08/08/2024",
-        },
-        {
-          nama: "Hani Putri",
-          emal: "hani.putri@example.com",
-          tanggal: "09/08/2024",
-        },
-        {
-          nama: "Indra Wijaya",
-          emal: "indra.wijaya@example.com",
-          tanggal: "10/08/2024",
-        },
-        {
-          nama: "Joko Purnomo",
-          emal: "joko.purnomo@example.com",
-          tanggal: "11/08/2024",
-        },
-        {
-          nama: "Kirana Salsabila",
-          emal: "kirana.salsabila@example.com",
-          tanggal: "12/08/2024",
-        },
-      ];
       
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
+    function truncateTextByChar(text: string, charLimit: number): string {
+        if (text.length <= charLimit) return text;
+        return text.slice(0, charLimit) + '...';
+    }
+
+    const [listUsers, setUsers] = useState<User[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+        try {
+            // panggil backend API
+            const res = await fetch("http://localhost:3001/api/getUsers"); 
+            const data = await res.json();
+            setUsers(data);
+        } catch (err) {
+            console.error("Gagal fetch users:", err);
+        } finally {
+            setLoading(false);
+        }
+        };
+
+        fetchUsers();
+    }, [hapusNama]);
+
+    if (loading) return <p>Loading...</p>;
+
+    async function handleDelete(userId: string) {
+      setIsLoading(true);
+      try {
+        const res = await fetch("http://localhost:3001/api/removeUser", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: userId }),
+        });
+    
+        if (!res.ok) {
+          throw new Error("Gagal menghapus user");
+        }
+    
+        const data = await res.json();
+        console.log("User berhasil dihapus:", data);
+        alert("User berhasil dihapus");
+        setHapusNama("none");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Gagal menghapus user. Silakan coba lagi nanti.");
+      }finally {
+        setIsLoading(false);
+      }
+    }
+      
+      
     
   return (
     <>
@@ -136,30 +142,30 @@ export default function AdminUsers() {
             <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-30'>
                 {listUsers.map((user, index) => (
                     <div key={index} className='w-80 flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
-                    <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.nama.charAt(0)}</div>
+                    <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.username?.charAt(0)}</div>
                         <div className='flex flex-col'>
-                            <p className='text-[13px] font-bold text-[#710093]'>{user.nama} <span className='font-light text-[10px] ml-2'>{user.tanggal}</span></p>
-                            <p className='text-[12px] font-light'>{user.emal}</p>
+                            <p className='text-[13px] font-bold text-[#710093]'>{truncateTextByChar(user.username || '', 5)} <span className='font-light text-[10px] ml-2'>{user.createdAt}</span></p>
+                            <p className='text-[12px] font-light'>{user.email}</p>
                         </div>
                         <button
                         onClick={() => {
-                            if (edit === 'none' || edit !== user.nama) {
-                                setEdit(user.nama);
+                            if (edit === 'none' || edit !== user.username) {
+                                setEdit(user.username || "");
                             }else {
                                 setEdit('none');
                             }
                         }}
                         className='h-8 w-8 absolute -right-3 top-2 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
-                            <Image width={30} height={30} src='/arrow-solid.svg' alt="Dashboard" className={`w-2 h-2 ${edit === user.nama ? '-rotate-90' : 'rotate-180' }`}/>
+                            <Image width={30} height={30} src='/arrow-solid.svg' alt="Dashboard" className={`w-2 h-2 ${edit === user.username ? '-rotate-90' : 'rotate-180' }`}/>
                         </button>
-                        <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                        <button onClick={()=>{(setHapusNama(user.username || ""),setId(user.id))}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                             <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                         </button>
-                        { edit === user.nama &&
+                        { edit === user.username &&
                         <div className='absolute z-2 p-2 border-[1.5px] rounded-lg border-[#cb48f3] -top-3 right-7 backdrop-blur-xl flex flex-col justify-center items-center gap-2 px-4'>
-                            <button className=' w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7ea8ec] text-[#002593] rounded-lg bg-[#e6f5ff] hover:bg-[#7ea8ec] hover:text-white active:bg-[#002593] flex flex-row justify-between'>Message <span className='font-bold'>0</span></button>
-                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] flex flex-row justify-between'>JoinUs <span className='font-bold'>0</span></button>
-                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7eec8e] text-[#00934c] rounded-lg bg-[#e6ffee] hover:bg-[#7eec8e] hover:text-white active:bg-[#00934c] flex flex-row justify-between'>Career <span className='font-bold'>0</span></button>
+                            <button className=' w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7ea8ec] text-[#002593] rounded-lg bg-[#e6f5ff] hover:bg-[#7ea8ec] hover:text-white active:bg-[#002593] flex flex-row justify-between'>Message <span className='font-bold'>{user.total_contact}</span></button>
+                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] flex flex-row justify-between'>JoinUs <span className='font-bold'>{user.total_join}</span></button>
+                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7eec8e] text-[#00934c] rounded-lg bg-[#e6ffee] hover:bg-[#7eec8e] hover:text-white active:bg-[#00934c] flex flex-row justify-between'>Career <span className='font-bold'>{user.total_career}</span></button>
                         </div>
                         }
                     </div>
@@ -189,8 +195,10 @@ export default function AdminUsers() {
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
                 <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{hapusNama}</span> dihapus ?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
-                <button onClick={() => setHapusNama("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                <button onClick={()=>(handleDelete(id))} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {isLoading ? "Delete..." : "Yes"}
+                </button>
+                <button onClick={() => (setHapusNama("none"))} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>

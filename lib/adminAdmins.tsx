@@ -4,9 +4,14 @@ import React, { useState } from 'react'
 export default function AdminAdmins() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
+    const [addAdmin, setAddAdmin] = useState(false);
+    const [isPosition, setIsPosition] = useState(false);
+    const [isLevel, setIsLevel] = useState(false);
     const [hapusNama, setHapusNama] = useState("none");
 
     const [urutan, setUrutan] = useState("A - Z");
+    const [pickPosition, setPickPosition] = useState("web Frontend");
+    const [pickLevel, setPickLevel] = useState("Basic");
     const [urutanActive, setUrutanActive] = useState(false);
     const diKlik = () => {
         setUrutanActive(!urutanActive);
@@ -118,7 +123,7 @@ export default function AdminAdmins() {
                 </div>
                 <div className='relative flex flex-row gap-2'>
                     <button onClick={() => {
-                        setHapus(true);
+                        setAddAdmin(true);
                     }} 
                     className='cursor-pointer text-[12px] font-bold p-2 px-5 text-white rounded-lg bg-[#ce2dff] hover:bg-[#e078ff] active:bg-[#390056]'>+ Admin</button>
                     <button onClick={diKlik} className='cursor-pointer bg-white text-[#710093] font-semibold flex flex-row text-[12px] px-4 py-2 rounded-full hover:bg-[#f9e6ff] transition duration-200'>{urutan}
@@ -231,24 +236,17 @@ export default function AdminAdmins() {
                             <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
-                            { edit === user.nama &&
-                            <div className='absolute z-2 p-2 border-[1.5px] rounded-lg border-[#cb48f3] -top-3 right-7 backdrop-blur-xl flex flex-col justify-center items-center gap-2 px-4'>
-                                <button className=' w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7ea8ec] text-[#002593] rounded-lg bg-[#e6f5ff] hover:bg-[#7ea8ec] hover:text-white active:bg-[#002593] flex flex-row justify-between'>Message <span className='font-bold'>0</span></button>
-                                <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] flex flex-row justify-between'>JoinUs <span className='font-bold'>0</span></button>
-                                <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7eec8e] text-[#00934c] rounded-lg bg-[#e6ffee] hover:bg-[#7eec8e] hover:text-white active:bg-[#00934c] flex flex-row justify-between'>Career <span className='font-bold'>0</span></button>
-                            </div>
-                            }
                         </button>
                     ))}
                 </div>
             </div>
 
             {/* EDIT USER */}
-            {hapus || hapusNama !== "none" ?
+            {hapus || hapusNama !== "none" || addAdmin ?
             <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'>n</div>
             : null
             }
-            {hapus || hapusNama !== "none" ?
+            {hapus || hapusNama !== "none" || addAdmin ?
             <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'>n</div>
             : null
             }
@@ -258,6 +256,50 @@ export default function AdminAdmins() {
                 <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
                 <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
                 <button onClick={() => setHapus(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                </button>
+            </div>
+            }
+            {addAdmin &&
+            <div className='fixed z-6 top-30 left-100 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                <p className='w-full text-left text-lg font-bold text-[#710093]'>Add admin</p>
+                <input type="text" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' placeholder='Username'/>
+                <input type="email" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' placeholder='Email'/>
+                <input type="password" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500' placeholder='Password'/>
+                <input type="password" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500' placeholder='Confirm Password'/>
+                <button onClick={()=>(setIsPosition(!isPosition))} className='w-full p-2 px-4 rounded-lg bg-purple-200 border border-purple-500 text-[12px] font-semibold text-[#9400cf]'>
+                    {pickPosition}
+                    <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 ${isPosition ? 'rotate-270' : 'rotate-180'} absolute top-66`}/>
+                </button>
+                { isPosition && 
+                    <>
+                    <div className='absolute z-2 border-[1.5px] rounded-lg border-[#710093] top-10 -left-47  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'>
+                        <button onClick={()=>((setPickPosition("Web Frontend")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Web Frontend</button>
+                        <button onClick={()=>((setPickPosition("Web Backend")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Web Backend</button>
+                        <button onClick={()=>((setPickPosition("Android Developer")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Android Developer</button>
+                        <button onClick={()=>((setPickPosition("IOS Developer")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>IOS Developer</button>
+                        <button onClick={()=>((setPickPosition("Administrator")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Administrator</button>
+                        <button onClick={()=>((setPickPosition("Django Developer")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Django Developer</button>
+                    </div>
+                    <div className='absolute bg-white w-45 h-71 opacity-60 z-1 border-[1.5px] rounded-lg border-[#cb48f3] top-10 -left-47  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'></div>
+                    </>
+                }
+                <button onClick={()=>(setIsLevel(!isLevel))} className='w-full p-2 px-4 rounded-lg bg-purple-300 border border-purple-500 text-[12px] font-semibold text-[#9400cf]'>
+                    {pickLevel}
+                    <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 ${isLevel ? 'rotate-90' : 'rotate-180'} absolute top-78 right-9`}/>
+                </button>
+                { isLevel && 
+                    <>
+                    <div className='absolute z-2 border-[1.5px] rounded-lg border-[#710093] top-25 -right-32  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'>
+                        <button onClick={()=>((setPickLevel("Basic")),setIsLevel(!isLevel))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Basic</button>
+                        <button onClick={()=>((setPickLevel("Medium")),setIsLevel(!isLevel))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Medium</button>
+                        <button onClick={()=>((setPickLevel("Super")),setIsLevel(!isLevel))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Super</button>
+                    </div>
+                    <div className='absolute bg-white w-29 h-39 opacity-60 z-1 border-[1.5px] rounded-lg border-[#cb48f3] top-25 -right-32  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'></div>
+                    </>
+                }
+                <button className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>Create</button>
+                <button onClick={() => setAddAdmin(false)} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>

@@ -1,14 +1,29 @@
+import PopUpLogin from '@/components/popUpLogin';
 import Image from 'next/image';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
+
 
 function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   const [showPopup, setShowPopup] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [active, setActive] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, [showPopup]);
+
+  // const handlePopUp = () => {
+  //   removeLoginPopUp();
+  //   setLoginPopUp("true");
+  // }
 
   return (
     <>
     <div ref={ref} className="relative top-20 right-0"></div>
     <div className=' lg:w-full lg:pl-20 lg:mb-0 lg:mt-50 lg:relative lg:flex lg:flex-col lg:justify-center lg:items-center lg:pr-20 w-full px-5 mb-0 mt-50 relative flex flex-col justify-center items-center'>
-      <div className=' lg:w-full lg:h-50 lg:bg-gradient-to-b lg:from-[#D6FFD8] lg:to-[#A0FDFF] lg:absolute lg:-top-20 lg:-z-1 w-full h-30 bg-gradient-to-b from-[#D6FFD8] to-[#A0FDFF] absolute -top-10 -z-1'></div>
+      <div className=' lg:w-full lg:h-50 lg:bg-gradient-to-b lg:from-[#a9ff91] lg:to-[#17fbff] lg:absolute lg:-top-20 lg:-z-1 w-full h-30 bg-gradient-to-b from-[#a9ff91] to-[#17fbff] absolute -top-10 -z-1'></div>
       <div className='lg:relative relative z-3 flex flex-row lg:w-200 w-70'>
         <h1 className='lg:w-180 lg:text-4xl lg:text-left lg:font-bold lg:text-[#4F006C] w-180 text-xl text-left font-bold -mb-2 text-[#4F006C]'>Contact Us</h1>
         <Image width={140} height={140} src="/all_mascot.svg" alt="" className='absolute lg:w-100 w-50 lg:-top-52 lg:-right-40 -top-22 -right-20'/>
@@ -19,13 +34,13 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
           <div className=" lg:w-full lg:md:w-2/3 lg:flex lg:flex-col lg:gap-4 w-full md:w-2/3 flex flex-col justify-center items-center gap-4">
             <div className=" lg:flex lg:flex-col lg:md:flex-row lg:gap-4 w-full flex flex-col md:flex-row gap-4">
               <input
-                onClick={() => setShowPopup(true)}
+                // onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="email"
                 placeholder="Name"
               />
               <input
-                onClick={() => setShowPopup(true)}
+                // onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="text"
                 placeholder="Email"
@@ -33,19 +48,19 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
             </div>
 
             <input
-              onClick={() => setShowPopup(true)}
+              // onClick={() => setShowPopup(true)}
               className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
               type="text"
               placeholder="Subject"
             />
 
             <textarea
-              onClick={() => setShowPopup(true)}
+              // onClick={() => setShowPopup(true)}
               className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-4 lg:text-[#4F006C] lg:h-40 lg:w-full lg:resize-none bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-4 text-[#4F006C] h-40 w-full resize-none"
               placeholder="Message"
             ></textarea>
 
-            <button className="cursor-pointer lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
+            <button onClick={() => setShowPopup(true)} className="cursor-pointer lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
               Send
             </button>
           </div>
@@ -54,7 +69,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
           <div className=" lg:w-full lg:md:w-1/3 lg:flex lg:flex-col lg:gap-4 lg:text-[#4F006C] w-full md:w-1/3 flex flex-col justify-center items-center gap-4 text-[#4F006C]">
             
             <div className=" lg:bg-[#D9DFFC] lg:flex lg:flex-row lg:items-center lg:p-4 lg:pl-7 lg:rounded-2xl bg-[#D9DFFC] flex flex-row items-center p-4 pl-7 rounded-xl w-full">
-              <Image width={140} height={140} src="/icon-jam.svg" alt="" className=' lg:w-8 lg:mr-5 w-6 mr-5'/>
+              <Image width={140} height={140} src="/icon-jam.svg" alt="" className=' lg:w-6 lg:mr-5 w-6 mr-5'/>
               <div>
                 <p className="font-semibold text-[12px] text-[#181F38]">Monday - Friday</p>
                 <p className="lg:text-sm text-[12px] text-[#181F38]">7 AM - 6 PM</p>
@@ -62,7 +77,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
             </div>
             
             <div className=" lg:bg-[#D9DFFC] lg:flex lg:flex-row lg:items-center lg:p-4 lg:pl-7 lg:rounded-2xl bg-[#D9DFFC] flex flex-row items-center p-4 pl-7 rounded-xl w-full">
-              <Image width={140} height={140} src="/icon-phone.svg" alt="" className=' lg:w-8 lg:mr-5 w-6 mr-5'/>
+              <Image width={140} height={140} src="/icon-phone.svg" alt="" className=' lg:w-6 lg:mr-5 w-6 mr-5'/>
               <div>
                 <p className="lg:font-semibold font-semibold text-[12px] text-[#181F38]">+62274 540448</p>
                 <p className="lg:text-sm text-[12px] text-[#181F38]">+622745306395</p>
@@ -71,7 +86,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
             
             <div className=" lg:bg-[#D9DFFC] lg:flex lg:flex-row lg:items-center lg:p-4 lg:pl-7 lg:rounded-2xl bg-[#D9DFFC] flex flex-row items-center p-4 pl-7 rounded-xl w-full">
-              <Image width={140} height={140} src="/icon-email.svg" alt="" className=' lg:w-8 lg:mr-5 w-6 mr-5'/>
+              <Image width={140} height={140} src="/icon-email.svg" alt="" className=' lg:w-6 lg:mr-5 w-6 mr-5'/>
               <div>
                 <p className="lg:text-sm text-[12px] text-[#181F38]">info@indokoding.com</p>
               </div>
@@ -99,15 +114,40 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1450.0329966036097!2d110.30648249266326!3d-7.785142307915073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af70009a10b4b%3A0x2a213bb1df2a7745!2sCV%20Indokoding%20Sukses%20Makmur!5e0!3m2!1sen!2sid!4v1753343284581!5m2!1sen!2sid" className=' lg:w-full lg:h-80 lg:-mt-10 w-full h-80 -mt-10'></iframe>
     
 
-    <div className={`fixed z-3 h-35 left-0 right-0 top-0 bg-[#2c48ac] blur-2xl ${showPopup ? 'translate-x-0 opacity-50' : 'translate-x-10 opacity-0 pointer-events-none'}`}>aa</div>
-    <div className={`fixed z-4 w-100 p-3 rounded-md border-[1px] border-[#97BED7] bg-white top-25 flex flex-row justify-center items-center gap-3 ${showPopup ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
+    {/* <div className={`fixed z-6 h-35 left-0 right-0 top-0 bg-[#2c48ac] blur-2xl ${showPopup ? 'translate-x-0 opacity-50' : 'translate-x-10 opacity-0 pointer-events-none'}`}>aa</div>
+    <div className={`fixed z-6 w-100 p-3 rounded-md border-[1px] border-[#97BED7] bg-white top-25 flex flex-row justify-center items-center gap-3 ${showPopup ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
       <Image width={140} height={140} src="/warning-purple.svg" alt="" className="w-5"/>
       <p className='text-[10px] text-[#4F006C]'>Oops! You need to log in first before filling out the form.</p>
       <button className='text-[10px] font-bold text-blue-600'>Log In</button>
     </div>
-    <button onClick={() => setShowPopup(false)} className={`fixed z-5 top-[100.5px] right-103 w-7 h-11 rounded-r-md bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]  ${showPopup ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0 pointer-events-none'}`}>
+    <button onClick={() => setShowPopup(false)} className={`fixed z-6 top-[100px] right-103 w-7 h-[45px] rounded-r-md bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]  ${showPopup ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0 pointer-events-none'}`}>
         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-    </button>
+    </button> */}
+
+    {showPopup && token === null ?
+    <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
+    : null
+    }
+    {showPopup && token === null ?
+    <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
+    : null
+    }
+    {showPopup && token === null ?
+    <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
+        <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+        <p className='text-[12px] text-purple-900 w-30 text-justify'>Oops! You need to <span className='font-bold'>Log In</span> first before filling out the form.</p>
+        <button onClick={() => (setShowLogin(true),setShowPopup(false),setActive(true))} className='text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50'>Log In</button>
+        <button onClick={() => (setShowPopup(false))} className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+            <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+        </button>
+    </div>
+    : null
+    }
+    {showLogin &&
+      <div className='fixed top-50 right-10 z-7'>
+        <PopUpLogin />
+      </div>
+    }
     </>
   );
 }
