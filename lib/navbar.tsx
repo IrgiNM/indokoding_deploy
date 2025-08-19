@@ -3,6 +3,8 @@ import NavLink from '@/components/navLink';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import AuthPopUp from '@/components/authPopUp';
+import PopUpLogin from '@/components/popUpLogin';
 
 export default function Navbar({
   page,
@@ -19,6 +21,14 @@ export default function Navbar({
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [isClick, setIsClick] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [showLogOut, setShowLogOut] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [showActive, setShowActive] = useState('none');
+  
+  
   const handleClick = () => {
     if (isClick === true) {
       setIsClick(false);
@@ -35,6 +45,27 @@ export default function Navbar({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, [showLogOut, showAuth]);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+  }, []);
+
+  const logout = (): void => {
+    try {
+      localStorage.clear();
+  
+      console.log("Logout berhasil, data dihapus dari localStorage");
+    } catch (error) {
+      console.error("Gagal logout:", error);
+    }
+  };
+  
 
   const nav = [
     {
@@ -124,6 +155,13 @@ export default function Navbar({
         }
       </div>
 
+      {token ?
+      <button onClick={() => (setShowLogOut(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-[#f00070] text-[12px] absolute right-10 top-7 font-bold text-[#f00070] hover:bg-[#f00070] hover:text-white'>Log Out</button>
+      :
+      <>
+      <button onClick={() => (setShowActive("login"), setShowAuth(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-purple-600 text-[12px] absolute right-8 top-7 font-bold text-purple-600 hover:bg-purple-600 hover:text-white'>Log In</button>
+      </>
+      }
       
       <div className='lg:hidden w-full fixed right-0 flex'>
         <button onClick={handleClick} className='w-12 h-12 flex justify-center items-center bg-[#AD48FF] rounded-full absolute top-5 right-5 active:bg-gradient-to-b active:from-[#AD48FF] active:to-[#6f09c3] active:font-bold z-21'>
@@ -168,6 +206,36 @@ export default function Navbar({
         
       </div>
     </div>
+
+
+    {showLogOut ?
+      <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
+      : null
+    }
+    {showLogOut ?
+      <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
+      : null
+    }
+    {showLogOut && token !== null ?
+      <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
+          <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+          <p className='text-[12px] text-purple-900 w-30 text-center'>Are you sure you want to log out?</p>
+          <button onClick={() => (logout(),setShowLogOut(false))} className='text-[12px] font-bold text-[#f00070] w-full border py-1 rounded-md hover:bg-red-50'>Log Out</button>
+          <button onClick={() => (setShowLogOut(false))} className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+              <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+          </button>
+      </div>
+      : null
+    }
+    {showAuth && token === null ?
+      <button onClick={()=>(setShowAuth(false))} className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+          <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+      </button>
+    : null
+    }
+    {showAuth &&
+      <PopUpLogin/>
+    }
     </>
   );
 }

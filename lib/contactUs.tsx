@@ -5,8 +5,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 
 function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   const [showPopup, setShowPopup] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [active, setActive] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -136,17 +135,21 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
         <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
         <p className='text-[12px] text-purple-900 w-30 text-justify'>Oops! You need to <span className='font-bold'>Log In</span> first before filling out the form.</p>
-        <button onClick={() => (setShowLogin(true),setShowPopup(false),setActive(true))} className='text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50'>Log In</button>
+        <button onClick={() => (setShowAuth(true),setShowPopup(false))} className='text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50'>Log In</button>
         <button onClick={() => (setShowPopup(false))} className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
             <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
         </button>
     </div>
     : null
     }
-    {showLogin &&
-      <div className='fixed top-50 right-10 z-7'>
-        <PopUpLogin />
-      </div>
+    {showAuth && token === null ?
+      <button onClick={()=>(setShowAuth(false))} className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+          <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+      </button>
+    : null
+    }
+    {showAuth &&
+      <PopUpLogin/>
     }
     </>
   );

@@ -1,5 +1,25 @@
-import Image from 'next/image'
-import React, { useState } from 'react'
+import { collection, getDocs, or, query, where } from "firebase/firestore";
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import { db } from '../firebase/config';
+
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  confirm_password?: string;
+  level?: string;
+  position?: string;
+  fired?: string;
+  phone?: string;
+  sick?: number;
+  createdAt?: string;
+  permission?: number;
+  not_reason?: number;
+  role_job?: string[];
+  role: string;
+}
 
 export default function AdminAdmins() {
     const [edit, setEdit] = useState('none');
@@ -8,6 +28,8 @@ export default function AdminAdmins() {
     const [isPosition, setIsPosition] = useState(false);
     const [isLevel, setIsLevel] = useState(false);
     const [hapusNama, setHapusNama] = useState("none");
+    const [isLoading, setIsLoading] = useState(false);
+    
 
     const [urutan, setUrutan] = useState("A - Z");
     const [pickPosition, setPickPosition] = useState("web Frontend");
@@ -33,74 +55,211 @@ export default function AdminAdmins() {
         setUrutanActive(false);
     }
 
-    const listUsers = [
-        {
-          nama: "IrgiNM",
-          emal: "irginazwamustofa@gmail.com",
-          tanggal: "01/08/2024",
-        },
-        {
-          nama: "Aulia R",
-          emal: "aulia.r@example.com",
-          tanggal: "02/08/2024",
-        },
-        {
-          nama: "Budi Santoso",
-          emal: "budi.santoso@example.com",
-          tanggal: "03/08/2024",
-        },
-        {
-          nama: "Citra Ayu",
-          emal: "citra.ayu@example.com",
-          tanggal: "04/08/2024",
-        },
-        {
-          nama: "Dewi Lestari",
-          emal: "dewi.lestari@example.com",
-          tanggal: "05/08/2024",
-        },
-        {
-          nama: "Eka Pratama",
-          emal: "eka.pratama@example.com",
-          tanggal: "06/08/2024",
-        },
-        {
-          nama: "Fajar Nugraha Lesmana",
-          emal: "fajar.nugraha@example.com",
-          tanggal: "07/08/2024",
-        },
-        {
-          nama: "Gilang Saputra",
-          emal: "gilang.saputra@example.com",
-          tanggal: "08/08/2024",
-        },
-        {
-          nama: "Hani Putri",
-          emal: "hani.putri@example.com",
-          tanggal: "09/08/2024",
-        },
-        {
-          nama: "Indra Wijaya",
-          emal: "indra.wijaya@example.com",
-          tanggal: "10/08/2024",
-        },
-        {
-          nama: "Joko Purnomo",
-          emal: "joko.purnomo@example.com",
-          tanggal: "11/08/2024",
-        },
-        {
-          nama: "Kirana Salsabila",
-          emal: "kirana.salsabila@example.com",
-          tanggal: "12/08/2024",
-        },
-      ];
+    // const listUsers = [
+    //     {
+    //       nama: "IrgiNM",
+    //       emal: "irginazwamustofa@gmail.com",
+    //       tanggal: "01/08/2024",
+    //     },
+    //     {
+    //       nama: "Aulia R",
+    //       emal: "aulia.r@example.com",
+    //       tanggal: "02/08/2024",
+    //     },
+    //     {
+    //       nama: "Budi Santoso",
+    //       emal: "budi.santoso@example.com",
+    //       tanggal: "03/08/2024",
+    //     },
+    //     {
+    //       nama: "Citra Ayu",
+    //       emal: "citra.ayu@example.com",
+    //       tanggal: "04/08/2024",
+    //     },
+    //     {
+    //       nama: "Dewi Lestari",
+    //       emal: "dewi.lestari@example.com",
+    //       tanggal: "05/08/2024",
+    //     },
+    //     {
+    //       nama: "Eka Pratama",
+    //       emal: "eka.pratama@example.com",
+    //       tanggal: "06/08/2024",
+    //     },
+    //     {
+    //       nama: "Fajar Nugraha Lesmana",
+    //       emal: "fajar.nugraha@example.com",
+    //       tanggal: "07/08/2024",
+    //     },
+    //     {
+    //       nama: "Gilang Saputra",
+    //       emal: "gilang.saputra@example.com",
+    //       tanggal: "08/08/2024",
+    //     },
+    //     {
+    //       nama: "Hani Putri",
+    //       emal: "hani.putri@example.com",
+    //       tanggal: "09/08/2024",
+    //     },
+    //     {
+    //       nama: "Indra Wijaya",
+    //       emal: "indra.wijaya@example.com",
+    //       tanggal: "10/08/2024",
+    //     },
+    //     {
+    //       nama: "Joko Purnomo",
+    //       emal: "joko.purnomo@example.com",
+    //       tanggal: "11/08/2024",
+    //     },
+    //     {
+    //       nama: "Kirana Salsabila",
+    //       emal: "kirana.salsabila@example.com",
+    //       tanggal: "12/08/2024",
+    //     },
+    //   ];
       
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
     function truncateTextByChar(text: string, charLimit: number): string {
         if (text.length <= charLimit) return text;
         return text.slice(0, charLimit) + '...';
+    }
+
+    const [formDataAdmin, setFormData] = useState({
+      username: "",
+      email: "",
+      password: "",
+      confirm_password: "",
+      level: pickLevel,
+      position: pickPosition,
+      fired: "Now",
+      phone: "-",
+      sick: 0,
+      permission: 0,
+      not_reason: 0,
+      role_job: [], 
+      role: "admin",
+    });   
+
+    const handleChangeAdmin = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
+
+    const handleCreateAdmin = async () => {
+        setIsLoading(true);
+        // Query Firestore untuk cek username
+        const checkUserQuery = query(
+            collection(db, "users"),
+            or(
+                where("username", "==", formDataAdmin.username),
+                where("email", "==", formDataAdmin.email)
+            )
+        );
+        const checkSnap = await getDocs(checkUserQuery);
+
+        if( checkSnap.empty) {
+            
+            try {
+                const res = await fetch("http://localhost:3001/api/createAdmin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formDataAdmin),
+                });
+
+                const data = await res.json();
+                console.log("Respon dari server:", data);
+
+                if (res.ok) {
+                alert(data.message || "Create Admin berhasil!");
+                setFormData({
+                    username: "",
+                    email: "",
+                    password: "",
+                    confirm_password: "",
+                    level: pickLevel,
+                    position: pickPosition,
+                    fired: "Now",
+                    phone: "-",
+                    sick: 0,
+                    permission: 0,
+                    not_reason: 0,
+                    role_job: [], 
+                    role: "admin",
+                  });
+                setAddAdmin(false);
+                } else {
+                alert(data.message || "Create Admin gagal");
+                }
+            } catch (error) {
+                console.error("Error saat Create Admin:", error);
+                alert("Terjadi kesalahan saat Create Admin");
+            } finally {
+                setIsLoading(false);
+            }
+        }else {
+            alert("Username atau email sudah terdaftar");
+        }
+    };
+
+    const [listUsers, setUsers] = useState<User[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [firstUser, setFirstUser] = useState<User | null>(null);
+
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const res = await fetch("http://localhost:3001/api/getAdmins");
+          const data: User[] = await res.json();
+
+          setUsers(data);
+
+          // ambil data pertama hanya jika ada
+          if (data.length > 0 && !firstUser) {
+            setFirstUser(data[0]);
+          }
+        } catch (err) {
+          console.error("Gagal fetch users:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchUsers();
+    }, [hapusNama]);
+
+    if (loading) return <p>Loading...</p>;
+
+    async function handleDelete(userId: string) {
+      setIsLoading(true);
+      try {
+        const res = await fetch("http://localhost:3001/api/removeUser", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: userId }),
+        });
+    
+        if (!res.ok) {
+          throw new Error("Gagal menghapus user");
+        }
+    
+        const data = await res.json();
+        console.log("User berhasil dihapus:", data);
+        alert("User berhasil dihapus");
+        setHapusNama("none");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Gagal menghapus user. Silakan coba lagi nanti.");
+      }finally {
+        setIsLoading(false);
+      }
     }
       
     
@@ -147,7 +306,7 @@ export default function AdminAdmins() {
 
             {/* DETAIL USERS */}
             <div className='w-full flex flex-row'>
-                <div className='w-90 top-23 pt-10 h-full fixed flex flex-col items-center bg-white border-r-[1.5px] border-[#e792ff] overflow-clip'>
+                <div className='w-80 top-23 pt-10 h-full fixed flex flex-col items-center bg-white border-r-[1.5px] border-[#e792ff] overflow-clip'>
                     <button className='text-[10px] rounded-md bg-[#ffecf1] text-[#650028] border-[1px] border-b-2 absolute top-4 left-4 border-[#bc3c7a] py-1 px-3 flex flex-row items-center gap-2 font-semibold hover:border-b-4 hover:top-3 transition-all duration-100'>
                         <Image width={30} height={30} src='/trash-red.svg' alt="Dashboard" className='w-2 h-2'/>
                         Delete
@@ -162,27 +321,27 @@ export default function AdminAdmins() {
                     </button>
                     <div className='w-25 h-25 bg-blue-100 flex justify-center items-center rounded-full font-bold text-6xl text-blue-700'>I</div>
                     <p className='text-[10px] rounded-full bg-[#c300ff] text-white border-2 border-white  py-1 px-2 font-semibold -mt-4'>basic</p>
-                    <p className='font-bold text-[#710093] text-xl mt-2'>IrgiNM</p>
+                    <p className='font-bold text-[#710093] text-xl mt-2'>{firstUser?.username}</p>
                     <p className='w-60 text-[10px] mt-7'>Position</p>
-                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>Frontend Developer</p>
+                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>{firstUser?.position}</p>
                     <p className='w-60 text-[10px] mt-3'>Hire Date & Termination Date</p>
-                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>02/08/2021 - Now</p>
+                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>{firstUser?.createdAt} - {firstUser?.fired}</p>
                     <p className='w-60 text-[10px] mt-3'>Email Address</p>
-                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>irginazwamustofa@gmail.com</p>
+                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>{firstUser?.email}</p>
                     <p className='w-60 text-[10px] mt-3'>Phone Number</p>
-                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>+62 8983733359</p>
+                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>+62 {firstUser?.phone}</p>
                     <div className='flex flex-row gap-3 mt-3'>
                         <div className='w-20 h-20 bg-[#f9e6ff] border-1 border-[#bc3c7a] flex flex-col justify-center items-center rounded-md font-bold text-[#93005b] mt-5'>
                         <p className='text-[10px]'>Sick</p>
-                        <p className='text-3xl'>5</p>
+                        <p className='text-3xl'>{firstUser?.sick}</p>
                         </div>
                         <div className='w-20 h-20 bg-[#e6fdff] border-1 border-[#3ca0bc] flex flex-col justify-center items-center rounded-md font-bold text-[#005b93] mt-5'>
                         <p className='text-[10px]'>Permission</p>
-                        <p className='text-3xl'>8</p>
+                        <p className='text-3xl'>{firstUser?.permission}</p>
                         </div>
                         <div className='w-20 h-20 bg-[#ece6ee] border-1 border-[#7e6e76] flex flex-col justify-center items-center rounded-md font-bold text-[#141e4a] mt-5'>
                         <p className='text-[10px]'>Not Reason</p>
-                        <p className='text-3xl'>0</p>
+                        <p className='text-3xl'>{firstUser?.not_reason}</p>
                         </div>
                     </div>
                     {/* DEKORASI BACKGROUND */}
@@ -211,21 +370,21 @@ export default function AdminAdmins() {
                 </div>
 
                 {/* LIST USERS */}
-                <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-30 pl-95'>
+                <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-30 pl-83'>
                     {listUsers.map((user, index) => (
-                        <button key={index} className='w-80 flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative hover:border-2 hover:-mt-1 hover:-ml-1'>
-                            <div className='w-13 h-13 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.nama.charAt(0)}</div>
+                        <button onClick={()=>(setFirstUser(user))} key={index} className='w-85 flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative hover:border-2 hover:-mt-1 hover:-ml-1'>
+                            <div className='w-13 h-13 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.username.charAt(0)}</div>
                             <div className='flex flex-col items-start'>
                                 <div className='flex flex-row items-end gap-2'>
-                                    <p className='text-[13px] font-bold text-[#710093]'>{truncateTextByChar(user.nama,7)} <span className='font-light text-[10px] ml-2'>{user.tanggal}</span> </p>
+                                    <p className='text-[13px] text-left font-bold text-[#710093]'>{truncateTextByChar(user.username,3)} <span className='font-light text-[10px] ml-2'>{user.createdAt}</span> </p>
                                     <p className='text-[10px] rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#f2c6ff] py-1 px-2 font-semibold'>basic</p>
                                 </div>
-                                <p className='text-[12px] font-light'>{user.emal}</p>
+                                <p className='text-[12px] font-light'>{user.email}</p>
                             </div>
                             <button
                             onClick={() => {
-                                if (edit === 'none' || edit !== user.nama) {
-                                    setEdit(user.nama);
+                                if (edit === 'none' || edit !== user.username) {
+                                    setEdit(user.username);
                                 }else {
                                     setEdit('none');
                                 }
@@ -233,7 +392,7 @@ export default function AdminAdmins() {
                             className='h-8 w-8 absolute -right-3 top-2 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
                                 <Image width={30} height={30} src='/edit.svg' alt="Dashboard" className={`w-3 h-3`}/>
                             </button>
-                            <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                            <button onClick={()=>{setHapusNama(user.username);}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
                         </button>
@@ -263,17 +422,36 @@ export default function AdminAdmins() {
             {addAdmin &&
             <div className='fixed z-6 top-30 left-100 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <p className='w-full text-left text-lg font-bold text-[#710093]'>Add admin</p>
-                <input type="text" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' placeholder='Username'/>
-                <input type="email" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' placeholder='Email'/>
-                <input type="password" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500' placeholder='Password'/>
-                <input type="password" className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500' placeholder='Confirm Password'/>
+                <input type="text"
+                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' name="username"
+                    placeholder="Username"
+                    value={formDataAdmin.username}
+                    onChange={handleChangeAdmin}/>
+                <input type="email"
+                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500'
+                    name="email"
+                    placeholder="Email"
+                    value={formDataAdmin.email}
+                    onChange={handleChangeAdmin}/>
+                <input type="password"
+                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500'
+                    name="password"
+                    placeholder="Password"
+                    value={formDataAdmin.password}
+                    onChange={handleChangeAdmin}/>
+                <input type="password"
+                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500'
+                    name="confirm_password"
+                    placeholder="Confirm Password"
+                    value={formDataAdmin.confirm_password}
+                    onChange={handleChangeAdmin}/>
                 <button onClick={()=>(setIsPosition(!isPosition))} className='w-full p-2 px-4 rounded-lg bg-purple-200 border border-purple-500 text-[12px] font-semibold text-[#9400cf]'>
                     {pickPosition}
                     <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 ${isPosition ? 'rotate-270' : 'rotate-180'} absolute top-66`}/>
                 </button>
                 { isPosition && 
                     <>
-                    <div className='absolute z-2 border-[1.5px] rounded-lg border-[#710093] top-10 -left-47  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'>
+                    <div className='absolute z-2 border-[1.5px] rounded-lg border-[#710093] top-20 -left-47  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'>
                         <button onClick={()=>((setPickPosition("Web Frontend")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Web Frontend</button>
                         <button onClick={()=>((setPickPosition("Web Backend")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Web Backend</button>
                         <button onClick={()=>((setPickPosition("Android Developer")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Android Developer</button>
@@ -281,7 +459,7 @@ export default function AdminAdmins() {
                         <button onClick={()=>((setPickPosition("Administrator")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Administrator</button>
                         <button onClick={()=>((setPickPosition("Django Developer")),setIsPosition(!isPosition))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Django Developer</button>
                     </div>
-                    <div className='absolute bg-white w-45 h-71 opacity-60 z-1 border-[1.5px] rounded-lg border-[#cb48f3] top-10 -left-47  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'></div>
+                    <div className='absolute bg-white w-45 h-71 opacity-60 z-1 border-[1.5px] rounded-lg border-[#cb48f3] top-20 -left-47  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'></div>
                     </>
                 }
                 <button onClick={()=>(setIsLevel(!isLevel))} className='w-full p-2 px-4 rounded-lg bg-purple-300 border border-purple-500 text-[12px] font-semibold text-[#9400cf]'>
@@ -290,15 +468,17 @@ export default function AdminAdmins() {
                 </button>
                 { isLevel && 
                     <>
-                    <div className='absolute z-2 border-[1.5px] rounded-lg border-[#710093] top-25 -right-32  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'>
+                    <div className='absolute z-2 border-[1.5px] rounded-lg border-[#710093] top-55 -right-32  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'>
                         <button onClick={()=>((setPickLevel("Basic")),setIsLevel(!isLevel))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Basic</button>
                         <button onClick={()=>((setPickLevel("Medium")),setIsLevel(!isLevel))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Medium</button>
                         <button onClick={()=>((setPickLevel("Super")),setIsLevel(!isLevel))} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 px-4 rounded-full'>Super</button>
                     </div>
-                    <div className='absolute bg-white w-29 h-39 opacity-60 z-1 border-[1.5px] rounded-lg border-[#cb48f3] top-25 -right-32  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'></div>
+                    <div className='absolute bg-white w-29 h-39 opacity-60 z-1 border-[1.5px] rounded-lg border-[#cb48f3] top-55 -right-32  backdrop-blur-md flex flex-col justify-center items-center gap-2 p-4'></div>
                     </>
                 }
-                <button className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>Create</button>
+                <button onClick={() => (handleCreateAdmin())} className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>
+                    {isLoading ? "Creating..." : "Create"}
+                </button>
                 <button onClick={() => setAddAdmin(false)} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>

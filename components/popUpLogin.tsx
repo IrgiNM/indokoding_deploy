@@ -24,20 +24,6 @@ export default function PopUpLogin() {
       }
     }, []);
 
-    // useEffect(() => {
-    //   const hasil = getLoginPopUp();
-    //   if(hasil === "true"){
-    //     setShowLogIn(true);
-    //   }else if(hasil === "false"){
-    //     setShowLogIn(false);
-    //   }
-    // }, [props.active]);
-
-    // const closeLogin = () => {
-    //     removeLoginPopUp();
-    //     setLoginPopUp("false");
-    // }
-
     const [formDataRegister, setFormData] = useState({
       username: "",
       email: "",
@@ -46,24 +32,9 @@ export default function PopUpLogin() {
       role: "guest",
     });   
 
-    const [formDataLogin, setFormDataLogin] = useState({ 
-        username: "", 
-        password: "",
-        role: "guest",
-    });
-
-
     const handleChangeRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    };
-    
-    const handleChangeLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormDataLogin((prev) => ({
         ...prev,
         [name]: value,
       }));
@@ -121,6 +92,20 @@ export default function PopUpLogin() {
         }
     };
 
+    const [formDataLogin, setFormDataLogin] = useState({ 
+        username: "", 
+        password: "",
+        role: "guest",
+    });
+    
+    const handleChangeLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setFormDataLogin((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
+
     const handleLogin = async () => {
       try {
         setIsLoading(true);
@@ -165,17 +150,34 @@ export default function PopUpLogin() {
       
   
     const handleGoogleLogin = async () => {
-        try {
+      try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
         console.log("User Info:", user);
-
-        // Di sini bisa simpan data user ke database atau context
-        alert(`Welcome ${user.displayName}!`);
-        } catch (error) {
+    
+        // Ambil token dari Firebase
+        const token = await user.getIdToken();
+    
+        // Simpan ke localStorage (biar sama dengan login biasa)
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", user.displayName || "Guest");
+        localStorage.setItem("email", user.email || "");
+        localStorage.setItem("role", "guest");
+    
+        // Simpan ke state React
+        setToken(token);
+        setUsername(user.displayName || "Guest");
+        setEmail(user.email || "");
+        setRole("guest");
+    
+        setMessage("Login dengan Google berhasil!");
+        alert(`Welcome ${user.displayName || "Guest"}!`);
+      } catch (error) {
         console.error("Google login error:", error);
-        }
-    }
+        alert("Login Google gagal!");
+      }
+    };
+      
 
     
 
