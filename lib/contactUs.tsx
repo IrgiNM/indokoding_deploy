@@ -1,22 +1,131 @@
 import PopUpLogin from '@/components/popUpLogin';
+import { collection, getDocs, or, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
 import Image from 'next/image';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { db } from '../firebase/config'; // sesuaikan path
 
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  total_join: number;
+  total_career: number;
+  total_contact: number;
+}
 
 function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   const [showPopup, setShowPopup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [listUsers, setUsers] = useState<User[]>([]);
+  
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
-  }, [showPopup]);
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+    }
+  }, []);
 
-  // const handlePopUp = () => {
-  //   removeLoginPopUp();
-  //   setLoginPopUp("true");
-  // }
+  useEffect(() => {
+      const fetchUsers = async () => {
+      try {
+          // panggil backend API
+          const res = await fetch("http://localhost:3001/api/getUsers"); 
+          const data = await res.json();
+          setUsers(data);
+      } catch (err) {
+          console.error("Gagal fetch users:", err);
+      } finally {
+          setIsLoading(false);
+      }
+      };
+      fetchUsers();
+  }, [isLoading]);
+
+  const [formDataContact, setFormData] = useState({
+    username: "",
+    email: "",
+    subject: "",
+    message: "",
+  });   
+
+  const handleChangeContact = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleContact = async () => {
+    if (!formDataContact.username || !formDataContact.email || 
+        !formDataContact.subject || !formDataContact.message) {
+      alert('Harap isi semua field');
+      return;
+    }
+  
+    // cek token dulu sebelum kirim request
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // alert("Anda harus login terlebih dahulu untuk mengirim pesan");
+      setShowPopup(true);
+      return;
+    }
+  
+    setIsLoading(true);
+  
+    try {
+      const payload = {
+        username: formDataContact.username,
+        email: formDataContact.email,
+        subject: formDataContact.subject,
+        message: formDataContact.message,
+      };
+  
+      const res = await fetch("http://localhost:3001/api/createContact", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Gagal mengirim pesan");
+      }
+  
+      const data = await res.json();
+      alert(data.message || "Pesan berhasil dikirim!");
+  
+      // Reset form setelah berhasil
+      setFormData({
+        username: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+  
+    } catch (error: unknown) {
+      console.error("Error saat mengirim kontak:", error);
+      
+      if (error instanceof Error) {
+        alert(error.message || "Terjadi kesalahan saat mengirim pesan");
+      } else {
+        alert("Terjadi kesalahan yang tidak diketahui");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  
+
 
   return (
     <>
@@ -36,13 +145,21 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                 // onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="email"
-                placeholder="Name"
+                placeholder="Username"
+                id="username"
+                name="username"
+                value={formDataContact.username}
+                onChange={handleChangeContact}
               />
               <input
                 // onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="text"
                 placeholder="Email"
+                id="email"
+                name="email"
+                value={formDataContact.email}
+                onChange={handleChangeContact}
               />
             </div>
 
@@ -51,16 +168,26 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
               className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
               type="text"
               placeholder="Subject"
+              id="subject"
+              name="subject"
+              value={formDataContact.subject}
+              onChange={handleChangeContact}
             />
 
             <textarea
               // onClick={() => setShowPopup(true)}
               className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-4 lg:text-[#4F006C] lg:h-40 lg:w-full lg:resize-none bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-4 text-[#4F006C] h-40 w-full resize-none"
               placeholder="Message"
+              id="message"
+              name="message"
+              value={formDataContact.message}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, message: e.target.value }))
+              }
             ></textarea>
 
-            <button onClick={() => setShowPopup(true)} className="cursor-pointer lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
-              Send
+            <button onClick={() => (handleContact())} className="cursor-pointer lg:bg-[#181F38] lg:text-white lg:text-sm lg:font-bold lg:py-3 lg:rounded-3xl lg:w-full lg:hover:bg-[#303b69] lg:transition bg-[#181F38] text-[12px] text-white font-semibold py-3 rounded-3xl w-full hover:bg-[#303b69] transition">
+              {isLoading ? "Try Send..." : "Send"}
             </button>
           </div>
 
