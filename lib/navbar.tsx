@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import AuthPopUp from '@/components/authPopUp';
 import PopUpLogin from '@/components/popUpLogin';
+import Cookies from "js-cookie";
+import { deleteCookies, getCookies } from '@/utils/tokenController';
 
 export default function Navbar({
   page,
@@ -28,6 +30,56 @@ export default function Navbar({
   const [showAuth, setShowAuth] = useState(false);
   const [showActive, setShowActive] = useState('none');
   
+  useEffect(() => {
+    const fetchCookies = async () => {
+      try {
+        const savedToken = await getCookies(); // <- pakai await
+  
+        if (savedToken) {
+          // Parse JSON kalau cookies disimpan sebagai string
+          const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+          setShowAuth(false);
+          // Ambil token dan simpan ke state
+          setToken(parsed?.token || "");
+        } else {
+          setToken("");
+        }
+      } catch (error) {
+        console.error("Gagal mengambil cookies:", error);
+        setToken("");
+      }
+    };
+  
+    fetchCookies();
+  }, [showLogOut, showAuth]);
+
+  useEffect(() => {
+    const checkLoginSuccess = async () => {
+      // Cek jika ada token dan popup masih terbuka
+      const token = await getCookies();
+      if (token && showAuth) {
+        // Parse JSON kalau cookies disimpan sebagai string
+        const parsed = typeof token === "string" ? JSON.parse(token) : token;
+        setShowAuth(false);
+        // Ambil token dan simpan ke state
+        setToken(parsed?.token || "");
+      } else {
+        setToken("");
+      }
+    };
+    // Untuk menangkap alert yang mungkin muncul
+    const originalAlert = window.alert;
+    window.alert = function(message) {
+      if (message.includes('Login successful') || message.includes('berhasil')) {
+        setTimeout(checkLoginSuccess, 100); // Beri sedikit delay
+      }
+      return originalAlert.apply(this, arguments as any);
+    };
+    
+    return () => {
+      window.alert = originalAlert;
+    };
+  }, [showAuth]);
   
   const handleClick = () => {
     if (isClick === true) {
@@ -46,21 +98,16 @@ export default function Navbar({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
-  }, [showLogOut, showAuth]);
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
-  }, []);
+  // useEffect(() => {
+  //   const storedToken: string = Cookies.get("token") || '';
+  //   setToken(storedToken);
+  // }, [showLogOut, showAuth]);
 
   const logout = (): void => {
     try {
-      localStorage.clear();
-  
-      console.log("Logout berhasil, data dihapus dari localStorage");
+      deleteCookies();
+      alert("Berhasil logout!");
+      console.log("Logout berhasil, data dihapus dari cookies");
     } catch (error) {
       console.error("Gagal logout:", error);
     }
@@ -216,7 +263,7 @@ export default function Navbar({
       <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
       : null
     }
-    {showLogOut && token !== null ?
+    {showLogOut && token !== '' ?
       <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
           <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
           <p className='text-[12px] text-purple-900 w-30 text-center'>Are you sure you want to log out?</p>
@@ -227,12 +274,14 @@ export default function Navbar({
       </div>
       : null
     }
-    {showAuth && token === null ?
+
+    {showAuth && token === '' ?
       <button onClick={()=>(setShowAuth(false))} className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
           <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
       </button>
     : null
     }
+
     {showAuth &&
       <PopUpLogin/>
     }

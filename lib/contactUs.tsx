@@ -3,6 +3,8 @@ import { collection, getDocs, or, query, serverTimestamp, updateDoc, where } fro
 import Image from 'next/image';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { db } from '../firebase/config'; // sesuaikan path
+import Cookies from "js-cookie";
+import { getCookies } from '@/utils/tokenController';
 
 interface User {
   id: string;
@@ -24,11 +26,50 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
-  }, []);
+    const fetchCookies = async () => {
+      try {
+        const savedToken = await getCookies(); // <- pakai await
+  
+        if (savedToken) {
+          // Parse JSON kalau cookies disimpan sebagai string
+          const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+          setShowAuth(false);
+          // Ambil token dan simpan ke state
+          setToken(parsed?.token || "");
+        } else {
+          setToken("");
+        }
+      } catch (error) {
+        console.error("Gagal mengambil cookies:", error);
+        setToken("");
+      }
+    };
+  
+    fetchCookies();
+  }, [showAuth]);
+
+  useEffect(() => {
+    const checkLoginSuccess = async () => {
+      // Cek jika ada token dan popup masih terbuka
+      const token = await getCookies();
+      if (token && showAuth) {
+        setShowAuth(false);
+      }
+    };
+
+    // Untuk menangkap alert yang mungkin muncul
+    const originalAlert = window.alert;
+    window.alert = function(message) {
+      if (message.includes('Login successful') || message.includes('berhasil')) {
+        setTimeout(checkLoginSuccess, 100); // Beri sedikit delay
+      }
+      return originalAlert.apply(this, arguments as any);
+    };
+    
+    return () => {
+      window.alert = originalAlert;
+    };
+  }, [showAuth]);
 
   useEffect(() => {
       const fetchUsers = async () => {
@@ -69,15 +110,15 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     }
   
     // cek token dulu sebelum kirim request
-    const token = localStorage.getItem("token");
+    const token = await getCookies();
     if (!token) {
       // alert("Anda harus login terlebih dahulu untuk mengirim pesan");
       setShowPopup(true);
       return;
     }
-  
+    
     setIsLoading(true);
-  
+    
     try {
       const payload = {
         username: formDataContact.username,
@@ -145,7 +186,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                 // onClick={() => setShowPopup(true)}
                 className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
                 type="email"
-                placeholder="Username"
+                placeholder="Name"
                 id="username"
                 name="username"
                 value={formDataContact.username}
@@ -250,15 +291,15 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
     </button> */}
 
-    {showPopup && token === null ?
+    {showPopup && token === '' ?
     <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
     : null
     }
-    {showPopup && token === null ?
+    {showPopup && token === '' ?
     <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
     : null
     }
-    {showPopup && token === null ?
+    {showPopup && token === '' ?
     <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
         <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
         <p className='text-[12px] text-purple-900 w-30 text-justify'>Oops! You need to <span className='font-bold'>Log In</span> first before filling out the form.</p>
@@ -269,7 +310,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     </div>
     : null
     }
-    {showAuth && token === null ?
+    {showAuth && token === '' ?
       <button onClick={()=>(setShowAuth(false))} className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
           <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
       </button>

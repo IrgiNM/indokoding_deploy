@@ -2,6 +2,7 @@ import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
+import Cookies from "js-cookie";
 
 
 export default function LoginForm(props: { onSignUp: () => void }) {
@@ -16,7 +17,7 @@ export default function LoginForm(props: { onSignUp: () => void }) {
     const [showLogIn, setShowLogIn] = useState(true);
 
     useEffect(() => {
-      const savedToken = localStorage.getItem("token");
+      const savedToken = Cookies.get("token");
       if (savedToken) {
         setToken(savedToken);
       }
@@ -55,10 +56,10 @@ export default function LoginForm(props: { onSignUp: () => void }) {
         console.log("Respon dari server:", data);
     
         if (res.ok) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("username", data.username);
-          localStorage.setItem("email", data.email);
-          localStorage.setItem("role", data.role);
+          Cookies.set("token", data.token, { expires: 7 }); // berlaku 7 hari
+          Cookies.set("username", data.username || "Guest", { expires: 7 });
+          Cookies.set("email", data.email || "", { expires: 7 });
+          Cookies.set("role", data.role, { expires: 7 });
           setUsername(data.username);
           setEmail(data.email);
           setRole(data.role);
@@ -88,11 +89,11 @@ export default function LoginForm(props: { onSignUp: () => void }) {
         // Ambil token dari Firebase
         const token = await user.getIdToken();
     
-        // Simpan ke localStorage (biar sama dengan login biasa)
-        localStorage.setItem("token", token);
-        localStorage.setItem("username", user.displayName || "Guest");
-        localStorage.setItem("email", user.email || "");
-        localStorage.setItem("role", "guest");
+        // Simpan ke cookies (biar sama dengan login biasa)
+        Cookies.set("token", token, { expires: 7 }); // berlaku 7 hari
+        Cookies.set("username", user.displayName || "Guest", { expires: 7 });
+        Cookies.set("email", user.email || "", { expires: 7 });
+        Cookies.set("role", "guest", { expires: 7 });
     
         // Simpan ke state React
         setToken(token);

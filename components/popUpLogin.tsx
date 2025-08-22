@@ -2,8 +2,8 @@ import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
-import { getToken } from "@/utils/getToken";
-
+import Cookies from "js-cookie";
+import { getCookies, setCookies } from "@/utils/tokenController";
 
 export default function PopUpLogin() {
 
@@ -14,15 +14,34 @@ export default function PopUpLogin() {
     const [message, setMessage] = useState<string>("");
     const [showSignUp, setShowSignUp] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    
 
     const [showLogIn, setShowLogIn] = useState(true);
 
     useEffect(() => {
-      const savedToken = localStorage.getItem("token");
-      if (savedToken) {
-        setToken(savedToken);
-      }
-    }, []);
+      const fetchCookies = async () => {
+        try {
+          const savedToken = await getCookies(); // <- pakai await
+    
+          if (savedToken) {
+            // Parse JSON kalau cookies disimpan sebagai string
+            const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+    
+            // Ambil token dan simpan ke state
+            setToken(parsed?.token || "");
+          } else {
+            setToken("");
+          }
+        } catch (error) {
+          console.error("Gagal mengambil cookies:", error);
+          setToken("");
+        }
+      };
+    
+      fetchCookies();
+    }, [isLoading]);
+    
+
 
     const [formDataRegister, setFormData] = useState({
       username: "",
@@ -67,10 +86,10 @@ export default function PopUpLogin() {
                 console.log("Respon dari server:", data);
 
                 if (res.ok) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("username", data.username);
-                localStorage.setItem("email", data.email);
-                localStorage.setItem("role", data.role);
+                Cookies.set("token", data.token, { expires: 7 }); // berlaku 7 hari
+                Cookies.set("username", data.username, { expires: 7 });
+                Cookies.set("email", data.email, { expires: 7 });
+                Cookies.set("role", data.role, { expires: 7 });
                 setUsername(data.username);
                 setEmail(data.email);
                 setRole(data.role);
@@ -125,10 +144,7 @@ export default function PopUpLogin() {
         console.log("Respon dari server:", data);
     
         if (res.ok) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("username", data.username);
-          localStorage.setItem("email", data.email);
-          localStorage.setItem("role", data.role);
+          await setCookies(data.token, data.username, data.email, data.role);
           setUsername(data.username);
           setEmail(data.email);
           setRole(data.role);
@@ -158,11 +174,11 @@ export default function PopUpLogin() {
         // Ambil token dari Firebase
         const token = await user.getIdToken();
     
-        // Simpan ke localStorage (biar sama dengan login biasa)
-        localStorage.setItem("token", token);
-        localStorage.setItem("username", user.displayName || "Guest");
-        localStorage.setItem("email", user.email || "");
-        localStorage.setItem("role", "guest");
+        // Simpan ke cookies (biar sama dengan login biasa)
+        Cookies.set("token", token, { expires: 7 }); // berlaku 7 hari
+        Cookies.set("username", user.displayName || "Guest", { expires: 7 });
+        Cookies.set("email", user.email || "", { expires: 7 });
+        Cookies.set("role", "guest", { expires: 7 });
     
         // Simpan ke state React
         setToken(token);
