@@ -229,7 +229,6 @@ export default function AdminAdmins() {
           setLoading(false);
         }
       };
-
       fetchUsers();
     }, [hapusNama]);
 

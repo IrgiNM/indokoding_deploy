@@ -1,8 +1,13 @@
 import CardCareer from '@/components/cardCareer'
-import React from 'react'
+import Image from 'next/image';
+import React, { useState } from 'react'
 
 export default function CareerApply() {
-    const [diKlik, setDiKlik] = React.useState('Django Developer');
+    const [diKlik, setDiKlik] = useState('Django Developer');
+    const [showLogOut, setShowLogOut] = useState(false);
+    const [showAuth, setShowAuth] = useState(false);
+    const [token, setToken] = useState<string | null>(null);
+
     const dataCareer = [
         {
             id: 1,
@@ -68,6 +73,32 @@ export default function CareerApply() {
         </div>
         <div className=' lg:w-[850px] lg:absolute lg:-z-1 lg:right-20 lg:-top-15 lg:h-200 lg:bg-gradient-to-b lg:mt-10 lg:from-[#81ff88] lg:to-[#4afcff] lg:rounded-t-[100px] w-[850px] absolute -z-1 -right-150 top-53 h-200 bg-gradient-to-b mt-10 from-[#81ff88] to-[#4afcff] rounded-t-xl'></div>
         
+        {showLogOut ?
+          <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
+          : null
+        }
+        {showLogOut ?
+          <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
+          : null
+        }
+        {showLogOut && token !== '' ?
+          <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
+              <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+              <p className='text-[12px] text-purple-900 w-30 text-center'>Are you sure you want to log out?</p>
+              <button onClick={() => ( setShowLogOut(false))} className='text-[12px] font-bold text-[#f00070] w-full border py-1 rounded-md hover:bg-red-50'>Log Out</button>
+              <button onClick={() => (setShowLogOut(false))} className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                  <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+              </button>
+          </div>
+          : null
+        }
+    
+        {showAuth && token === '' ?
+          <button onClick={()=>(setShowAuth(false))} className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+              <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+          </button>
+        : null
+        }
     </div>
   )
 }

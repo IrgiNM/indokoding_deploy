@@ -206,7 +206,7 @@ export default function Navbar({
       <button onClick={() => (setShowLogOut(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-[#f00070] text-[12px] absolute right-10 top-7 font-bold text-[#f00070] hover:bg-[#f00070] hover:text-white'>Log Out</button>
       :
       <>
-      <button onClick={() => (setShowActive("login"), setShowAuth(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-purple-600 text-[12px] absolute right-8 top-7 font-bold text-purple-600 hover:bg-purple-600 hover:text-white'>Log In</button>
+      <button onClick={() => (setShowActive("login"), setShowAuth(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-purple-600 text-[12px] absolute lg:right-8 right-17 top-7 font-bold text-purple-600 hover:bg-purple-600 hover:text-white'>Log In</button>
       </>
       }
       
