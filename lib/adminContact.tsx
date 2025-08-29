@@ -361,7 +361,7 @@ export default function Admincontacts() {
             {readMessage &&
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#005dcf] w-30 text-center'>Yakin <span className='font-bold'>Message ini</span> dihapus ?</p>
+                <p className='text-[12px] text-[#005dcf] w-30 text-center'>Yakin <span className='font-bold'>Semua Message</span> dibaca ?</p>
                 <button onClick={() => (handleBukaSemua("saya"),setReadMessage(false))} className='p-2 w-full rounded-md bg-[#9fc7ff] hover:bg-[#0055ff] active:bg-[#001d93] text-[12px] text-[#005dcf] hover:text-white font-bold'>Yes</button>
                 <button onClick={() => setReadMessage(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>

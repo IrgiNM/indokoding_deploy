@@ -28,7 +28,7 @@ export default function CardCareer(props: any) {
             Detail
             </button>
             {isActive === title &&
-                <button className={`${isActive === title ? 'lg:p-19 p-11' : 'lg:p-7 p-11'} lg:py-2 lg:bg-[#007924] lg:text-white lg:font-semibold lg:rounded-md lg:text-sm lg:hover:bg-[#223d43] lg:transition py-2 bg-[#007924] text-white font-semibold rounded-md text-[12px] hover:bg-[#223d43] transition cursor-pointer`}>
+                <button onClick={props.applyClick} className={`${isActive === title ? 'lg:p-19 p-11' : 'lg:p-7 p-11'} lg:py-2 lg:bg-[#007924] lg:text-white lg:font-semibold lg:rounded-md lg:text-sm lg:hover:bg-[#223d43] lg:transition py-2 bg-[#007924] text-white font-semibold rounded-md text-[12px] hover:bg-[#223d43] transition cursor-pointer`}>
                 Apply
                 </button>
             }

@@ -276,7 +276,7 @@ export default function Navbar({
     }
 
     {showAuth && token === '' ?
-      <button onClick={()=>(setShowAuth(false))} className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+      <button onClick={()=>(setShowAuth(false))} className={`fixed z-13 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
           <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
       </button>
     : null

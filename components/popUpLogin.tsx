@@ -201,10 +201,10 @@ export default function PopUpLogin() {
     <>
     {showLogIn && message !== "User berhasil disimpan" && token === "" ?
     <>
-    <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
-    <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
+    <div className='fixed z-11 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
+    <div className='fixed z-10 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
 
-    <div className='fixed lg:top-40 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7'>
+    <div className='fixed lg:top-40 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-12'>
         <p className='text-2xl font-bold text-purple-900 mb-2'>Log In</p>
         <input type="text" placeholder='Username'
             name="username"
@@ -235,7 +235,7 @@ export default function PopUpLogin() {
         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
     </button>
     {showSignUp && message !== "User berhasil disimpan" && token === "" ?
-            <div className='fixed top-50 right-10 z-7'>
+            <div className='fixed top-50 right-10 z-12'>
                 <div className='fixed lg:top-40 lg:left-108 top-40 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7'>
                     <p className='text-2xl font-bold text-purple-900 mb-2'>Sign Up</p>
                     <input type="text" name="username"

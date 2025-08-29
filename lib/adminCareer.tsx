@@ -3,6 +3,19 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
 
+export interface Career {
+    id: string;   
+    createdAt: string;        
+    dibaca_oleh: string[]; 
+    email: string;    
+    favorite: boolean;
+    message: string;              
+    phone: string;
+    from: string;
+    position: string;       
+    rate: number;          
+    name: string;              
+}
 
 export default function AdminCareer() {
     const [edit, setEdit] = useState('none');
@@ -17,6 +30,7 @@ export default function AdminCareer() {
     const [isLoading, setIsLoading] = useState(false);
     const [requirment, setRequirment] = useState(1);
     const [isUpdate, setIsUpdate] = useState(false);
+    const [readMessage, setReadMessage] = useState(false);
     
     const [urutan, setUrutan] = useState("A - Z");
     const [urutanActive, setUrutanActive] = useState(false);
@@ -45,8 +59,10 @@ export default function AdminCareer() {
 
     const [pickNama, setPickNama] = useState('none');
     const [pickEmail, setPickEmail] = useState('none@gmail.com');
+    const [pickId, setPickId] = useState('');
     const [pickTanggal, setPickTanggal] = useState('0-0-2025');
     const [pickPesan, setPickPesan] = useState('none');
+    const [pickPhone, setPickPhone] = useState('none');
     const [pickGaji, setPickGaji] = useState(200.321);
     const [pickPosition, setPickPosition] = useState('Web Frontend');
     const [titleForm, setTitleForm] = useState('');
@@ -237,6 +253,55 @@ export default function AdminCareer() {
         return text.slice(0, charLimit) + '...';
     }
 
+    const [Careers, setCareers] = useState<Career[]>([]);
+    useEffect(() => {
+        const fetchCareers = async () => {
+            try {
+                // panggil backend API
+                const res = await fetch("http://localhost:3001/api/getCareerMessage");
+                const data = await res.json();
+                
+                // Urutkan data berdasarkan pilihan sorting
+                const sortedData = sortCareers(data, urutan);
+                setCareers(sortedData);
+            } catch (err) {
+                console.error("Gagal fetch Careers:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchCareers();
+    }, [urutan, detail]);
+
+    const sortCareers = (data: Career[], order: string) => {
+        const sortedData = [...data];
+        
+        switch (order) {
+            case 'A - Z':
+                return sortedData.sort((a, b) => 
+                    a.name.localeCompare(b.name)
+                );
+            
+            case 'Z - A':
+                return sortedData.sort((a, b) => 
+                    b.name.localeCompare(a.name)
+                );
+            
+            case 'New':
+                return sortedData.sort((a, b) => 
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+            
+            case 'Old':
+                return sortedData.sort((a, b) => 
+                    new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                );
+            
+            default:
+                return sortedData;
+        }
+    };
+
     const [formDataRequirement, setFormDataRequirement] = useState({
       description: "", 
     }); 
@@ -302,6 +367,91 @@ export default function AdminCareer() {
             alert("Requirement Career sudah terdaftar");
         }
     };
+
+    async function handleBuka(id: string, email: string) {
+      try {
+        const res = await fetch("http://localhost:3001/api/openCareer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id, email: email }),
+        });
+    
+        const data = await res.json();
+        console.log("id:", id, "email:", email);
+        console.log("Career message berhasil dibuka:", data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    async function handleBukaSemua(email: string) {
+      try {
+        const res = await fetch("http://localhost:3001/api/openAllCareer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: email }),
+        });
+    
+        const data = await res.json();
+        console.log("Career message berhasil dibuka semua:", data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    async function handleDelete(id: string, email: string) {
+      setIsLoading(true);
+      try {
+        const res = await fetch("http://localhost:3001/api/removeCareerMessage", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id, email: email }),
+        });
+    
+        if (!res.ok) {
+          throw new Error("Gagal menghapus message");
+        }
+    
+        const data = await res.json();
+        console.log("Career message berhasil dihapus:", data);
+        alert("Career message berhasil dihapus");
+        setHapusNama("none");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Gagal menghapus message. Silakan coba lagi nanti.");
+      }finally {
+        setIsLoading(false);
+      }
+    }
+
+    async function handleDeleteAll() {
+      setIsLoading(true);
+      try {
+        const res = await fetch("http://localhost:3001/api/removeAllCareer", {
+          method: "DELETE",
+        });
+    
+        if (!res.ok) {
+          throw new Error("Gagal menghapus semua message");
+        }
+    
+        const data = await res.json();
+        console.log("Career message berhasil dihapus semua:", data);
+        alert("Career message berhasil dihapus semua");
+        setHapus(false);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
+      }finally {
+        setIsLoading(false);
+      }
+    }
     
   return (
     <>
@@ -329,16 +479,16 @@ export default function AdminCareer() {
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
                     </button>
                     { urutanActive && 
-                        <div className='absolute z-7 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-11 right-62 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
+                        <div className='absolute z-7 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-11 right-52 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
                             <button onClick={az} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>A - Z</button>
                             <button onClick={za} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Z - A</button>
                             <button onClick={newklik} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>New</button>
                             <button onClick={old} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Old</button>
                         </div>
                     }
-                    <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#7e8bec] text-[#001893] flex flex-row gap-2 rounded-lg bg-[#e6edff] hover:bg-[#7e8bec] hover:text-white active:bg-[#001893] cursor-pointer'>
+                    <button onClick={() => setReadMessage(true)} className='text-[12px] font-bold p-2 px-5 border-1 border-[#7e8bec] text-[#001893] flex flex-row gap-2 rounded-lg bg-[#e6edff] hover:bg-[#7e8bec] hover:text-white active:bg-[#001893] cursor-pointer'>
                         <Image width={30} height={30} src='/email-dibuka-blue.svg' alt="Dashboard" className='w-3 h-3 mt-[.5px]'/>
-                        Dibaca semua</button>
+                        Read All</button>
                     <button onClick={() => {
                         setHapus(true);
                     }} 
@@ -351,7 +501,7 @@ export default function AdminCareer() {
                 <div className='flex flex-row gap-2 items-center'>
                     <p className='text-[12px] font-semibold text-[#710093]'>Dibutuhkan :</p>
                     {RequirementsCareer.map((career, index) => (
-                        <button onClick={() => {
+                        <button key={index} onClick={() => {
                             setPickTitle(career.title);
                             setPickDescription(career.description);
                             setPickListRequirement(career.list);
@@ -389,48 +539,49 @@ export default function AdminCareer() {
                     }}  className='text-[12px] font-bold p-1 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Look Request</button>
                     : null}
                 </div>
-                {listUsers.map((user, index) => (
-                        <div className={`w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] hover:bg-purple-50 shadow-md gap-2 relative`}>
+                {Careers.map((user, index) => (
+                        <div key={index} className={`w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] hover:bg-purple-50 shadow-md gap-2 relative`}>
                             
                             <Image width={30} height={30} src={
-                                user.Position === 'Web Frontend' ? '/code.svg' :
-                                user.Position === 'Web Backend' ? '/server.svg' :
-                                user.Position === 'Django Developer' ? '/django.svg' :
-                                user.Position === 'Android Developer' ? '/android.svg' :
-                                user.Position === 'IOS Developer' ? '/apple.svg' :
-                                user.Position === 'Administrator' ? '/admin.svg' :
+                                user.position === 'Web Frontend' ? '/code.svg' :
+                                user.position === 'Web Backend' ? '/server.svg' :
+                                user.position === 'Django Developer' ? '/django.svg' :
+                                user.position === 'Android Developer' ? '/android.svg' :
+                                user.position === 'IOS Developer' ? '/apple.svg' :
+                                user.position === 'Administrator' ? '/admin.svg' :
                                 '/code.svg'
                             } alt="Dashboard" className='w-8 border-1 border-purple-300 rounded-full h-8 p-2 absolute'/>
                             <button key={index} onClick={() => {
                                 klikDetail();
-                                setPickNama(user.nama);
+                                setPickNama(user.name);
                                 setPickEmail(user.email);
-                                setPickTanggal(user.tanggal);
-                                setPickPesan(user.pesan);
-                                setPickGaji(user.gaji);
-                                user.status = 'dibaca';
+                                setPickTanggal(user.createdAt);
+                                setPickPesan(user.message);
+                                setPickPhone(user.phone);
+                                setPickGaji(user.rate);
+                                handleBuka(user.id, user.email);
                             }} className='w-full flex items-start justify-start pl-10'>
                                 <div className='flex flex-col items-start'>
-                                    <p className={`text-[13px] font-bold text-[#710093] ${user.dibacaOleh.length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.nama,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.tanggal}</span></p>
+                                    <p className={`text-[13px] font-bold text-[#710093] ${user.dibaca_oleh.length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.name,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.createdAt}</span></p>
                                     <p className='text-[12px] font-light'>from 
                                         <span className='text-[#004793]'> {truncateTextByChar(user.from,10)} -</span>
                                         <span className='text-[#004793]'> {user.email} -</span>
-                                        <span> {truncateTextByChar(user.pesan,70)}</span>
+                                        <span> {truncateTextByChar(user.message,70)}</span>
                                     </p>
                                 </div>
                             </button>
-                            <button onClick={()=>{setHapusNama(user.nama);}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                            <button onClick={()=>{setHapusNama(user.name);setPickId(user.id);setPickEmail(user.email)}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
-                            {user.status === 'bdibaca' ?
-                            <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
-                            :
+                            {user.dibaca_oleh.length > 0 ?
                             <Image width={30} height={30} src='/email-dibuka.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
+                            :
+                            <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
                             }
-                            {user.dibacaOleh.length > 0 && user.dibacaOleh.map((admin, idx) => (
-                                <button onClick={() => {
-                                    if (edit === 'none' || edit !== user.nama) {
-                                        setEdit(user.nama);
+                            {user.dibaca_oleh.length > 0 && user.dibaca_oleh.map((admin, idx) => (
+                                <button key={idx} onClick={() => {
+                                    if (edit === 'none' || edit !== user.name) {
+                                        setEdit(user.name);
                                     }else {
                                         setEdit('none');
                                     }
@@ -438,16 +589,16 @@ export default function AdminCareer() {
                                     <Image width={30} height={30} src='/eye.svg' alt="Dashboard" className='w-4 h-4 absolute right-24 top-6 cursor-pointer'/>
                                 </button>
                             ))}
-                            {user.dibacaOleh.length > 0  && edit === user.nama ?
+                            {user.dibaca_oleh.length > 0  && edit === user.name ?
                                 <div className='absolute z-1 w-30 border-[1.5px] rounded-lg border-[#cb48f3] top-4 right-30 backdrop-blur-md flex flex-col justify-center items-center gap-2 py-4'>
-                                    {user.dibacaOleh.map((admin, idx) => (
+                                    {user.dibaca_oleh.map((admin, idx) => (
                                         <p key={idx} className='text-[12px] font-semibold text-[#710093]'>{admin}</p>
                                     ))}
                                 </div>
                             : null}
                             <p className='text-[12px] font-bold text-[#009351] absolute w-20 border border-[#009351] bg-[#effff4] flex flex-row gap-2 p-2 right-32 top-4 rounded-md'>
                                 <Image width={140} height={140} src="/dollar-green.svg" alt="MySQL" className="w-2" />
-                                {user.gaji.toFixed(2)}
+                                {Number(user.rate).toFixed(2)}
                             </p>
                             <p className='absolute top-1 right-37 text-[12px] text-[#710093] p-0 px-2 rounded-md bg-purple-100'>Rate</p>
                             <button className='absolute top-4 right-55 p-2 hover:border hover:border-[#e079ff] rounded-full'>
@@ -459,11 +610,11 @@ export default function AdminCareer() {
             </div>
 
             {/* EDIT USER */}
-            {hapus || hapusNama !== "none" || detail || detailRequest || request ?
+            {hapus || hapusNama !== "none" || detail || detailRequest || request || readMessage ?
             <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
             : null
             }
-            {hapus || hapusNama !== "none" || detail || detailRequest || request ?
+            {hapus || hapusNama !== "none" || detail || detailRequest || request || readMessage ?
             <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
             : null
             }
@@ -471,7 +622,9 @@ export default function AdminCareer() {
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
                 <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
+                <button onClick={handleDeleteAll} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {isLoading ? "delete..." : "Yes"}
+                </button>
                 <button onClick={() => setHapus(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
@@ -480,8 +633,10 @@ export default function AdminCareer() {
             {hapusNama !== "none" &&
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>Message ini</span> dihapus ?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
+                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>Message {hapusNama} ini</span> dihapus ?</p>
+                <button onClick={()=>(handleDelete(pickId, pickEmail))} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {isLoading ? "delete..." : "Yes"}
+                </button>
                 <button onClick={() => setHapusNama("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
@@ -502,6 +657,16 @@ export default function AdminCareer() {
                     </button>
                 </div>
             </>
+            }
+            {readMessage &&
+            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                <p className='text-[12px] text-[#005dcf] w-30 text-center'>Yakin <span className='font-bold'>Semua Message</span> dibaca ?</p>
+                <button onClick={() => (handleBukaSemua("saya"),setReadMessage(false))} className='p-2 w-full rounded-md bg-[#9fc7ff] hover:bg-[#0055ff] active:bg-[#001d93] text-[12px] text-[#005dcf] hover:text-white font-bold'>Yes</button>
+                <button onClick={() => setReadMessage(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                </button>
+            </div>
             }
             {detail &&
                 <div className='fixed w-150 z-6 top-20 left-90 p-7 border-1 rounded-lg border-[#930062] bg-white flex flex-col justify-center items-start'>
@@ -528,11 +693,12 @@ export default function AdminCareer() {
                         </div>
                         <div className='p-3 gap-2 border-2 border-[#7fd6af] text-[#007541] font-bold flex flex-row bg-[#effff4] rounded-md'>
                             <Image width={140} height={140} src="/dollar-green.svg" alt="MySQL" className="w-2" />
-                            {pickGaji.toFixed(2)}
+                            {Number(pickGaji).toFixed(2)}
                         </div>
                     </div>
                     
-                    <p className='max-h-50 pr-5 mt-3 overflow-auto text-[12px] text-justify'><span className='text-[#710093] font-semibold'>Pesan : </span>{pickPesan}</p>
+                    <p className='max-h-50 pr-5 mt-3 overflow-auto text-[12px] text-justify'><span className='text-[#710093] font-bold'>Number Phone : </span>{pickPhone}</p>
+                    <p className='max-h-50 pr-5 mt-3 overflow-auto text-[12px] text-justify'><span className='text-[#710093] font-bold'>Pesan : </span>{pickPesan}</p>
 
                     <button onClick={() => klikDetail()} className={`fixed z-6 top-16 right-73 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
