@@ -68,120 +68,9 @@ export default function AdminCareer() {
     const [titleForm, setTitleForm] = useState('');
     const [descriptionForm, setDescriptionForm] = useState('');
     const [listForm, setListForm] = useState<string[]>([]);
-
-
-    const listUsers = [
-        {
-          nama: "Andi Saputra",
-          tanggal: "2025-08-11",
-          email: "andi@example.com",
-          from: "Jakarta",
-          Position: "Django Developer",
-          gaji: 500,
-          pesan: "Mengajukan kenaikan gaji karena penambahan tanggung jawab.",
-          dibacaOleh: ["admin1", "admin2"],
-          status: "baru",
-        },
-        {
-          nama: "Budi Hartono",
-          tanggal: "2025-08-10",
-          email: "budi@example.com",
-          from: "Bandung",
-          Position: "Django Developer",
-          gaji: 433.33,
-          pesan: "Meminta izin cuti selama 5 hari untuk keperluan keluarga.",
-          dibacaOleh: ["admin2"],
-          status: "proses",
-        },
-        {
-          nama: "Velly Rhis Faulina",
-          tanggal: "2025-08-09",
-          email: "citra@example.com",
-          from: "Surabaya",
-          Position: "IOS Developer",
-          gaji: 533.33,
-          pesan: "Memberikan laporan progres proyek terakhir. Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ullam tenetur unde doloribus, tempore repudiandae accusantium perferendis nemo ducimus iusto architecto at laudantium! Voluptate tempora, earum, consequatur atque aperiam nesciunt possimus facilis officia assumenda veritatis dolorum, illum beatae dolorem. Numquam, doloremque quisquam! A odit magnam nobis! Impedit fugiat consequuntur libero odio, reiciendis alias doloremque optio, a modi, quasi beatae? In veniam ipsum quam adipisci, suscipit numquam aliquid debitis neque earum quo at voluptas? Voluptatem et porro, aliquam natus at, repellendus eum nihil velit culpa sed quos enim aspernatur illum fugit doloribus fugiat eligendi eaque ut? Modi esse sed libero voluptas. iusto architecto at laudantium! Voluptate tempora, earum, consequatur atque aperiam nesciunt possimus facilis officia assumenda veritatis dolorum, illum beatae dolorem. Numquam, doloremque quisquam! A odit magnam nobis! Impedit fugiat consequuntur libero odio, reiciendis alias doloremque optio, a modi, quasi beatae? In veniam ipsum quam adipisci, suscipit numquam aliquid debitis neque earum quo at voluptas? Voluptatem et porro, aliquam natus at, repellendus eum nihil velit culpa sed quos enim aspernatur illum fugit doloribus fugiat eligendi eaque ut? Modi esse sed libero voluptas.",
-          dibacaOleh: [],
-          status: "selesai",
-        },
-        {
-          nama: "Kireisa Hana Mustofa",
-          tanggal: "2025-08-08",
-          email: "dian@example.com",
-          from: "Yogyakarta",
-          Position: "Django Developer",
-          gaji: 466.67,
-          pesan: "Mengajukan permintaan pelatihan tambahan.",
-          dibacaOleh: ["admin1"],
-          status: "baru",
-        },
-        {
-          nama: "Eka Wulandari",
-          tanggal: "2025-08-07",
-          email: "eka@example.com",
-          from: "Semarang",
-          Position: "IOS Developer",
-          gaji: 480,
-          pesan: "Melaporkan keterlambatan proyek karena faktor cuaca.",
-          dibacaOleh: ["admin3"],
-          status: "proses",
-        },
-        {
-          nama: "Fajar Nugroho",
-          tanggal: "2025-08-06",
-          email: "fajar@example.com",
-          from: "Makassar",
-          Position: "Administrator",
-          gaji: 460,
-          pesan: "Meminta upgrade laptop kerja untuk menunjang performa.",
-          dibacaOleh: [],
-          status: "baru",
-        },
-        {
-          nama: "Gita Anggraini",
-          tanggal: "2025-08-05",
-          email: "gita@example.com",
-          from: "Medan",
-          Position: "IOS Developer",
-          gaji: 513.33,
-          pesan: "Memberikan testimoni positif atas kerja sama tim.",
-          dibacaOleh: ["admin1", "admin2"],
-          status: "selesai",
-        },
-        {
-          nama: "Hadi Santoso",
-          tanggal: "2025-08-04",
-          email: "hadi@example.com",
-          from: "Bali",
-          Position: "IOS Developer",
-          gaji: 500,
-          pesan: "Mengajukan perubahan jam kerja.",
-          dibacaOleh: [],
-          status: "baru",
-        },
-        {
-          nama: "Indah Permata",
-          tanggal: "2025-08-03",
-          email: "indah@example.com",
-          from: "Palembang",
-          Position: "Django Developer",
-          gaji: 486.67,
-          pesan: "Meminta klarifikasi terkait proyek baru.",
-          dibacaOleh: ["admin2"],
-          status: "proses",
-        },
-        {
-          nama: "Joko Susanto",
-          tanggal: "2025-08-02",
-          email: "joko@example.com",
-          from: "Lampung",
-          Position: "Administrator",
-          gaji: 520,
-          pesan: "Memberikan laporan akhir bulan.",
-          dibacaOleh: ["admin1", "admin3"],
-          status: "selesai",
-        },          
-      ];
+    const [love, setLove] = useState(false);
+    const [loveTesting, setLoveTesting] = useState(false);
+    const [date, setDate] = useState("");
 
     const [pickTitle, setPickTitle] = useState('All');
     const [pickDescription, setPickDescription] = useState('We are looking for a Django Developer to join our team. You will be responsible for building and maintaining web applications using Django framework.');
@@ -271,7 +160,7 @@ export default function AdminCareer() {
             }
         };
         fetchCareers();
-    }, [urutan, detail]);
+    }, [urutan, detail, loveTesting]);
 
     const sortCareers = (data: Career[], order: string) => {
         const sortedData = [...data];
@@ -281,25 +170,46 @@ export default function AdminCareer() {
                 return sortedData.sort((a, b) => 
                     a.name.localeCompare(b.name)
                 );
-            
             case 'Z - A':
                 return sortedData.sort((a, b) => 
                     b.name.localeCompare(a.name)
                 );
-            
             case 'New':
                 return sortedData.sort((a, b) => 
                     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
                 );
-            
             case 'Old':
                 return sortedData.sort((a, b) => 
                     new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
                 );
-            
             default:
                 return sortedData;
         }
+    };
+
+    const searchLove = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/api/searchCareerByLove", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          console.log("Data ditemukan:", data.careers || []);
+          const sortedData = sortCareers(data.careers || [], urutan);
+          setCareers(sortedData);
+        } else {
+          console.error("Error:", data.error);
+          setCareers([]);
+        }
+      } catch (error) {
+        console.error("Request error:", error);
+        setCareers([]);
+      }
     };
 
     const [formDataRequirement, setFormDataRequirement] = useState({
@@ -368,6 +278,23 @@ export default function AdminCareer() {
         }
     };
 
+    async function handleLove(id: string) {
+      try {
+        const res = await fetch("http://localhost:3001/api/loveCareer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id}),
+        });
+    
+        const data = await res.json();
+        console.log("id:", id);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
     async function handleBuka(id: string, email: string) {
       try {
         const res = await fetch("http://localhost:3001/api/openCareer", {
@@ -385,6 +312,34 @@ export default function AdminCareer() {
         console.error("Error:", error);
       }
     }
+
+    const searchDate = async (selectedDate: string) => {
+      setDate(selectedDate);
+
+      try {
+        const res = await fetch("http://localhost:3001/api/searchCareersByDate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ date: selectedDate }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          console.log("Data ditemukan:", data.careers || []);
+          const sortedData = sortCareers(data.careers || [], urutan);
+          setCareers(sortedData);
+        } else {
+          console.error("Error:", data.error);
+          setCareers([]);
+        }
+      } catch (error) {
+        console.error("Request error:", error);
+        setCareers([]);
+      }
+    };
 
     async function handleBukaSemua(email: string) {
       try {
@@ -471,10 +426,17 @@ export default function AdminCareer() {
                     </button>
                 </div>
                 <div className='relative flex flex-row gap-2'>
-                    <button className='hover:bg-purple-50 p-2 hover:border hover:border-[#e079ff] rounded-full'>
-                        <Image width={140} height={140} src="/love.svg" alt="MySQL" className="w-4" />
+                    <button onClick={()=>{
+                        setLove(!love);
+                        if(love===false){
+                            searchLove();
+                        }else if(love===true){
+                            setLoveTesting(!loveTesting);
+                        }
+                        }} className='hover:bg-purple-50 p-2 hover:border hover:border-[#e079ff] rounded-full'>
+                        <Image width={140} height={140} src={love ? `/love-fill.svg` : '/love.svg'} alt="MySQL" className="w-4" />
                     </button>
-                    <input type="date" className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
+                    <input type="date" value={date} onChange={(e) => searchDate(e.target.value)} className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
                     <button onClick={diKlik} className='cursor-pointer bg-white text-[#710093] font-semibold flex flex-row text-[12px] px-4 py-2 rounded-full hover:bg-[#f9e6ff] transition duration-200'>{urutan}
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
                     </button>
@@ -541,7 +503,6 @@ export default function AdminCareer() {
                 </div>
                 {Careers.map((user, index) => (
                         <div key={index} className={`w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] hover:bg-purple-50 shadow-md gap-2 relative`}>
-                            
                             <Image width={30} height={30} src={
                                 user.position === 'Web Frontend' ? '/code.svg' :
                                 user.position === 'Web Backend' ? '/server.svg' :
@@ -601,8 +562,11 @@ export default function AdminCareer() {
                                 {Number(user.rate).toFixed(2)}
                             </p>
                             <p className='absolute top-1 right-37 text-[12px] text-[#710093] p-0 px-2 rounded-md bg-purple-100'>Rate</p>
-                            <button className='absolute top-4 right-55 p-2 hover:border hover:border-[#e079ff] rounded-full'>
-                                <Image width={140} height={140} src="/love.svg" alt="MySQL" className="w-4" />
+                            <button onClick={()=>(
+                                setLoveTesting(!loveTesting),
+                                handleLove(user.id)
+                                )} className='absolute top-4 right-55 p-2 hover:border hover:border-[#e079ff] rounded-full'>
+                                <Image width={140} height={140} src={user.favorite===true ? `/love-fill.svg` : '/love.svg'} alt="MySQL" className="w-4" />
                             </button>
                         </div>
                     

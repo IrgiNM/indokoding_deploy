@@ -29,6 +29,7 @@ export default function Navbar({
   const [showSignup, setShowSignup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [showActive, setShowActive] = useState('none');
+  const [love, setLove] = useState(false);
   
   useEffect(() => {
     const fetchCookies = async () => {
@@ -51,7 +52,7 @@ export default function Navbar({
     };
   
     fetchCookies();
-  }, [showLogOut, showAuth]);
+  }, [showLogOut, showAuth, token]);
 
   useEffect(() => {
     const checkLoginSuccess = async () => {
@@ -60,9 +61,9 @@ export default function Navbar({
       if (token && showAuth) {
         // Parse JSON kalau cookies disimpan sebagai string
         const parsed = typeof token === "string" ? JSON.parse(token) : token;
-        setShowAuth(false);
         // Ambil token dan simpan ke state
         setToken(parsed?.token || "");
+        setShowAuth(false);
       } else {
         setToken("");
       }
@@ -79,7 +80,7 @@ export default function Navbar({
     return () => {
       window.alert = originalAlert;
     };
-  }, [showAuth]);
+  }, [showAuth, token]);
   
   const handleClick = () => {
     if (isClick === true) {
@@ -134,7 +135,7 @@ export default function Navbar({
       link: () => {
         console.log("Our Work clicked");
         setBgNav("Our Work");
-        onNavClick.ourWork?.(); 
+        onNavClick.ourWork?.();
       },
     },
     {
@@ -275,15 +276,17 @@ export default function Navbar({
       : null
     }
 
-    {showAuth && token === '' ?
-      <button onClick={()=>(setShowAuth(false))} className={`fixed z-13 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+    {showAuth && (token === '' || token === null) ?
+      <button onClick={()=>(setShowAuth(false))} className={`fixed z-13 lg:top-27 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
           <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
       </button>
     : null
     }
 
     {showAuth &&
-      <PopUpLogin/>
+      <PopUpLogin onClick={()=>{
+        setShowAuth(false);
+      }}/>
     }
     </>
   );

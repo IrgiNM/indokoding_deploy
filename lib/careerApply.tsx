@@ -292,7 +292,9 @@ export default function CareerApply() {
         : null
         }
         {showAuth &&
-          <PopUpLogin/>
+          <PopUpLogin onClick={()=>{
+            setShowAuth(false);
+          }}/>
         }
     </div>
   )

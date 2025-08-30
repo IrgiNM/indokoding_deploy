@@ -5,7 +5,11 @@ import { auth, db, provider, signInWithPopup } from '../firebase/config'; // ses
 import Cookies from "js-cookie";
 import { getCookies, setCookies } from "@/utils/tokenController";
 
-export default function PopUpLogin() {
+type PopUpLoginProps = {
+  onClick: () => void;
+};
+
+export default function PopUpLogin({ onClick }: PopUpLoginProps) {
 
     const [token, setToken] = useState("");
     const [username, setUsername] = useState("");
@@ -86,10 +90,7 @@ export default function PopUpLogin() {
                 console.log("Respon dari server:", data);
 
                 if (res.ok) {
-                Cookies.set("token", data.token, { expires: 7 }); // berlaku 7 hari
-                Cookies.set("username", data.username, { expires: 7 });
-                Cookies.set("email", data.email, { expires: 7 });
-                Cookies.set("role", data.role, { expires: 7 });
+                await setCookies(data.token, data.username, data.email, data.role);
                 setUsername(data.username);
                 setEmail(data.email);
                 setRole(data.role);
@@ -175,17 +176,17 @@ export default function PopUpLogin() {
         const token = await user.getIdToken();
     
         // Simpan ke cookies (biar sama dengan login biasa)
-        Cookies.set("token", token, { expires: 7 }); // berlaku 7 hari
-        Cookies.set("username", user.displayName || "Guest", { expires: 7 });
-        Cookies.set("email", user.email || "", { expires: 7 });
-        Cookies.set("role", "guest", { expires: 7 });
+        // Cookies.set("token", token, { expires: 7 }); // berlaku 7 hari
+        // Cookies.set("username", user.displayName || "Guest", { expires: 7 });
+        // Cookies.set("email", user.email || "", { expires: 7 });
+        // Cookies.set("role", "guest", { expires: 7 });
+        await setCookies(token, (user.displayName ? user.displayName : "empty"), (user.email ? user.email : "empty@gmail.com"), "guest");
     
         // Simpan ke state React
         setToken(token);
         setUsername(user.displayName || "Guest");
         setEmail(user.email || "");
         setRole("guest");
-    
         setMessage("Login dengan Google berhasil!");
         alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (error) {
@@ -204,7 +205,7 @@ export default function PopUpLogin() {
     <div className='fixed z-11 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
     <div className='fixed z-10 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
 
-    <div className='fixed lg:top-40 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-12'>
+    <div className='fixed lg:top-30 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-12'>
         <p className='text-2xl font-bold text-purple-900 mb-2'>Log In</p>
         <input type="text" placeholder='Username'
             name="username"
@@ -221,7 +222,7 @@ export default function PopUpLogin() {
         </button>
         <div className='w-full h-[1px] mt-2 bg-purple-100'></div>
         <button 
-          onClick={() => (setShowLogIn(false), handleGoogleLogin())}
+          onClick={() => (setShowLogIn(false), onClick, handleGoogleLogin())}
           className='w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-purple-900 border font-semibold bg-white hover:bg-blue-50 mt-2'
         >
             <Image width={140} height={140} src="/google-color.svg" alt="" className="w-5"/>
@@ -231,12 +232,12 @@ export default function PopUpLogin() {
           Don't have an account? Please <button onClick={() => setShowSignUp(!showSignUp)} className='font-bold cursor-pointer'>sign up</button> first.
         </p>
     </div>
-    <button onClick={() => (setShowLogIn(false))} className={`relative z-8 lg:-top-13 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+    <button onClick={() => (setShowLogIn(false))} className={`relative z-8 lg:-top-16 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
     </button>
     {showSignUp && message !== "User berhasil disimpan" && token === "" ?
-            <div className='fixed top-50 right-10 z-12'>
-                <div className='fixed lg:top-40 lg:left-108 top-40 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7'>
+            <div className='fixed top-30 right-10 z-12'>
+                <div className='fixed lg:top-30 lg:left-108 top-40 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7'>
                     <p className='text-2xl font-bold text-purple-900 mb-2'>Sign Up</p>
                     <input type="text" name="username"
                         placeholder="Username"
@@ -270,7 +271,7 @@ export default function PopUpLogin() {
                     have an account? Please <button onClick={() => setShowSignUp(false)} className='font-bold cursor-pointer'>Log In</button>
                     </p>
                 </div>
-                <button onClick={() => setShowSignUp(false)} className={`relative z-8 lg:-top-13 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                <button onClick={() => setShowSignUp(false)} className={`relative z-8 lg:-top-3 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>

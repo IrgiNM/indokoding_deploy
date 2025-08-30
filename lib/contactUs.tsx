@@ -316,7 +316,9 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     : null
     }
     {showAuth &&
-      <PopUpLogin/>
+      <PopUpLogin onClick={()=>{
+        setShowAuth(false);
+      }}/>
     }
     </>
   );
