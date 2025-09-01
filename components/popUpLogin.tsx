@@ -193,6 +193,7 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         await setCookies(token, (user.displayName ? user.displayName : "empty"), (user.email ? user.email : "empty@gmail.com"), "guest");
     
         // Simpan ke state React
+        onClick;
         setToken(token);
         setUsername(user.displayName || "Guest");
         setEmail(user.email || "");

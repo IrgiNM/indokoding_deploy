@@ -56,31 +56,44 @@ export default function Navbar({
 
   useEffect(() => {
     const checkLoginSuccess = async () => {
-      // Cek jika ada token dan popup masih terbuka
-      const token = await getCookies();
-      if (token && showAuth) {
-        // Parse JSON kalau cookies disimpan sebagai string
-        const parsed = typeof token === "string" ? JSON.parse(token) : token;
-        // Ambil token dan simpan ke state
-        setToken(parsed?.token || "");
+      try {
+        const savedToken = await getCookies();
+        // Langsung parse token kalau ada
+        const parsed = savedToken
+          ? typeof savedToken === "string"
+            ? JSON.parse(savedToken)
+            : savedToken
+          : null;
+  
+        if (parsed?.token) {
+          setToken(parsed.token);
+        }
+        // ✅ Apapun kondisi token, popup login akan ditutup
         setShowAuth(false);
-      } else {
-        setToken("");
+      } catch (error) {
+        console.error("Gagal membaca cookies:", error);
+        setShowAuth(false); // Tetap ditutup walau ada error
       }
     };
-    // Untuk menangkap alert yang mungkin muncul
+  
+    // Override alert bawaan browser
     const originalAlert = window.alert;
-    window.alert = function(message) {
-      if (message.includes('Login successful') || message.includes('berhasil')) {
-        setTimeout(checkLoginSuccess, 100); // Beri sedikit delay
+    window.alert = function (message) {
+      if (
+        message.includes("Login successful") ||
+        message.includes("berhasil")
+      ) {
+        setTimeout(checkLoginSuccess, 100);
+        setShowAuth(false); // ✅ Beri jeda sebelum menutup
       }
       return originalAlert.apply(this, arguments as any);
     };
-    
+  
     return () => {
-      window.alert = originalAlert;
+      window.alert = originalAlert; // Kembalikan alert bawaan saat unmount
     };
-  }, [showAuth, token]);
+  }, [showAuth]);
+  
   
   const handleClick = () => {
     if (isClick === true) {
@@ -184,6 +197,11 @@ export default function Navbar({
     },
   ];
     
+  useEffect(() => {
+    console.log("showAuth", showAuth);
+    console.log("token",token);
+  }, [token, showAuth]);
+
   return (
     <>
     <div className={`w-full lg:h-20 h-40 bg-gradient-to-b fixed top-0 from-white z-20 to-transparent ${scrolled ? 'lg:bg-white lg:shadow-md' : 'lg:bg-gradient-to-b lg:from-white lg:to-transparent'}`}>
@@ -284,9 +302,7 @@ export default function Navbar({
     }
 
     {showAuth &&
-      <PopUpLogin onClick={()=>{
-        setShowAuth(false);
-      }} isClose={false} isRole="guest"/>
+      <PopUpLogin onClick={()=>setShowAuth(false)} isClose={false} isRole="guest"/>
     }
     </>
   );
