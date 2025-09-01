@@ -2,6 +2,9 @@ import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
+import { User } from "./adminDashboard";
+import { useRouter } from "next/navigation";
+import { getCookies } from "@/utils/tokenController";
 
 export interface Career {
     id: string;   
@@ -31,6 +34,33 @@ export default function AdminCareer() {
     const [requirment, setRequirment] = useState(1);
     const [isUpdate, setIsUpdate] = useState(false);
     const [readMessage, setReadMessage] = useState(false);
+
+    const [token, setToken] = useState<User>();
+    const router = useRouter();
+    
+    useEffect(() => {
+      const fetchCookies = async () => {
+        try {
+          const savedToken = await getCookies(); // <- pakai await
+    
+          if (savedToken) {
+            // Parse JSON kalau cookies disimpan sebagai string
+            const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+            // Ambil token dan simpan ke state
+            setToken(parsed);
+            console.log("Token dari cookies:", parsed);
+          } else {
+            setToken(undefined);
+            router.push("/admin");
+          }
+        } catch (error) {
+          console.error("Gagal mengambil cookies:", error);
+          setToken(undefined);
+        }
+      };
+    
+      fetchCookies();
+    }, []);
     
     const [urutan, setUrutan] = useState("A - Z");
     const [urutanActive, setUrutanActive] = useState(false);

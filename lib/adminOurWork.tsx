@@ -1,5 +1,8 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { User } from './adminDashboard';
+import { useRouter } from 'next/navigation';
+import { getCookies } from '@/utils/tokenController';
 
 type OurWorkData = {
     title: string;
@@ -14,6 +17,33 @@ export default function AdminOurWork() {
     const [deleteAll, setDeleteAll] = useState(false);
     const [deleteData, setDeleteData] = useState("none");
     const [editData, setEditData] = useState<OurWorkData | null>(null);
+
+    const [token, setToken] = useState<User>();
+    const router = useRouter();
+    
+    useEffect(() => {
+      const fetchCookies = async () => {
+        try {
+          const savedToken = await getCookies(); // <- pakai await
+    
+          if (savedToken) {
+            // Parse JSON kalau cookies disimpan sebagai string
+            const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+            // Ambil token dan simpan ke state
+            setToken(parsed);
+            console.log("Token dari cookies:", parsed);
+          } else {
+            setToken(undefined);
+            router.push("/admin");
+          }
+        } catch (error) {
+          console.error("Gagal mengambil cookies:", error);
+          setToken(undefined);
+        }
+      };
+    
+      fetchCookies();
+    }, []);
 
     const [urutan, setUrutan] = useState("A - Z");
     const [urutanActive, setUrutanActive] = useState(false);

@@ -204,10 +204,10 @@ export default function Navbar({
       </div>
 
       {token ?
-      <button onClick={() => (setShowLogOut(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-[#f00070] text-[12px] absolute right-10 top-7 font-bold text-[#f00070] hover:bg-[#f00070] hover:text-white'>Log Out</button>
+      <button onClick={() => (setShowLogOut(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-[#f00070] text-[12px] absolute lg:right-10 right-19 top-7 font-bold text-[#f00070] hover:bg-[#f00070] hover:text-white'>Log Out</button>
       :
       <>
-      <button onClick={() => (setShowActive("login"), setShowAuth(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-purple-600 text-[12px] absolute lg:right-8 right-17 top-7 font-bold text-purple-600 hover:bg-purple-600 hover:text-white'>Log In</button>
+      <button onClick={() => (setShowActive("login"), setShowAuth(true))} className='p-2 px-5 rounded-full border-1 transition-all duration-300 border-purple-600 text-[12px] absolute lg:right-8 right-19 top-7 font-bold text-purple-600 hover:bg-purple-600 hover:text-white'>Log In</button>
       </>
       }
       
@@ -277,7 +277,7 @@ export default function Navbar({
     }
 
     {showAuth && (token === '' || token === null) ?
-      <button onClick={()=>(setShowAuth(false))} className={`fixed z-13 lg:top-27 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+      <button onClick={()=>(setShowAuth(false))} className={`fixed z-25 lg:top-27 lg:right-105 top-37 right-8 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
           <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
       </button>
     : null
@@ -286,7 +286,7 @@ export default function Navbar({
     {showAuth &&
       <PopUpLogin onClick={()=>{
         setShowAuth(false);
-      }}/>
+      }} isClose={false} isRole="guest"/>
     }
     </>
   );

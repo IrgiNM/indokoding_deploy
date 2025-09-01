@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation';
+import { getCookies } from '@/utils/tokenController';
+
 
 interface User {
   id: string;
-  username?: string;
+  username: string;
   email?: string;
   role?: string;
-  createdAt?: string;
+  createdAt: string;
   total_join: number;
   total_career: number;
   total_contact: number;
@@ -18,9 +21,37 @@ export default function AdminUsers() {
     const [id, setId] = useState("");
     const [hapusNama, setHapusNama] = useState("none");
     const [isLoading, setIsLoading] = useState(false);
+    const [date, setDate] = useState("");
+
+    const [token, setToken] = useState<User>();
+    const router = useRouter();
+    
+    useEffect(() => {
+      const fetchCookies = async () => {
+        try {
+          const savedToken = await getCookies(); // <- pakai await
+    
+          if (savedToken) {
+            // Parse JSON kalau cookies disimpan sebagai string
+            const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+            // Ambil token dan simpan ke state
+            setToken(parsed);
+            console.log("Token dari cookies:", parsed);
+          } else {
+            setToken(undefined);
+            router.push("/admin");
+          }
+        } catch (error) {
+          console.error("Gagal mengambil cookies:", error);
+          setToken(undefined);
+        }
+      };
+    
+      fetchCookies();
+    }, []);
     
 
-    const [urutan, setUrutan] = useState("A - Z");
+    const [urutan, setUrutan] = useState("New");
     const [urutanActive, setUrutanActive] = useState(false);
     const diKlik = () => {
         setUrutanActive(!urutanActive);
@@ -50,25 +81,81 @@ export default function AdminUsers() {
     }
 
     const [listUsers, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
-
     useEffect(() => {
-        const fetchUsers = async () => {
-        try {
-            // panggil backend API
-            const res = await fetch("http://localhost:3001/api/getUsers"); 
-            const data = await res.json();
-            setUsers(data);
-        } catch (err) {
-            console.error("Gagal fetch users:", err);
-        } finally {
-            setLoading(false);
-        }
+        const fetchContacts = async () => {
+            try {
+                // panggil backend API
+                const res = await fetch("http://localhost:3001/api/getUsers"); 
+                const data = await res.json();
+                
+                // Urutkan data berdasarkan pilihan sorting
+                const sortedData = sortContacts(data, urutan);
+                setUsers(sortedData);
+            } catch (err) {
+                console.error("Gagal fetch contacts:", err);
+            } finally {
+                setIsLoading(false);
+            }
         };
-        fetchUsers();
-    }, [hapusNama]);
+        fetchContacts();
+    }, [urutan, hapusNama]);
 
-    if (loading) return <p>Loading...</p>;
+    const sortContacts = (data: User[], order: string) => {
+        const sortedData = [...data];
+        
+        switch (order) {
+            case 'A - Z':
+                return sortedData.sort((a, b) => 
+                    a.username.localeCompare(b.username)
+                );
+            
+            case 'Z - A':
+                return sortedData.sort((a, b) => 
+                    b.username.localeCompare(a.username)
+                );
+            
+            case 'New':
+                return sortedData.sort((a, b) => 
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+            
+            case 'Old':
+                return sortedData.sort((a, b) => 
+                    new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                );
+            
+            default:
+                return sortedData;
+        }
+    };
+
+    const searchDate = async (selectedDate: string) => {
+      setDate(selectedDate);
+
+      try {
+        const res = await fetch("http://localhost:3001/api/searchUsersByDate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ date: selectedDate }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          console.log("Data ditemukan:", data.contacts || []);
+          const sortedData = sortContacts(data.contacts || [], urutan);
+          setUsers(sortedData);
+        } else {
+          console.error("Error:", data.error);
+          setUsers([]);
+        }
+      } catch (error) {
+        console.error("Request error:", error);
+        setUsers([]);
+      }
+    };
 
     async function handleDelete(userId: string) {
       setIsLoading(true);
@@ -117,19 +204,18 @@ export default function AdminUsers() {
                     </button>
                 </div>
                 <div className='relative flex flex-row gap-2'>
-                    <input type="date" className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
+                    <input type="date" value={date} onChange={(e) => searchDate(e.target.value)} className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
                     <button onClick={diKlik} className='cursor-pointer bg-white text-[#710093] font-semibold flex flex-row text-[12px] px-4 py-2 rounded-full hover:bg-[#f9e6ff] transition duration-200'>{urutan}
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
                     </button>
                     { urutanActive && 
-                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-43 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
+                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-23 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
                             <button onClick={az} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>A - Z</button>
                             <button onClick={za} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Z - A</button>
                             <button onClick={newklik} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>New</button>
                             <button onClick={old} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Old</button>
                         </div>
                     }
-                    <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Reset</button>
                     <button onClick={() => {
                         setHapus(true);
                     }} 
@@ -162,9 +248,9 @@ export default function AdminUsers() {
                         </button>
                         { edit === user.username &&
                         <div className='absolute z-2 p-2 border-[1.5px] rounded-lg border-[#cb48f3] -top-3 right-7 backdrop-blur-xl flex flex-col justify-center items-center gap-2 px-4'>
-                            <button className=' w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7ea8ec] text-[#002593] rounded-lg bg-[#e6f5ff] hover:bg-[#7ea8ec] hover:text-white active:bg-[#002593] flex flex-row justify-between'>Message <span className='font-bold'>{user.total_contact}</span></button>
-                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] flex flex-row justify-between'>JoinUs <span className='font-bold'>{user.total_join}</span></button>
-                            <button className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7eec8e] text-[#00934c] rounded-lg bg-[#e6ffee] hover:bg-[#7eec8e] hover:text-white active:bg-[#00934c] flex flex-row justify-between'>Career <span className='font-bold'>{user.total_career}</span></button>
+                            <button onClick={() => {router.push("/admin/contact")}} className=' w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7ea8ec] text-[#002593] rounded-lg bg-[#e6f5ff] hover:bg-[#7ea8ec] hover:text-white active:bg-[#002593] flex flex-row justify-between'>Message <span className='font-bold'>{user.total_contact}</span></button>
+                            <button onClick={() => {router.push("/admin/joinUs")}} className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] flex flex-row justify-between'>JoinUs <span className='font-bold'>{user.total_join}</span></button>
+                            <button onClick={() => {router.push("/admin/career")}} className='w-27 text-[12px] font-light p-2 px-5 border-1 border-[#7eec8e] text-[#00934c] rounded-lg bg-[#e6ffee] hover:bg-[#7eec8e] hover:text-white active:bg-[#00934c] flex flex-row justify-between'>Career <span className='font-bold'>{user.total_career}</span></button>
                         </div>
                         }
                     </div>

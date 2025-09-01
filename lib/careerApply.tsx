@@ -294,7 +294,7 @@ export default function CareerApply() {
         {showAuth &&
           <PopUpLogin onClick={()=>{
             setShowAuth(false);
-          }}/>
+          }} isClose={false} isRole="guest"/>
         }
     </div>
   )

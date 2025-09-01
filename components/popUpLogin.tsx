@@ -4,12 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
 import Cookies from "js-cookie";
 import { getCookies, setCookies } from "@/utils/tokenController";
+import { useRouter } from 'next/navigation';
 
 type PopUpLoginProps = {
   onClick: () => void;
+  isClose: boolean;
+  isRole: string;
 };
 
-export default function PopUpLogin({ onClick }: PopUpLoginProps) {
+export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps) {
 
     const [token, setToken] = useState("");
     const [username, setUsername] = useState("");
@@ -18,7 +21,9 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
     const [message, setMessage] = useState<string>("");
     const [showSignUp, setShowSignUp] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
+    const [signUpClose, setSignUpClose] = useState(isClose);
+    const [isAdmin, setIsAdmin] = useState(isRole);
+    const router = useRouter();
 
     const [showLogIn, setShowLogIn] = useState(true);
 
@@ -52,7 +57,7 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "guest",
+      role: isAdmin,
     });   
 
     const handleChangeRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +101,9 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
                 setRole(data.role);
                 setMessage(data.message);
                 setToken(data.token);
-                console.log("Token:", data.token);
+                if(data.role==='admin'){
+                  router.push("/admin/dashboard");
+                }
                 alert(data.message || "Registrasi berhasil!");
                 } else {
                 alert(data.message || "Registrasi gagal");
@@ -115,7 +122,7 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
     const [formDataLogin, setFormDataLogin] = useState({ 
         username: "", 
         password: "",
-        role: "guest",
+        role: isAdmin,
     });
     
     const handleChangeLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,7 +144,7 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
           body: JSON.stringify({
             username: formDataLogin.username,
             password: formDataLogin.password,
-            role: "guest",
+            role: isAdmin,
           }),
         });
     
@@ -151,6 +158,9 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
           setRole(data.role);
           setToken(data.token);
           setMessage(data.message);
+          if(data.role==='admin'){
+            router.push("/admin/dashboard");
+          }
           alert(data.message || "Login berhasil!");
         } else {
           alert(data.error || "Login gagal");
@@ -271,9 +281,11 @@ export default function PopUpLogin({ onClick }: PopUpLoginProps) {
                     have an account? Please <button onClick={() => setShowSignUp(false)} className='font-bold cursor-pointer'>Log In</button>
                     </p>
                 </div>
-                <button onClick={() => setShowSignUp(false)} className={`relative z-8 lg:-top-3 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                {signUpClose &&
+                  <button onClick={() => setShowSignUp(false)} className={`relative z-8 lg:-top-3 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
+                }
             </div>
             : null
     }
