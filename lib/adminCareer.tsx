@@ -494,7 +494,7 @@ export default function AdminCareer() {
             {/* CAREER CONTROL */}
             <div className='fixed z-3 top-23 w-full pr-55 flex flex-row gap-2 justify-between items-center p-3 backdrop-blur-lg border-b-1 border-[#cb48f3]'>
                 <div className='flex flex-row gap-2 items-center'>
-                    <p className='text-[12px] font-semibold text-[#710093]'>Dibutuhkan :</p>
+                    <p className='text-[12px] font-semibold text-[#710093]'>Required :</p>
                     {RequirementsCareer.map((career, index) => (
                         <button key={index} onClick={() => {
                             setPickTitle(career.title);
@@ -520,7 +520,7 @@ export default function AdminCareer() {
                     <button onClick={() => {
                         setRequest(true);
                     }} 
-                    className='cursor-pointer text-[12px] font-bold p-2 px-5 text-white rounded-lg bg-[#ce2dff] hover:bg-[#e078ff] active:bg-[#390056]'>+ Change Request</button>
+                    className='cursor-pointer text-[12px] font-bold p-2 px-5 text-white rounded-lg bg-[#ce2dff] hover:bg-[#e078ff] active:bg-[#390056]'>+ Edit Job</button>
                 </div>
             </div>
 
@@ -531,7 +531,7 @@ export default function AdminCareer() {
                     { pickTitle !== 'All' ?
                     <button onClick={() => {
                         setDetailRequest(!detailRequest);
-                    }}  className='text-[12px] font-bold p-1 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Look Request</button>
+                    }}  className='text-[12px] font-bold p-1 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Manage Requirements</button>
                     : null}
                 </div>
                 {Careers.map((user, index) => (

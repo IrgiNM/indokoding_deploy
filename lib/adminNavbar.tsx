@@ -63,11 +63,11 @@ export default function AdminNavbar(props: AdminNavbarProps) {
         <div className='w-full h-[.5px] bg-[#48ff94] mb-2'/>
         <button onClick={() => {router.push("/admin/ourWork")}} className='w-full px-7 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
             <Image width={30} height={30} src={navActive === 'photo1' ? `/photo1-active.svg` : '/photo1.svg'} alt="Dashboard" className='w-3 h-3'/>
-            <p className={`text-[12px] ${navActive === 'photo1' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>Photo Our Work</p>
+            <p className={`text-[12px] ${navActive === 'photo1' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>Our Work Photos</p>
         </button>
         <button onClick={() => {router.push("/admin/aboutUs")}} className='w-full px-7 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
             <Image width={30} height={30} src={navActive === 'photo2' ? `/photo2-active.svg` : '/photo2.svg'} alt="Dashboard" className='w-3 h-3'/>
-            <p className={`text-[12px] ${navActive === 'photo2' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>Photo About Us</p>
+            <p className={`text-[12px] ${navActive === 'photo2' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>About Us Photos</p>
         </button>
         <button onClick={() => (setShowLogOut(true))} className='fixed left-6 bottom-15 p-2 px-5 rounded-full border-1 transition-all duration-300 border-[#f00070] text-[12px] mt-40 font-bold text-[#f00070] hover:bg-[#f00070] hover:text-white'>Log Out</button>
         {showLogOut && token !== '' ?

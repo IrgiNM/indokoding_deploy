@@ -228,7 +228,7 @@ export default function AdminJoinUs() {
                     <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Reset</button>
                     <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#7e8bec] text-[#001893] flex flex-row gap-2 rounded-lg bg-[#e6edff] hover:bg-[#7e8bec] hover:text-white active:bg-[#001893] cursor-pointer'>
                         <Image width={30} height={30} src='/email-dibuka-blue.svg' alt="Dashboard" className='w-3 h-3 mt-[.5px]'/>
-                        Dibaca semua</button>
+                        Read All</button>
                     <button onClick={() => {
                         setHapus(true);
                     }} 
