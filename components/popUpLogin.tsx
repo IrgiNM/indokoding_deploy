@@ -221,7 +221,7 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         }
         alert(data.message || "Registrasi berhasil!");
         } else {
-        alert(data.message || "Registrasi gagal");
+        alert(data.error || "Registrasi gagal");
         }
     
         
