@@ -38,6 +38,9 @@ export default function Admincontacts() {
             const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
             setToken(parsed);
+            if(parsed.role==="guest"){
+                router.push("/");
+            }
             console.log("Token dari cookies:", parsed);
           } else {
             setToken(undefined);

@@ -184,14 +184,9 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
     
         // Ambil token dari Firebase
         const token = await user.getIdToken();
-    
-        // Simpan ke cookies (biar sama dengan login biasa)
-        // Cookies.set("token", token, { expires: 7 }); // berlaku 7 hari
-        // Cookies.set("username", user.displayName || "Guest", { expires: 7 });
-        // Cookies.set("email", user.email || "", { expires: 7 });
-        // Cookies.set("role", "guest", { expires: 7 });
+
         await setCookies(token, (user.displayName ? user.displayName : "empty"), (user.email ? user.email : "empty@gmail.com"), "guest");
-    
+
         // Simpan ke state React
         onClick;
         setToken(token);
@@ -199,6 +194,90 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         setEmail(user.email || "");
         setRole("guest");
         setMessage("Login dengan Google berhasil!");
+
+        const res = await fetch("http://localhost:3001/api/registerGoogleUser", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.displayName,
+          email: user.email,
+          role: isAdmin,
+        }),
+        });
+
+        const data = await res.json();
+        console.log("Respon dari server:", data);
+
+        if (res.ok) {
+        setUsername(data.username);
+        setEmail(data.email);
+        setRole(data.role);
+        setMessage(data.message);
+        setToken(data.token);
+        if(data.role==='admin'){
+          router.push("/admin/dashboard");
+        }
+        alert(data.message || "Registrasi berhasil!");
+        } else {
+        alert(data.message || "Registrasi gagal");
+        }
+    
+        
+        alert(`Welcome ${user.displayName || "Guest"}!`);
+      } catch (error) {
+        console.error("Google login error:", error);
+        alert("Login Google gagal!");
+      }
+    };
+
+    const handleGoogleLoginAdmin = async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        console.log("User Info:", user);
+    
+        // Ambil token dari Firebase
+        const token = await user.getIdToken();
+
+        await setCookies(token, (user.displayName ? user.displayName : "empty"), (user.email ? user.email : "empty@gmail.com"), "guest");
+
+        // Simpan ke state React
+        onClick;
+        setMessage("Login dengan Google berhasil!");
+        
+        const res = await fetch("http://localhost:3001/api/loginGoogleUser",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: user.displayName,
+          email: user.email,
+          role: isAdmin,
+        }),
+        });
+
+        const data = await res.json();
+        console.log("Respon dari server:", data);
+
+        if (res.ok) {
+        await setCookies(data.token, data.username, data.email, data.role);
+        setUsername(data.username);
+        setEmail(data.email);
+        setRole(data.role);
+        setMessage(data.message);
+        setToken(data.token);
+        if(data.role==='admin'){
+          router.push("/admin/dashboard");
+        }
+        alert(data.message || "Registrasi berhasil!");
+        } else {
+        alert(data.message || "Registrasi gagal");
+        }
+    
+        
         alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (error) {
         console.error("Google login error:", error);
