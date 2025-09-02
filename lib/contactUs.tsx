@@ -5,6 +5,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { db } from '../firebase/config'; // sesuaikan path
 import Cookies from "js-cookie";
 import { getCookies } from '@/utils/tokenController';
+import { GiToken } from 'react-icons/gi';
 
 interface User {
   id: string;
@@ -112,6 +113,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     const token = await getCookies();
     if (!token) {
       // alert("Anda harus login terlebih dahulu untuk mengirim pesan");
+      console.log("No token found, showing popup", token);
       setShowPopup(true);
       return;
     }
@@ -298,7 +300,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
     : null
     }
-    {showPopup && token === '' ?
+    {showPopup && (token === '' || token === null) ?
     <div className='fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
         <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
         <p className='text-[12px] text-purple-900 w-30 text-justify'>Oops! You need to <span className='font-bold'>Log In</span> first before filling out the form.</p>

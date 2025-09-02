@@ -241,13 +241,11 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         // Ambil token dari Firebase
         const token = await user.getIdToken();
 
-        await setCookies(token, (user.displayName ? user.displayName : "empty"), (user.email ? user.email : "empty@gmail.com"), "guest");
-
         // Simpan ke state React
         onClick;
         setMessage("Login dengan Google berhasil!");
         
-        const res = await fetch("http://localhost:3001/api/loginGoogleUser",{
+        const res = await fetch("http://localhost:3001/api/loginGoogleAdmin",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -255,29 +253,31 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         body: JSON.stringify({
           username: user.displayName,
           email: user.email,
-          role: isAdmin,
+          role: 'admin',
         }),
         });
-
+        
         const data = await res.json();
         console.log("Respon dari server:", data);
 
         if (res.ok) {
-        await setCookies(data.token, data.username, data.email, data.role);
-        setUsername(data.username);
-        setEmail(data.email);
-        setRole(data.role);
-        setMessage(data.message);
-        setToken(data.token);
-        if(data.role==='admin'){
-          router.push("/admin/dashboard");
-        }
-        alert(data.message || "Registrasi berhasil!");
+          await setCookies(data.token, data.username, data.email, data.role);
+          setUsername(data.username);
+          setEmail(data.email);
+          setRole(data.role);
+          setMessage(data.message);
+          setToken(data.token);
+          if(data.role==='admin'){
+            router.push("/admin/dashboard");
+          }
+          alert(data.message || "Registrasi berhasil!");
         } else {
-        alert(data.message || "Registrasi gagal");
+          console.log("username yang dikirim:", user.displayName);
+          console.log("email yang dikirim:", user.email);
+          console.log("role yang dikirim:", 'admin');
+          alert(data.error || "Registrasi gagal!");
         }
     
-        
         alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (error) {
         console.error("Google login error:", error);
@@ -311,8 +311,16 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
             {isLoading ? "Try LogIn..." : "Log In"}
         </button>
         <div className='w-full h-[1px] mt-2 bg-purple-100'></div>
-        <button 
-          onClick={() => (setShowLogIn(false), onClick, handleGoogleLogin())}
+        <button
+          onClick={() => {
+            setShowLogIn(false);
+            onClick;
+            if(isAdmin==="admin"){
+              handleGoogleLoginAdmin()
+            }else if(isAdmin==="guest"){
+              handleGoogleLogin()
+            }
+          }}
           className='w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-purple-900 border font-semibold bg-white hover:bg-blue-50 mt-2'
         >
             <Image width={140} height={140} src="/google-color.svg" alt="" className="w-5"/>

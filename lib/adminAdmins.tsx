@@ -140,7 +140,7 @@ export default function AdminAdmins() {
             console.log("Respon dari server:", data);
     
             if (!res.ok) {
-                alert(data.message || "Create Admin gagal");
+                alert(data.error || "Create Admin gagal");
                 return;
             }
     
