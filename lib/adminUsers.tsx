@@ -230,7 +230,7 @@ export default function AdminUsers() {
                     <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.username?.charAt(0)}</div>
                         <div className='flex flex-col'>
                             <p className='text-[13px] font-bold text-[#710093]'>{truncateTextByChar(user.username || '', 5)} <span className='font-light text-[10px] ml-2'>{user.createdAt}</span></p>
-                            <p className='text-[12px] font-light'>{user.email}</p>
+                            <p className='text-[12px] font-light'>{truncateTextByChar(user.email || '',20)}</p>
                         </div>
                         <button
                         onClick={() => {

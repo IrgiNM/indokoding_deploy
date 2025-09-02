@@ -586,7 +586,7 @@ export default function AdminCareer() {
                             {user.dibaca_oleh.length > 0  && edit === user.name ?
                                 <div className='absolute z-1 w-30 border-[1.5px] rounded-lg border-[#cb48f3] top-4 right-30 backdrop-blur-md flex flex-col justify-center items-center gap-2 py-4'>
                                     {user.dibaca_oleh.map((admin, idx) => (
-                                        <p key={idx} className='text-[12px] font-semibold text-[#710093]'>{admin}</p>
+                                        <p key={idx} className='text-[12px] font-semibold text-[#710093]'>{truncateTextByChar(admin,10)}</p>
                                     ))}
                                 </div>
                             : null}
