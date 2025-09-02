@@ -276,6 +276,7 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
           console.log("email yang dikirim:", user.email);
           console.log("role yang dikirim:", 'admin');
           alert(data.error || "Registrasi gagal!");
+          router.push("/");
         }
     
         alert(`Welcome ${user.displayName || "Guest"}!`);
@@ -284,8 +285,6 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         alert("Login Google gagal!");
       }
     };
-      
-
     
 
   return (

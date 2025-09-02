@@ -553,10 +553,10 @@ export default function AdminCareer() {
                                 setPickPesan(user.message);
                                 setPickPhone(user.phone);
                                 setPickGaji(user.rate);
-                                handleBuka(user.id, user.email);
+                                handleBuka(user.id, (token?.username || "saya"));
                             }} className='w-full flex items-start justify-start pl-10'>
                                 <div className='flex flex-col items-start'>
-                                    <p className={`text-[13px] font-bold text-[#710093] ${user.dibaca_oleh.length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.name,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.createdAt}</span></p>
+                                    <p className={`text-[13px] font-bold text-[#710093] ${(user.dibaca_oleh || []).some(pembaca => pembaca === (token?.username || "saya")) ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(user.name,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{user.createdAt}</span></p>
                                     <p className='text-[12px] font-light'>from 
                                         <span className='text-[#004793]'> {truncateTextByChar(user.from,10)} -</span>
                                         <span className='text-[#004793]'> {user.email} -</span>
@@ -567,7 +567,7 @@ export default function AdminCareer() {
                             <button onClick={()=>{setHapusNama(user.name);setPickId(user.id);setPickEmail(user.email)}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
-                            {user.dibaca_oleh.length > 0 ?
+                            {(user.dibaca_oleh || []).some(pembaca => pembaca === (token?.username || "saya")) ?
                             <Image width={30} height={30} src='/email-dibuka.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
                             :
                             <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>

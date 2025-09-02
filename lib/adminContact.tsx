@@ -327,10 +327,10 @@ export default function Admincontacts() {
                                 setPickEmail(contact.email);
                                 setPickTanggal(contact.createdAt);
                                 setPickIsi(contact.message);
-                                handleBuka(contact.id, contact.email);
+                                handleBuka(contact.id, (token?.username || "saya"));
                             }} className='w-full flex items-start justify-start'>
                                 <div className='flex flex-col items-start'>
-                                    <p className={`text-[13px] font-bold text-[#710093] ${(contact.dibaca_oleh || []).length > 0 ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(contact.subject,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{contact.createdAt}</span></p>
+                                    <p className={`text-[13px] font-bold text-[#710093] ${(contact.dibaca_oleh || []).some(pembaca => pembaca === (token?.username || "saya")) ? 'opacity-30' : 'opacity-100'}`}>{truncateTextByChar(contact.subject,60)} <span className='font-light text-[10px] text-[#00930f] ml-2'>{contact.createdAt}</span></p>
                                     <p className='text-[12px] font-light'>from 
                                         <span className='text-[#004793]'> {contact.username} -</span>
                                         <span className='text-[#004793]'> {contact.email} -</span>
@@ -341,10 +341,10 @@ export default function Admincontacts() {
                             <button onClick={()=>{(setHapusMessage(contact.id),setPickEmail(contact.email))}} className='h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
-                            {(contact.dibaca_oleh || []).length > 0 ?
-                            <Image width={30} height={30} src='/email-dibuka.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
-                            :
-                            <Image width={30} height={30} src='/email-blue.svg' alt="Dashboard" className='w-4 h-4 absolute right-15 top-6'/>
+                            {(contact.dibaca_oleh || []).some(pembaca => pembaca === (token?.username || "saya")) ?
+                              <Image width={30} height={30} src='/email-dibuka.svg' alt="Email sudah dibaca" className='w-4 h-4 absolute right-15 top-6'/>
+                              :
+                              <Image width={30} height={30} src='/email-blue.svg' alt="Email belum dibaca" className='w-4 h-4 absolute right-15 top-6'/>
                             }
                             {(contact.dibaca_oleh || []).length > 0 && contact.dibaca_oleh.map((admin, idx) => (
                                 <button onClick={() => {
