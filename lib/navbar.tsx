@@ -1,6 +1,5 @@
 "use client";
 import NavLink from '@/components/navLink';
-import PopUpLogin from '@/components/popUpLogin';
 import { deleteCookies, getCookies } from '@/utils/tokenController';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -297,10 +296,10 @@ export default function Navbar({
       </button>
     : null
     }
-
+{/* 
     {showAuth &&
       <PopUpLogin onClick={()=>setShowAuth(false)} isClose={false} isRole="guest"/>
-    }
+    } */}
     </>
   );
 }
