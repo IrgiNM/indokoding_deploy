@@ -1,9 +1,7 @@
-import { collection, getDocs, or, query, where } from "firebase/firestore";
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { db } from '../firebase/config';
 import { getCookies } from "@/utils/tokenController";
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from 'react';
 
 interface User {
   id: string;

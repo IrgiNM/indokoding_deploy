@@ -1,10 +1,9 @@
+import { getCookies, setCookies } from "@/utils/tokenController";
 import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
-import Cookies from "js-cookie";
-import { getCookies, setCookies } from "@/utils/tokenController";
-import { useRouter } from 'next/navigation';
 
 type PopUpLoginProps = {
   onClick: () => void;
@@ -326,7 +325,7 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
             LogIn with Google
         </button>
         <p className='text-[12px] mt-1 text-justify'>
-          Don't have an account? Please <button onClick={() => setShowSignUp(!showSignUp)} className='font-bold cursor-pointer'>sign up</button> first.
+          Do not have an account? Please <button onClick={() => setShowSignUp(!showSignUp)} className='font-bold cursor-pointer'>sign up</button> first.
         </p>
     </div>
     <button onClick={() => (setShowLogIn(false))} className={`relative z-8 lg:-top-16 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>

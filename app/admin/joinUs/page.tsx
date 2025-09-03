@@ -1,5 +1,4 @@
 "use client";
-import AdminContact from '@/lib/adminContact';
 import AdminJoinUs from '@/lib/adminJoinUs';
 import AdminNavbar from '@/lib/adminNavbar';
 

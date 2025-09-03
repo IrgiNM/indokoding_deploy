@@ -1,10 +1,10 @@
+import { getCookies } from "@/utils/tokenController";
 import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase/config';
 import { User } from "./adminDashboard";
-import { useRouter } from "next/navigation";
-import { getCookies } from "@/utils/tokenController";
 
 export interface Career {
     id: string;   

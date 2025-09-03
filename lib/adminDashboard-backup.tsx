@@ -1,6 +1,6 @@
 import { getCookies } from '@/utils/tokenController';
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function AdminDashboard() {
     const [token, setToken] = useState<string | null>(null);

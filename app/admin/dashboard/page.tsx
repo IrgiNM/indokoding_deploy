@@ -1,8 +1,6 @@
 "use client";
-import React from 'react'
-import AdminNavbar from '@/lib/adminNavbar';
-import AdminMain from '@/lib/adminMain';
 import AdminDashboard from '@/lib/adminDashboard';
+import AdminNavbar from '@/lib/adminNavbar';
 
 export default function page() {
   return (

@@ -1,11 +1,7 @@
 import PopUpLogin from '@/components/popUpLogin';
-import { collection, getDocs, or, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
+import { getCookies } from '@/utils/tokenController';
 import Image from 'next/image';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { db } from '../firebase/config'; // sesuaikan path
-import Cookies from "js-cookie";
-import { getCookies } from '@/utils/tokenController';
-import { GiToken } from 'react-icons/gi';
 
 interface User {
   id: string;

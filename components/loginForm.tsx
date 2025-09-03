@@ -1,8 +1,7 @@
-import { collection, getDocs, or, query, where } from "firebase/firestore";
+import Cookies from "js-cookie";
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
-import Cookies from "js-cookie";
+import { auth, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
 
 
 export default function LoginForm(props: { onSignUp: () => void }) {
@@ -140,7 +139,7 @@ export default function LoginForm(props: { onSignUp: () => void }) {
             LogIn with Google
         </button>
         <p className='text-[12px] mt-1 text-justify'>
-          Don't have an account? Please <button onClick={props.onSignUp} className='font-bold cursor-pointer'>sign up</button> first.
+          Do not have an account? Please <button onClick={props.onSignUp} className='font-bold cursor-pointer'>sign up</button> first.
         </p>
     </div>
     {/* <button onClick={props.onClose} className={`relative z-8 lg:-top-13 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>

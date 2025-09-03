@@ -1,12 +1,10 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import AdminHeader from '@/components/AdminHeader';
-import LoginForm from '@/components/LoginAdmin';
 import Decorations from '@/components/DecorationAdmin';
 import PopUpLogin from '@/components/popUpLogin';
 import { User } from '@/lib/adminDashboard';
-import { useRouter } from 'next/navigation';
 import { getCookies } from '@/utils/tokenController';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 
 const AdminPage = () => {

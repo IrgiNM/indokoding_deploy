@@ -1,8 +1,8 @@
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { User } from './adminDashboard';
-import { useRouter } from 'next/navigation';
 import { getCookies } from '@/utils/tokenController';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { User } from './adminDashboard';
 
 type OurWorkData = {
     title: string;

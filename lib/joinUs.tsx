@@ -1,6 +1,4 @@
-import { SelectChangeEvent } from '@mui/material/Select';
 import Image from 'next/image';
-import * as React from 'react';
 
 export default function JoinUsPage() {
   return (

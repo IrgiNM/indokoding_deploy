@@ -1,8 +1,8 @@
 import { getCookies } from '@/utils/tokenController';
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { Career } from './adminCareer';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Career } from './adminCareer';
 
 
 export interface User {

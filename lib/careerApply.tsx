@@ -1,9 +1,9 @@
-import CardCareer from '@/components/cardCareer'
+import CardCareer from '@/components/cardCareer';
 import PopUpLogin from '@/components/popUpLogin';
-import { Career, RequirementCareer } from '@/type/careerType';
+import { RequirementCareer } from '@/type/careerType';
 import { getCookies } from '@/utils/tokenController';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 export default function CareerApply() {
     const [diKlik, setDiKlik] = useState('Django Developer');

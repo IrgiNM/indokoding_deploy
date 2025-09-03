@@ -1,12 +1,10 @@
 "use client";
 import NavLink from '@/components/navLink';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import AuthPopUp from '@/components/authPopUp';
 import PopUpLogin from '@/components/popUpLogin';
-import Cookies from "js-cookie";
 import { deleteCookies, getCookies } from '@/utils/tokenController';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Navbar({
   page,
