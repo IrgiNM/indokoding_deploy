@@ -22,11 +22,11 @@ export default function Navbar({
   const [isClick, setIsClick] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [showLogOut, setShowLogOut] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
+  // const [showSignup, setShowSignup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
-  const [showActive, setShowActive] = useState('none');
-  const [love, setLove] = useState(false);
+  // const [showActive, setShowActive] = useState('none');
+  // const [love, setLove] = useState(false);
   
   useEffect(() => {
     const fetchCookies = async () => {
@@ -75,15 +75,18 @@ export default function Navbar({
   
     // Override alert bawaan browser
     const originalAlert = window.alert;
-    window.alert = function (message) {
+    window.alert = function (...args: [message?: string]) {
+      const [message] = args;
+    
       if (
-        message.includes("Login successful") ||
-        message.includes("berhasil")
+        message?.includes("Login successful") ||
+        message?.includes("berhasil")
       ) {
         setTimeout(checkLoginSuccess, 100);
-        setShowAuth(false); // ✅ Beri jeda sebelum menutup
+        setShowAuth(false);
       }
-      return originalAlert.apply(this, arguments as any);
+    
+      return originalAlert.apply(this, args);
     };
   
     return () => {
