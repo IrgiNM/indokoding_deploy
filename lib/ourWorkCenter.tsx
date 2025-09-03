@@ -3,7 +3,7 @@ import React, { forwardRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/effect-coverflow";
+// import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import Image from "next/image";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
@@ -131,7 +131,7 @@ const dataCard = [
           <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto6.avif" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
       </Swiper>
-      <div className="flex flex-col relative lg:w-120 w-70 mb-100 bottom-5">
+      <div className="flex flex-col relative lg:w-120 lg:mb-30 lg:bottom-5 w-60 mb-100 bottom-5">
         {
           dataCard.map((item, index) => (
             <div key={index} className={`absolute transition-opacity duration-500 ease-in-out ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`}>

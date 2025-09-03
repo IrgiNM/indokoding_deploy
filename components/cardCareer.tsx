@@ -13,7 +13,7 @@ export default function CardCareer(props: CardCareerProps) {
   return (
     <button onClick={props.onClick} className={`${isActive === title ? ' lg:w-80 lg:h-160 w-60 h-155' : ' lg:w-55 lg:h-80 lg:hover:w-60 lg:hover:-ml-2 lg:hover:-mt-2 lg:hover:h-85 lg:transition-all lg:duration-200 w-55 h-70 hover:w-60 hover:-ml-2 hover:-mt-2 hover:h-85 transition-all duration-200'} cursor-pointer lg:relative lg:border-1 lg:border-[#007924] lg:bg-white lg:rounded-xl lg:p-3 lg:flex lg:flex-col lg:justify-start lg:items-start lg:gap-4 relative border-1 border-[#007924] bg-white rounded-xl p-2 flex flex-col justify-start items-start gap-4`}>
         <div className=' lg:w-full lg:h-full lg:bg-[#d6ffe8] lg:mb-15 lg:p-5 lg:rounded-lg lg:border-1 lg:border-[#4adf77] w-full h-full bg-[#d6ffe8] mb-15 p-5 rounded-lg border-1 border-[#4adf77]'>
-            <h1 className={` lg:text-lg lg:font-bold lg:mb-3 lg:text-left text-md font-bold mb-3 text-left ${props.id === 1 ? 'text-[#007924]' : props.id === 2 ?'text-[#006779]' : 'text-[#794100]'}`}>{props.title}</h1>
+            <h1 className={` lg:text-lg lg:font-bold lg:mb-3 lg:text-left text-md font-bold mb-3 text-left text-[#007924]`}>{props.title}</h1>
             <p className='lg:text-sm lg:text-justify text-[12px] text-justify'>{isActive === title ? props.description : truncateText(props.description, 10)}</p>
             {isActive === title && 
             <ul className=' lg:w-53 lg:mt-3 lg:pl-5 w-40 mt-3 pl-5'>
@@ -28,7 +28,7 @@ export default function CardCareer(props: CardCareerProps) {
             Detail
             </button>
             {isActive === title &&
-                <button className={`${isActive === title ? 'lg:p-19 p-11' : 'lg:p-7 p-11'} lg:py-2 lg:bg-[#007924] lg:text-white lg:font-semibold lg:rounded-md lg:text-sm lg:hover:bg-[#223d43] lg:transition py-2 bg-[#007924] text-white font-semibold rounded-md text-[12px] hover:bg-[#223d43] transition cursor-pointer`}>
+                <button onClick={props.applyClick} className={`${isActive === title ? 'lg:p-19 p-11' : 'lg:p-7 p-11'} lg:py-2 lg:bg-[#007924] lg:text-white lg:font-semibold lg:rounded-md lg:text-sm lg:hover:bg-[#223d43] lg:transition py-2 bg-[#007924] text-white font-semibold rounded-md text-[12px] hover:bg-[#223d43] transition cursor-pointer`}>
                 Apply
                 </button>
             }

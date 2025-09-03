@@ -37,7 +37,7 @@ export default function Page() {
       <AboutUs null='' ref={aboutUsRef}/>
       <OurSkills  />
       <Service  />
-      <ContactUs ref={contactUsRef} />
+      {/* <ContactUs ref={contactUsRef} /> */}
       <Footer />
     </div>
   )

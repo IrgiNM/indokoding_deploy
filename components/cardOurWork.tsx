@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+
 import { TypeOurWork } from '@/type/typeOurWork'
 import Image from 'next/image'
 
