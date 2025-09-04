@@ -1,7 +1,7 @@
 "use client";
 import NavLink from "@/components/navLink";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import AuthPopUp from "@/components/authPopUp";
 import PopUpLogin from "@/components/popUpLogin";
@@ -21,6 +21,7 @@ export default function Navbar({
 }) {
   const [bgNav, setBgNav] = useState(page);
   const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [token, setToken] = useState<string | null>(null);
@@ -119,6 +120,8 @@ export default function Navbar({
   //   setToken(storedToken);
   // }, [showLogOut, showAuth]);
 
+  console.log(pathname);
+
   const logout = (): void => {
     try {
       deleteCookies();
@@ -149,7 +152,7 @@ export default function Navbar({
       link: () => {
         console.log("Our Work clicked");
         setBgNav("Our Work");
-        onNavClick.ourWork?.();
+        pathname === "/career" || pathname === "/bookOnline" ? router.push("/#our-work") : onNavClick.ourWork?.();
       },
     },
     {
@@ -160,7 +163,7 @@ export default function Navbar({
       link: () => {
         console.log("About Us clicked");
         setBgNav("About Us");
-        onNavClick.aboutUs?.();
+        pathname === "/career" || pathname === "/bookOnline" ? router.push("/#about-us") : onNavClick.aboutUs?.();
       },
     },
     {
@@ -171,7 +174,7 @@ export default function Navbar({
       link: () => {
         console.log("Contact clicked");
         setBgNav("Contact");
-        onNavClick.contactUs?.();
+        pathname === "/career" || pathname === "/bookOnline" ? router.push("/#contact-us") : onNavClick.contactUs?.();
       },
     },
     {

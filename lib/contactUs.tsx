@@ -185,7 +185,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
   return (
     <>
-      <div ref={ref} className="relative top-20 right-0"></div>
+      <div ref={ref} id="contact-us" className="relative top-20 right-0"></div>
       <div className=" lg:w-full lg:pl-20 lg:mb-0 lg:mt-50 lg:relative lg:flex lg:flex-col lg:justify-center lg:items-center lg:pr-20 w-full px-5 mb-0 mt-50 relative flex flex-col justify-center items-center">
         <div className=" lg:w-full lg:h-50 lg:bg-gradient-to-b lg:from-[#a9ff91] lg:to-[#17fbff] lg:absolute lg:-top-20 lg:-z-1 w-full h-30 bg-gradient-to-b from-[#a9ff91] to-[#17fbff] absolute -top-10 -z-1"></div>
         <div className="lg:relative relative z-3 flex flex-row lg:w-200 w-70">

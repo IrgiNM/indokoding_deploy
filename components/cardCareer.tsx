@@ -19,7 +19,7 @@ export default function CardCareer(props: Props) {
   }
 
   return (
-    <button
+    <div
       onClick={props.onClick}
       className={`${
         isActive === title
@@ -52,7 +52,7 @@ export default function CardCareer(props: Props) {
         )}
       </div>
       <div
-        className={` lg:absolute lg:bottom-3 lg:w-58 lg:flex lg:flex-row lg:justify-start lg:items-center absolute bottom-2 w-58 flex ${
+        className={`lg:absolute lg:bottom-3 lg:w-58 lg:flex lg:flex-row lg:justify-start lg:items-center absolute bottom-2 w-58 flex ${
           isActive === title ? "flex-row" : "flex-col"
         } justify-start items-start`}
       >
@@ -75,6 +75,6 @@ export default function CardCareer(props: Props) {
           </button>
         )}
       </div>
-    </button>
+    </div>
   );
 }

@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react'
 function AboutUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
-    <div ref={ref} className="relative top-60 right-0"></div>
+    <div ref={ref} id="about-us" className="relative top-60 right-0"></div>
     <div className='lg:mt-100 lg:flex lg:flex-row lg:justify-center lg:items-center lg:w-full lg:relative flex flex-col justify-center items-center relative w-full gap-y-10'>
       <div className='lg:w-270 lg:pl-25 w-70'>
         <div className='relative'>

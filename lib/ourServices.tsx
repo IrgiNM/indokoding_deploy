@@ -30,7 +30,7 @@ const services = [
 function ServicesComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   return (
     <>
-    <div ref={ref} className='lg:w-full lg:flex lg:flex-col lg:relative lg:items-center lg:gap-2 lg:mt-15 w-full flex flex-col relative items-center mt-15 mb-70'>
+    <div ref={ref} id="our-service" className='lg:w-full lg:flex lg:flex-col lg:relative lg:items-center lg:gap-2 lg:mt-15 w-full flex flex-col relative items-center mt-15 mb-70'>
         <div className='relative'>
             <Image width={140} height={140} src="/assets/image/2line-yellow.png" alt="2line" className="lg:absolute lg:-right-10 lg:-top-5 lg:w-10 lg:h-10 absolute -right-7 -top-3 w-7 h-7"/>
             <p className='lg:text-[16px] text-[12px]'>what we do</p>

@@ -1,7 +1,7 @@
 import { roRO } from '@mui/material/locale';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Footer(
   {
@@ -19,6 +19,7 @@ export default function Footer(
   }
 ) {
   const router = useRouter();
+  const pathname = usePathname();
   const [bgNav, setBgNav] = useState(page);
 
   const onHandleClick = () => {
@@ -61,17 +62,17 @@ export default function Footer(
           <li><button onClick={()=>{
             setBgNav("Our Work");
             console.log(bgNav," clicked");
-            onNavClick.ourWork?.();
+            pathname === "/career" || pathname === "/bookOnline" ? router.push("/#our-work") : onNavClick.ourWork?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Work</button></li>
           <li><button onClick={()=>{
             setBgNav("About Us");
             console.log(bgNav," clicked");
-            onNavClick.aboutUs?.();
+            pathname === "/career" || pathname === "/bookOnline" ? router.push("/#about-us") : onNavClick.aboutUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
           <li><button onClick={()=>{
             setBgNav("Contact");
             console.log(bgNav," clicked");
-            onNavClick.contactUs?.();
+            pathname === "/career" || pathname === "/bookOnline" ? router.push("/#contact-us") : onNavClick.contactUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Contact</button></li>
           <li><button onClick={()=>{
             setBgNav("Career");
@@ -91,17 +92,17 @@ export default function Footer(
           <li><button onClick={()=>{
             setBgNav("About Us");
             console.log(bgNav," clicked");
-            onNavClick.aboutUs?.();
+            pathname === "/career" || pathname === "/bookOnline" ? router.push("/#about-us") : onNavClick.aboutUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
           <li><button onClick={()=>{
             setBgNav("About Us");
             console.log("Our Skills clicked");
-            onNavClick.ourSkill?.();
+            pathname === "/career" || pathname === "/bookOnline" ? router.push("/#our-skill") : onNavClick.ourSkill?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</button></li>
           <li><button onClick={()=>{
             setBgNav("About Us");
             console.log("Our Services clicked");
-            onNavClick.ourService?.();
+            pathname === "/career" || pathname === "/bookOnline" ? router.push("/#our-service") : onNavClick.ourService?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Services</button></li>
         </ul>
       </div>
