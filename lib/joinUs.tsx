@@ -1,21 +1,13 @@
 import PopUpLogin from "@/components/popUpLogin";
 import { getCookies } from "@/utils/tokenController";
-import { SelectChangeEvent } from "@mui/material/Select";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function JoinUsPage() {
-  const [age, setAge] = React.useState("");
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
-  const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [showAuthYet, setShowAuthYet] = useState(false);
   const [pickTitle, setPickTitle] = useState("Django Developer");
-  const [showPopup, setShowPopup] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const checkLoginSuccess = async () => {
@@ -108,7 +100,7 @@ export default function JoinUsPage() {
       };
       console.log("data yang dikirim : ", payload);
 
-      const res = await fetch("http://localhost:3001/api/createJoinUsMessage", {
+      const res = await fetch("/api/createJoinUsMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +116,6 @@ export default function JoinUsPage() {
 
       const data = await res.json();
       alert(data.message || "Pesan berhasil dikirim!");
-      setShowPopup(false);
 
       // Reset form setelah berhasil
       setFormData({
@@ -312,7 +303,7 @@ export default function JoinUsPage() {
           className="lg:w-35 lg:-rotate-20 lg:absolute lg:-right-6 lg:-bottom-25 w-10 rotate-10 scale-x-[-1] absolute -right-10 -bottom-20"
         />
       </div>
-      {showAuthYet && (token === null || token === "") ? (
+      {showAuthYet ? (
         <>
           <div className="fixed z-7 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
           <div className="fixed z-8 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
@@ -329,7 +320,7 @@ export default function JoinUsPage() {
               before filling out the form.
             </p>
             <button
-              onClick={() => (setShowAuth(true), setShowPopup(false))}
+              onClick={() => (setShowAuth(true))}
               className="text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50"
             >
               Log In
@@ -349,7 +340,7 @@ export default function JoinUsPage() {
           </div>
         </>
       ) : null}
-      {showAuth && (token === null || token === "") ? (
+      {showAuth ? (
         <button
           onClick={() => setShowAuth(false)}
           className={`fixed z-13 lg:top-27 lg:right-105 top-36 right-7 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}

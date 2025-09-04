@@ -1,10 +1,9 @@
+import { getCookies, setCookies } from "@/utils/tokenController";
 import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
-import Cookies from "js-cookie";
-import { getCookies, setCookies } from "@/utils/tokenController";
-import { useRouter } from 'next/navigation';
 
 type PopUpLoginProps = {
   onClick: () => void;
@@ -16,13 +15,11 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
 
     const [token, setToken] = useState("");
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
     const [message, setMessage] = useState<string>("");
     const [showSignUp, setShowSignUp] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [signUpClose, setSignUpClose] = useState(isClose);
-    const [isAdmin, setIsAdmin] = useState(isRole);
+    const signUpClose = isClose;
+    const isAdmin = isRole;
     const router = useRouter();
 
     const [showLogIn, setShowLogIn] = useState(true);
@@ -83,7 +80,7 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         if( checkSnap.empty) {
             
             try {
-                const res = await fetch("http://localhost:3001/api/registerUser", {
+                const res = await fetch("/api/registerUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -97,8 +94,6 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
                 if (res.ok) {
                 await setCookies(data.token, data.username, data.email, data.role);
                 setUsername(data.username);
-                setEmail(data.email);
-                setRole(data.role);
                 setMessage(data.message);
                 setToken(data.token);
                 if(data.role==='admin'){
@@ -136,7 +131,7 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
     const handleLogin = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch("http://localhost:3001/api/loginUser", {
+        const res = await fetch("/api/loginUser", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -154,8 +149,6 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         if (res.ok) {
           await setCookies(data.token, data.username, data.email, data.role);
           setUsername(data.username);
-          setEmail(data.email);
-          setRole(data.role);
           setToken(data.token);
           setMessage(data.message);
           if(data.role==='admin'){
@@ -188,14 +181,11 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         await setCookies(token, (user.displayName ? user.displayName : "empty"), (user.email ? user.email : "empty@gmail.com"), "guest");
 
         // Simpan ke state React
-        onClick;
         setToken(token);
         setUsername(user.displayName || "Guest");
-        setEmail(user.email || "");
-        setRole("guest");
         setMessage("Login dengan Google berhasil!");
 
-        const res = await fetch("http://localhost:3001/api/registerGoogleUser", {
+        const res = await fetch("/api/registerGoogleUser", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -212,8 +202,6 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
 
         if (res.ok) {
         setUsername(data.username);
-        setEmail(data.email);
-        setRole(data.role);
         setMessage(data.message);
         setToken(data.token);
         if(data.role==='admin'){
@@ -239,13 +227,11 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         console.log("User Info:", user);
     
         // Ambil token dari Firebase
-        const token = await user.getIdToken();
+        await user.getIdToken();
 
-        // Simpan ke state React
-        onClick;
         setMessage("Login dengan Google berhasil!");
         
-        const res = await fetch("http://localhost:3001/api/loginGoogleAdmin",{
+        const res = await fetch("/api/loginGoogleAdmin",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -263,8 +249,6 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
         if (res.ok) {
           await setCookies(data.token, data.username, data.email, data.role);
           setUsername(data.username);
-          setEmail(data.email);
-          setRole(data.role);
           setMessage(data.message);
           setToken(data.token);
           if(data.role==='admin'){

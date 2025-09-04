@@ -1,22 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { doc, deleteDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/firebase/config";
-import NextCors from "nextjs-cors";
 import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  arrayUnion,
+  collection, getDocs, query,
+  where, writeBatch
 } from "firebase/firestore";
-
-interface ContactData {
-  id: string;
-  email: string;
-}
+import type { NextApiRequest, NextApiResponse } from "next";
+import NextCors from "nextjs-cors";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // 🔹 Aktifkan CORS
@@ -33,12 +21,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // Contoh: hapus hanya messages yang sudah dibaca
-    const contactsQuery = query(
-        collection(db, "contacts"),
+    const CareersQuery = query(
+        collection(db, "career_message"),
         where("dibaca_oleh", "!=", [])
     );
     
-    const snapshot = await getDocs(contactsQuery);
+    const snapshot = await getDocs(CareersQuery);
 
     // Gunakan batch untuk menghapus lebih efisien
     const batch = writeBatch(db);

@@ -1,8 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { db } from "@/firebase/config";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import jwt from "jsonwebtoken";
+import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 
 const SECRET_KEY = process.env.JWT_SECRET || "rahasia-super-aman";
@@ -42,13 +41,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const [snap1] = await Promise.all([getDocs(q2)]);
 
-    let userDoc = snap1.docs[0];
+    const userDoc = snap1.docs[0];
     if (!userDoc) {
       return res.status(401).json({ error: "Username/email atau role tidak ditemukan" });
     }
 
     const userData = userDoc.data();
-    const userRef = doc(db, "users", userDoc.id);
 
     // Buat token
     const token = jwt.sign(

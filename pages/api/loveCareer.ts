@@ -1,16 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
-import { doc, deleteDoc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  arrayUnion,
+  updateDoc
 } from "firebase/firestore";
 
 interface CareerData {

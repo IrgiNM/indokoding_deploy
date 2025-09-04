@@ -64,14 +64,14 @@ export default function AdminDashboard() {
       };
     
       fetchCookies();
-    }, []);
+    }, [router]);
 
     const [contacts, setContacts] = useState<Contact[]>([]);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 // panggil backend API
-                const res = await fetch("http://localhost:3001/api/getContact"); 
+                const res = await fetch("/api/getContact"); 
                 const dataContacts = await res.json();
 
                 setContacts(dataContacts);
@@ -87,7 +87,7 @@ export default function AdminDashboard() {
         const fetchCareers = async () => {
             try {
                 // panggil backend API
-                const res = await fetch("http://localhost:3001/api/getCareerMessage");
+                const res = await fetch("/api/getCareerMessage");
                 const data = await res.json();
                 
                 setCareers(data);
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
         const fetchContacts = async () => {
             try {
                 // panggil backend API
-                const res = await fetch("http://localhost:3001/api/getUsers"); 
+                const res = await fetch("/api/getUsers"); 
                 const data = await res.json();
                 
                 setUsers(data);

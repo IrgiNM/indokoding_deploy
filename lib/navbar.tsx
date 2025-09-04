@@ -1,12 +1,10 @@
 "use client";
 import NavLink from "@/components/navLink";
-import React, { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
-import AuthPopUp from "@/components/authPopUp";
 import PopUpLogin from "@/components/popUpLogin";
-import Cookies from "js-cookie";
 import { deleteCookies, getCookies } from "@/utils/tokenController";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar({
   page,
@@ -26,11 +24,7 @@ export default function Navbar({
   const [isClick, setIsClick] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [showLogOut, setShowLogOut] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
-  const [showActive, setShowActive] = useState("none");
-  const [love, setLove] = useState(false);
 
   useEffect(() => {
     const fetchCookies = async () => {
@@ -256,7 +250,7 @@ export default function Navbar({
         ) : (
           <>
             <button
-              onClick={() => (setShowActive("login"), setShowAuth(true))}
+              onClick={() => (setShowAuth(true))}
               className="p-2 px-5 rounded-full border-1 transition-all duration-300 border-purple-600 text-[12px] absolute lg:right-8 right-19 top-7 font-bold text-purple-600 hover:bg-purple-600 hover:text-white"
             >
               Log In

@@ -1,9 +1,7 @@
-import { collection, getDocs, or, query, where } from "firebase/firestore";
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { db } from '../firebase/config';
 import { getCookies } from "@/utils/tokenController";
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from 'react';
 
 interface User {
   id: string;
@@ -27,19 +25,15 @@ export default function AdminAdmins() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
     const [addAdmin, setAddAdmin] = useState(false);
-    const [isPosition, setIsPosition] = useState(false);
-    const [isLevel, setIsLevel] = useState(false);
     const [hapusNama, setHapusNama] = useState("none");
     const [idUser, setIdUser] = useState("none");
     const [isLoading, setIsLoading] = useState(false);
     
-    const [editUsername, setEditUsername] = useState("");
-    const [editEmail, setEditEmail] = useState("");
     const [isUpdate, setIsUpdate] = useState(false);
 
     const [urutan, setUrutan] = useState("New");
-    const [pickPosition, setPickPosition] = useState("web Frontend");
-    const [pickLevel, setPickLevel] = useState("Basic");
+    const pickPosition = "web Frontend";
+    const pickLevel = "Basic";
     const [urutanActive, setUrutanActive] = useState(false);
     const diKlik = () => {
         setUrutanActive(!urutanActive);
@@ -61,7 +55,7 @@ export default function AdminAdmins() {
         setUrutanActive(false);
     }
     
-    const [token, setToken] = useState<User>();
+    // const [token, setToken] = useState<User>();
     const router = useRouter();
     
     useEffect(() => {
@@ -73,23 +67,23 @@ export default function AdminAdmins() {
             // Parse JSON kalau cookies disimpan sebagai string
             const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
-            setToken(parsed);
+            // setToken(parsed);
             if(parsed.role==="guest"){
                 router.push("/");
             }
             console.log("Token dari cookies:", parsed);
           } else {
-            setToken(undefined);
+            // setToken(undefined);
             router.push("/admin");
           }
         } catch (error) {
           console.error("Gagal mengambil cookies:", error);
-          setToken(undefined);
+        //   setToken(undefined);
         }
       };
     
       fetchCookies();
-    }, []);
+    }, [router]);
     
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
@@ -128,7 +122,7 @@ export default function AdminAdmins() {
         setIsLoading(true);
     
         try {
-            const res = await fetch("http://localhost:3001/api/createAdmin", {
+            const res = await fetch("/api/createAdmin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -181,7 +175,7 @@ export default function AdminAdmins() {
     useEffect(() => {
       const fetchUsers = async () => {
         try {
-          const res = await fetch("http://localhost:3001/api/getAdmins");
+          const res = await fetch("/api/getAdmins");
           const data: User[] = await res.json();
 
           const sortedData = sortContacts(data, urutan);
@@ -201,7 +195,7 @@ export default function AdminAdmins() {
         }
       };
       fetchUsers();
-    }, [urutan,hapusNama,addAdmin]);
+    }, [urutan,hapusNama,addAdmin,firstUser]);
 
     const sortContacts = (data: User[], order: string) => {
         const sortedData = [...data];
@@ -237,7 +231,7 @@ export default function AdminAdmins() {
     async function handleDelete(userId: string) {
       setIsLoading(true);
       try {
-        const res = await fetch("http://localhost:3001/api/removeUser", {
+        const res = await fetch("/api/removeUser", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -264,7 +258,7 @@ export default function AdminAdmins() {
     async function handleDeleteAll(roles: string) {
       setIsLoading(true);
       try {
-        const res = await fetch("http://localhost:3001/api/removeAllUser", {
+        const res = await fetch("/api/removeAllUser", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

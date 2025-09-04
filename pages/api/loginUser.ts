@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
 
-    let userDoc = snap1.docs[0] || snap2.docs[0];
+    const userDoc = snap1.docs[0] || snap2.docs[0];
     if (!userDoc) {
       return res.status(401).json({ error: "Username/email atau role tidak ditemukan" });
     }

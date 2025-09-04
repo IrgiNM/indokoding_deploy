@@ -1,21 +1,13 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { doc, deleteDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/firebase/config";
-import NextCors from "nextjs-cors";
 import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  arrayUnion,
+  collection, getDocs, query,
+  where, writeBatch
 } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
+import NextCors from "nextjs-cors";
 
-interface CareerData {
-  id: string;
-  email: string;
+interface UserData {
+  role: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -32,13 +24,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const { role }: UserData = req.body;
+
+    if (!role ) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
     // Contoh: hapus hanya messages yang sudah dibaca
-    const CareersQuery = query(
-        collection(db, "career_message"),
-        where("dibaca_oleh", "!=", [])
+    const contactsQuery = query(
+        collection(db, "users"),
+        where("role", "==", role)
     );
     
-    const snapshot = await getDocs(CareersQuery);
+    const snapshot = await getDocs(contactsQuery);
 
     // Gunakan batch untuk menghapus lebih efisien
     const batch = writeBatch(db);

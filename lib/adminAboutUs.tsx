@@ -1,11 +1,9 @@
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { User } from './adminDashboard';
-import { useRouter } from 'next/navigation';
 import { getCookies } from '@/utils/tokenController';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function AdminUsers() {
-    const [edit, setEdit] = useState('none');
     const [tambah, setTambah] = useState(false);
     const [hapus, setHapus] = useState(false);
     const [show, setShow] = useState(false);
@@ -13,7 +11,7 @@ export default function AdminUsers() {
     const [fullGambar, setFullGambar] = useState('none');
     const [hapusNama, setHapusNama] = useState("none");
     
-    const [token, setToken] = useState<User>();
+    // const [token, setToken] = useState<User>();
         const router = useRouter();
         
         useEffect(() => {
@@ -25,23 +23,23 @@ export default function AdminUsers() {
                 // Parse JSON kalau cookies disimpan sebagai string
                 const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
                 // Ambil token dan simpan ke state
-                setToken(parsed);
+                // setToken(parsed);
                 if(parsed.role==="guest"){
                     router.push("/");
                 }
                 console.log("Token dari cookies:", parsed);
               } else {
-                setToken(undefined);
+                // setToken(undefined);
                 router.push("/admin");
               }
             } catch (error) {
               console.error("Gagal mengambil cookies:", error);
-              setToken(undefined);
+            //   setToken(undefined);
             }
           };
         
           fetchCookies();
-        }, []);
+        }, [router]);
 
     const [urutan, setUrutan] = useState("A - Z");
     const [urutanActive, setUrutanActive] = useState(false);

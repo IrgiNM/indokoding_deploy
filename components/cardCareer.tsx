@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 type Props = {
   id: string;
   list: [];
@@ -19,7 +19,7 @@ export default function CardCareer(props: Props) {
   }
 
   return (
-    <div
+    <button
       onClick={props.onClick}
       className={`${
         isActive === title
@@ -75,6 +75,6 @@ export default function CardCareer(props: Props) {
           </button>
         )}
       </div>
-    </div>
+    </button>
   );
 }

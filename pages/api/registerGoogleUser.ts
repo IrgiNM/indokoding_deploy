@@ -1,17 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
 import {
-  collection,
   addDoc,
-  serverTimestamp,
-  query,
-  where,
+  collection,
   getDocs,
-  doc,
-  updateDoc,
+  query,
+  serverTimestamp,
+  where
 } from "firebase/firestore";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const SECRET_KEY = "rahasia-super-aman";
 
@@ -61,7 +58,7 @@ export default async function handler(
       // }
       
       if (snapEmail.empty) {
-        const docRef = await addDoc(collection(db, "users"), {
+        await addDoc(collection(db, "users"), {
           username,
           email,
           role,

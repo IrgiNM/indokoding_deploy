@@ -6,7 +6,7 @@ import JoinUsPage from '@/lib/joinUs';
 import CareerApply from '@/lib/careerApply';
 import { useRef, useState } from "react";
 
-export default function page() {
+export default function Page() {
   const ourWorkRef = useRef<HTMLDivElement>(null);
   const aboutUsRef = useRef<HTMLDivElement>(null);
   const contactUsRef = useRef<HTMLDivElement>(null);

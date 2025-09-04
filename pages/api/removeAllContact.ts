@@ -1,21 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { doc, deleteDoc, writeBatch } from "firebase/firestore";
 import { db } from "@/firebase/config";
-import NextCors from "nextjs-cors";
 import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  arrayUnion,
+  collection, getDocs, query,
+  where, writeBatch
 } from "firebase/firestore";
-
-interface UserData {
-  role: string;
-}
+import type { NextApiRequest, NextApiResponse } from "next";
+import NextCors from "nextjs-cors";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // 🔹 Aktifkan CORS
@@ -31,16 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { role }: UserData = req.body;
-
-    if (!role ) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
-
     // Contoh: hapus hanya messages yang sudah dibaca
     const contactsQuery = query(
-        collection(db, "users"),
-        where("role", "==", role)
+        collection(db, "contacts"),
+        where("dibaca_oleh", "!=", [])
     );
     
     const snapshot = await getDocs(contactsQuery);

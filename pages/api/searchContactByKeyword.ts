@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");

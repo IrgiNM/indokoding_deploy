@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
-import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -12,19 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "GET") {
     try {
 
-      const reqSnap = await getDocs(collection(db, "Requirements_Career"));
-      const titles: string[] = reqSnap.docs.map((doc) => doc.data().title);
-  
-      console.log("Judul yang diambil:", titles);
-  
-      if (titles.length === 0) {
-        return res.status(404).json({ error: "Tidak ada data Requirements_Career ditemukan" });
-      }
-
       const careersRef = collection(db, "career_message");
       const q = query(
         careersRef,
-        where("position", "in", titles),
         where("favorite", "==", true)
       );
 

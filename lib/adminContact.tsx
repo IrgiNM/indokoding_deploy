@@ -55,7 +55,7 @@ export default function Admincontacts() {
     };
 
     fetchCookies();
-  }, []);
+  }, [router]);
 
   const [urutan, setUrutan] = useState("New");
   const [urutanActive, setUrutanActive] = useState(false);
@@ -101,7 +101,7 @@ export default function Admincontacts() {
     const fetchContacts = async () => {
       try {
         // panggil backend API
-        const res = await fetch("http://localhost:3001/api/getContact");
+        const res = await fetch("/api/getContact");
         const data = await res.json();
 
         // Urutkan data berdasarkan pilihan sorting
@@ -115,22 +115,6 @@ export default function Admincontacts() {
     };
     fetchContacts();
   }, [hapusMessage, urutan, detail, readMessage]);
-
-  const getContact = async () => {
-    try {
-      // panggil backend API
-      const res = await fetch("http://localhost:3001/api/getContact");
-      const data = await res.json();
-
-      // Urutkan data berdasarkan pilihan sorting
-      const sortedData = sortContacts(data, "New");
-      setContacts(sortedData);
-    } catch (err) {
-      console.error("Gagal fetch contacts:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // Fungsi untuk mengurutkan contacts
   const sortContacts = (data: Contact[], order: string) => {
@@ -165,7 +149,7 @@ export default function Admincontacts() {
 
     try {
       const res = await fetch(
-        "http://localhost:3001/api/searchContactsByDate",
+        "/api/searchContactsByDate",
         {
           method: "POST",
           headers: {
@@ -194,7 +178,7 @@ export default function Admincontacts() {
   async function handleDelete(id: string, email: string) {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/api/removeContact", {
+      const res = await fetch("/api/removeContact", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -221,7 +205,7 @@ export default function Admincontacts() {
   async function handleDeleteAll() {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/api/removeAllContact", {
+      const res = await fetch("/api/removeAllContact", {
         method: "DELETE",
       });
 
@@ -243,7 +227,7 @@ export default function Admincontacts() {
 
   async function handleBuka(id: string, email: string) {
     try {
-      const res = await fetch("http://localhost:3001/api/openContact", {
+      const res = await fetch("/api/openContact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -261,7 +245,7 @@ export default function Admincontacts() {
 
   async function handleBukaSemua(email: string) {
     try {
-      const res = await fetch("http://localhost:3001/api/openAllContact", {
+      const res = await fetch("/api/openAllContact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

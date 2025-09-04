@@ -1,10 +1,10 @@
+import { getCookies } from "@/utils/tokenController";
 import { collection, getDocs, or, query, where } from "firebase/firestore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import { User } from "./adminDashboard";
-import { useRouter } from "next/navigation";
-import { getCookies } from "@/utils/tokenController";
 
 export interface Career {
   id: string;
@@ -31,10 +31,7 @@ export default function AdminCareer() {
   const [detailRequest, setDetailRequest] = useState(false);
   const [hapusNama, setHapusNama] = useState("none");
   const [isPosition, setIsPosition] = useState(false);
-  const [isLevel, setIsLevel] = useState(false);
-  const [pickLevel, setPickLevel] = useState("Basic");
   const [isLoading, setIsLoading] = useState(false);
-  const [requirment, setRequirment] = useState(1);
   const [isUpdate, setIsUpdate] = useState(false);
   const [readMessage, setReadMessage] = useState(false);
 
@@ -69,7 +66,7 @@ export default function AdminCareer() {
     };
 
     fetchCookies();
-  }, []);
+  }, [router]);
 
   const [urutan, setUrutan] = useState("A - Z");
   const [urutanActive, setUrutanActive] = useState(false);
@@ -115,8 +112,6 @@ export default function AdminCareer() {
   const [pickDescription, setPickDescription] = useState(
     "We are looking for a Django Developer to join our team. You will be responsible for building and maintaining web applications using Django framework."
   );
-  const [pickList, setPickList] = useState([]);
-  const [pickListdata, setPickListdata] = useState<string[]>(pickList);
   const [picklistRequirement, setPickListRequirement] = useState<string[]>([]);
 
   const [requirments, setRequirments] = useState("");
@@ -129,21 +124,20 @@ export default function AdminCareer() {
   };
 
   const [hapusRequirement, setHapusRequirement] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [RequirementsCareer, setRequirementsCareer] = useState<Career[]>([]);
   useEffect(() => {
     const fetchRequirementsCareer = async () => {
       try {
         // panggil backend API
         const res = await fetch(
-          "http://localhost:3001/api/getRequirementsCareer"
+          "/api/getRequirementsCareer"
         );
         const data = await res.json();
         setRequirementsCareer(data);
       } catch (err) {
         console.error("Gagal fetch RequirementsCareer:", err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchRequirementsCareer();
@@ -153,7 +147,7 @@ export default function AdminCareer() {
     setIsLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:3001/api/removeRequirementCareer",
+        "/api/removeRequirementCareer",
         {
           method: "DELETE",
           headers: {
@@ -193,7 +187,7 @@ export default function AdminCareer() {
     const fetchCareers = async () => {
       try {
         // panggil backend API
-        const res = await fetch("http://localhost:3001/api/getCareerMessage");
+        const res = await fetch("/api/getCareerMessage");
         const data = await res.json();
 
         // Urutkan data berdasarkan pilihan sorting
@@ -233,7 +227,7 @@ export default function AdminCareer() {
 
   const searchLove = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/searchCareerByLove", {
+      const res = await fetch("/api/searchCareerByLove", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +277,7 @@ export default function AdminCareer() {
       try {
         console.log("Mengirim data ke server:", formDataRequirement);
         const res = await fetch(
-          "http://localhost:3001/api/createRequirementCareer",
+          "/api/createRequirementCareer",
           {
             method: "POST",
             headers: {
@@ -330,15 +324,13 @@ export default function AdminCareer() {
 
   async function handleLove(id: string) {
     try {
-      const res = await fetch("http://localhost:3001/api/loveCareer", {
+      await fetch("/api/loveCareer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: id }),
       });
-
-      const data = await res.json();
       console.log("id:", id);
     } catch (error) {
       console.error("Error:", error);
@@ -347,7 +339,7 @@ export default function AdminCareer() {
 
   async function handleBuka(id: string, email: string) {
     try {
-      const res = await fetch("http://localhost:3001/api/openCareer", {
+      const res = await fetch("/api/openCareer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -367,7 +359,7 @@ export default function AdminCareer() {
     setDate(selectedDate);
 
     try {
-      const res = await fetch("http://localhost:3001/api/searchCareersByDate", {
+      const res = await fetch("/api/searchCareersByDate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -393,7 +385,7 @@ export default function AdminCareer() {
 
   async function handleBukaSemua(email: string) {
     try {
-      const res = await fetch("http://localhost:3001/api/openAllCareer", {
+      const res = await fetch("/api/openAllCareer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -411,7 +403,7 @@ export default function AdminCareer() {
   async function handleDelete(id: string, email: string) {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/api/removeCareerMessage", {
+      const res = await fetch("/api/removeCareerMessage", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -438,7 +430,7 @@ export default function AdminCareer() {
   async function handleDeleteAll() {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:3001/api/removeAllCareer", {
+      const res = await fetch("/api/removeAllCareer", {
         method: "DELETE",
       });
 

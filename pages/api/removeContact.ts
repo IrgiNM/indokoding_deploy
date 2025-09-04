@@ -1,19 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
 
-interface CareerData {
+interface ContactData {
   id: string;
   email: string;
 }
@@ -32,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { id, email, }: CareerData = req.body;
+    const { id, email, }: ContactData = req.body;
 
     if (!id || !email) {
       return res.status(400).json({ error: "All fields are required" });
@@ -57,18 +47,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const userDoc = querySnapshot.docs[0];
     const userData = userDoc.data();
 
-    // Update total_Career
-    const newTotalCareer = (userData.total_career || 0) - 1;
-    await updateDoc(userDoc.ref, { total_career: newTotalCareer });
+    // Update total_contact
+    const newTotalContact = (userData.total_contact || 0) - 1;
+    await updateDoc(userDoc.ref, { total_contact: newTotalContact });
 
     // Referensi ke dokumen user
-    const userRef = doc(db, "career_message", id);
+    const userRef = doc(db, "contacts", id);
 
     // Hapus dokumen
     await deleteDoc(userRef);
 
     return res.status(200).json({
-      message: `Career message dengan id ${id} berhasil dihapus`,
+      message: `Contact message dengan id ${id} berhasil dihapus`,
     });
   } catch (error) {
     console.error("Error hapus user:", error);

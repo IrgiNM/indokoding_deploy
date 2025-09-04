@@ -85,9 +85,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // ✅ Siapkan data update
-      const updateData: any = {
+      const updateData = {
         username,
         email,
+        password,
         updatedAt: serverTimestamp(),
       };
 

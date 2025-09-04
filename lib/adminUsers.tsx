@@ -23,7 +23,7 @@ export default function AdminUsers() {
     const [isLoading, setIsLoading] = useState(false);
     const [date, setDate] = useState("");
 
-    const [token, setToken] = useState<User>();
+    // const [token, setToken] = useState<User>();
     const router = useRouter();
     
     useEffect(() => {
@@ -35,20 +35,20 @@ export default function AdminUsers() {
             // Parse JSON kalau cookies disimpan sebagai string
             const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
-            setToken(parsed);
+            // setToken(parsed);
             console.log("Token dari cookies:", parsed);
           } else {
-            setToken(undefined);
+            // setToken(undefined);
             router.push("/admin");
           }
         } catch (error) {
           console.error("Gagal mengambil cookies:", error);
-          setToken(undefined);
+        //   setToken(undefined);
         }
       };
     
       fetchCookies();
-    }, []);
+    }, [router]);
     
 
     const [urutan, setUrutan] = useState("New");
@@ -85,7 +85,7 @@ export default function AdminUsers() {
         const fetchContacts = async () => {
             try {
                 // panggil backend API
-                const res = await fetch("http://localhost:3001/api/getUsers"); 
+                const res = await fetch("/api/getUsers"); 
                 const data = await res.json();
                 
                 // Urutkan data berdasarkan pilihan sorting
@@ -133,7 +133,7 @@ export default function AdminUsers() {
       setDate(selectedDate);
 
       try {
-        const res = await fetch("http://localhost:3001/api/searchUsersByDate", {
+        const res = await fetch("/api/searchUsersByDate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -160,7 +160,7 @@ export default function AdminUsers() {
     async function handleDelete(userId: string) {
       setIsLoading(true);
       try {
-        const res = await fetch("http://localhost:3001/api/removeUser", {
+        const res = await fetch("/api/removeUser", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

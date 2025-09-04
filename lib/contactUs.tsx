@@ -1,37 +1,13 @@
 import PopUpLogin from "@/components/popUpLogin";
-import {
-  collection,
-  getDocs,
-  or,
-  query,
-  serverTimestamp,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { forwardRef, useEffect, useState } from "react";
-import { db } from "../firebase/config"; // sesuaikan path
-import Cookies from "js-cookie";
-import { getCookies } from "@/utils/tokenController";
-import { GiToken } from "react-icons/gi";
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  createdAt: string;
-  total_join: number;
-  total_career: number;
-  total_contact: number;
-}
 
 function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
   const [showPopup, setShowPopup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [listUsers, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchCookies = async () => {
@@ -89,9 +65,8 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
     const fetchUsers = async () => {
       try {
         // panggil backend API
-        const res = await fetch("http://localhost:3001/api/getUsers");
-        const data = await res.json();
-        setUsers(data);
+        const res = await fetch("/api/getUsers");
+        await res.json();
       } catch (err) {
         console.error("Gagal fetch users:", err);
       } finally {
@@ -146,7 +121,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
         message: formDataContact.message,
       };
 
-      const res = await fetch("http://localhost:3001/api/createContact", {
+      const res = await fetch("/api/createContact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

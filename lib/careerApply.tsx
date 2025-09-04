@@ -1,6 +1,6 @@
 import CardCareer from "@/components/cardCareer";
 import PopUpLogin from "@/components/popUpLogin";
-import { Career, RequirementCareer } from "@/type/careerType";
+import { RequirementCareer } from "@/type/careerType";
 import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -10,11 +10,9 @@ export default function CareerApply() {
   const [showLogOut, setShowLogOut] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [showAuthYet, setShowAuthYet] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
   const [pickTitle, setPickTitle] = useState("Django Developer");
 
-  const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [RequirementsCareer, setRequirementsCareer] = useState<
     RequirementCareer[]
@@ -24,14 +22,14 @@ export default function CareerApply() {
       try {
         // panggil backend API
         const res = await fetch(
-          "http://localhost:3001/api/getRequirementsCareer"
+          "/api/getRequirementsCareer"
         );
         const data = await res.json();
         setRequirementsCareer(data);
       } catch (err) {
         console.error("Gagal fetch RequirementsCareer:", err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchRequirementsCareer();
@@ -118,7 +116,7 @@ export default function CareerApply() {
       };
       console.log("data yang dikirim : ", payload);
 
-      const res = await fetch("http://localhost:3001/api/createCareerMessage", {
+      const res = await fetch("/api/createCareerMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -203,7 +201,7 @@ export default function CareerApply() {
       {showLogOut ? (
         <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
       ) : null}
-      {showLogOut && token !== "" ? (
+      {showLogOut ? (
         <div className="fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
           <Image
             width={140}
@@ -236,7 +234,7 @@ export default function CareerApply() {
         </div>
       ) : null}
 
-      {showAuth && token === "" ? (
+      {showAuth ? (
         <button
           onClick={() => setShowAuth(false)}
           className={`fixed z-8 lg:top-36 lg:right-105 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
@@ -356,7 +354,7 @@ export default function CareerApply() {
           </div>
         </>
       ) : null}
-      {showAuthYet && (token === null || token === "") ? (
+      {showAuthYet ? (
         <>
           <div className="fixed z-7 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
           <div className="fixed z-8 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
@@ -393,7 +391,7 @@ export default function CareerApply() {
           </div>
         </>
       ) : null}
-      {showAuth && (token === null || token === "") ? (
+      {showAuth ? (
         <button
           onClick={() => setShowAuth(false)}
           className={`fixed z-13 lg:top-27 lg:right-105 top-36 right-7 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}

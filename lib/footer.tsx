@@ -1,7 +1,6 @@
-import { roRO } from '@mui/material/locale';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Footer(
   {

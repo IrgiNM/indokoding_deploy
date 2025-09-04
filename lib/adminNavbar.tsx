@@ -11,7 +11,6 @@ export default function AdminNavbar(props: AdminNavbarProps) {
   const navActive = props.active || 'dashboard';
   const router = useRouter();
   const [showLogOut, setShowLogOut] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   
   const logout = (): void => {
     try {
@@ -70,7 +69,7 @@ export default function AdminNavbar(props: AdminNavbarProps) {
             <p className={`text-[12px] ${navActive === 'photo2' ? 'text-[#AD48FF] font-bold' : 'text-black'}`}>About Us Photos</p>
         </button>
         <button onClick={() => (setShowLogOut(true))} className='fixed left-6 bottom-15 p-2 px-5 rounded-full border-1 transition-all duration-300 border-[#f00070] text-[12px] mt-40 font-bold text-[#f00070] hover:bg-[#f00070] hover:text-white'>Log Out</button>
-        {showLogOut && token !== '' ?
+        {showLogOut ?
           <>
             <div className='fixed z-98 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
             <div className='fixed z-99 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>

@@ -22,8 +22,8 @@ interface User {
   role: string;
 }
 
-function convertTimestamps(data: DocumentData): Record<string, any> {
-  const result: Record<string, any> = {};
+function convertTimestamps(data: DocumentData): Record<string, string> {
+  const result: Record<string, string> = {};
   for (const key in data) {
     const value = data[key];
     if (value && typeof value === "object" && "seconds" in value && "nanoseconds" in value) {
