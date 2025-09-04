@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { User } from './adminDashboard';
 import { useRouter } from 'next/navigation';
 import { getCookies } from '@/utils/tokenController';
+import { Career } from './adminCareer';
 
 export default function AdminJoinUs() {
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
     const [detail, setDetail] = useState(false);
     const [hapusNama, setHapusNama] = useState("none");
+    const [isLoading, setIsLoading] = useState(false);
+    const [loveTesting, setLoveTesting] = useState(false);
+    
 
     const [token, setToken] = useState<User>();
     const router = useRouter();
@@ -64,6 +68,51 @@ export default function AdminJoinUs() {
         setUrutan("Old");
         setUrutanActive(false);
     }
+
+    const [Careers, setCareers] = useState<Career[]>([]);
+    useEffect(() => {
+        const fetchCareers = async () => {
+            try {
+                // panggil backend API
+                const res = await fetch("http://localhost:3001/api/getCareerMessage");
+                const data = await res.json();
+                
+                // Urutkan data berdasarkan pilihan sorting
+                const sortedData = sortCareers(data, urutan);
+                setCareers(sortedData);
+            } catch (err) {
+                console.error("Gagal fetch Careers:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchCareers();
+    }, [urutan, detail, loveTesting]);
+
+    const sortCareers = (data: Career[], order: string) => {
+        const sortedData = [...data];
+        
+        switch (order) {
+            case 'A - Z':
+                return sortedData.sort((a, b) => 
+                    a.name.localeCompare(b.name)
+                );
+            case 'Z - A':
+                return sortedData.sort((a, b) => 
+                    b.name.localeCompare(a.name)
+                );
+            case 'New':
+                return sortedData.sort((a, b) => 
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+            case 'Old':
+                return sortedData.sort((a, b) => 
+                    new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+                );
+            default:
+                return sortedData;
+        }
+    };
 
     const [pickNama, setPickNama] = useState('none');
     const [pickEmail, setPickEmail] = useState('none@gmail.com');
