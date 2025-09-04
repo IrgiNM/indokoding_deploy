@@ -54,6 +54,27 @@ const dataCard = [
       image: '/assets/image/ourwork/porto6.avif',
       tags: ['next js', 'tailwindcss', 'interactive', 'science'],
     },
+    {
+      id: 7,
+      title: 'Credit-Score',
+      description: 'Discover expert tips, guides, and insights on improving your credit score, managing debt, and making informed financial decisions. Stay updated with the latest credit trends and tools to boost your financial health at Credit-Score.',
+      image: '/assets/image/ourwork/porto7.png',
+      tags: ['next js', 'tailwindcss', 'debt-management', 'personal-finance'],
+    },
+    {
+      id: 8,
+      title: 'Check.co.uk',
+      description: 'Discover expert tips, guides, and insights on improving your credit score, managing debt, and making informed financial decisions. Stay updated with the latest credit trends and tools to boost your financial health at Check.co.uk.',
+      image: '/assets/image/ourwork/porto8.png',
+      tags: ['credit-score', 'financial-tips', 'debt-management', 'personal-finance'],
+    },
+    {
+      id: 9,
+      title: 'BookYourGP',
+      description: 'healthtech app to manage and merge recalls so patients will come to the surgery less frequently.',
+      image: '/assets/image/ourwork/porto9.png',
+      tags: ['healthtech', 'medical-app', 'patient-management', 'appointment-system'],
+    },
   ]
 
   const warnaTag = [
@@ -132,6 +153,15 @@ const dataCard = [
         </SwiperSlide>
         <SwiperSlide>
           <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto6.avif" className="rounded border-2 border-[#128900]"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto7.png" className="rounded border-2 border-[#128900]"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto8.png" className="rounded border-2 border-[#128900]"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto9.png" className="rounded border-2 border-[#128900]"/>
         </SwiperSlide>
       </Swiper>
       <div className="flex flex-col relative lg:w-120 lg:mb-30 lg:bottom-5 w-60 mb-100 bottom-5">

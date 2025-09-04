@@ -204,7 +204,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
               <input
                 // onClick={() => setShowPopup(true)}
-                className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#4F006C] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#4F006C] w-full"
+                className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-3 lg:text-[#181F38] lg:w-full bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-2 text-[#181F38] w-full"
                 type="text"
                 placeholder="Subject"
                 id="subject"
@@ -215,7 +215,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
               <textarea
                 // onClick={() => setShowPopup(true)}
-                className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-4 lg:text-[#4F006C] lg:h-40 lg:w-full lg:resize-none bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-4 text-[#4F006C] h-40 w-full resize-none"
+                className=" lg:bg-[#D9DFFC] lg:rounded-3xl lg:text-sm lg:px-5 lg:py-4 lg:text-[#4F006C] lg:h-60 lg:w-full lg:resize-none bg-[#D9DFFC] rounded-lg text-[12px] px-5 py-4 text-[#4F006C] h-40 w-full resize-none"
                 placeholder="Message"
                 id="message"
                 name="message"
@@ -283,6 +283,15 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                     info@indokoding.com
                   </p>
                 </div>
+              </div>
+
+              <div className='text-[10px] w-full text-justify text-[#181F38]'>
+                <p>📍Office: Jl. Ngadinegaran MJ III No.144, Mantrijeron,
+                Mantrijeron, Yogyakarta 55143</p>
+              </div>
+              <div className='text-[10px] w-full text-justify text-[#181F38]'>
+                <p>📍Factory: Prenggan, Sidokarto,
+                  Godean, Sleman Regency,Yogyakarta 55264</p>
               </div>
 
               <div className="lg:mt-4 mt-4 flex flex-col justify-center items-center">
