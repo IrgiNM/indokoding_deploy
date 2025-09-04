@@ -300,7 +300,8 @@ export default function AdminCareer() {
 
         if (res.ok) {
           setIsUpdate(false);
-          setRequest(false), setTitleForm("");
+          setRequest(false);
+          setTitleForm("");
           setDescriptionForm("");
           setListForm([]);
           alert(data.message || "Create Requirement Career berhasil!");
@@ -1254,7 +1255,8 @@ export default function AdminCareer() {
             <button
               onClick={async () => {
                 setIsUpdate(false);
-                setRequest(false), setTitleForm("");
+                setRequest(false); 
+                setTitleForm("");
                 setDescriptionForm("");
                 setListForm([]);
               }}

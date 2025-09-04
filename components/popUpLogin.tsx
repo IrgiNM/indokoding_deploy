@@ -11,7 +11,7 @@ type PopUpLoginProps = {
   isRole: string;
 };
 
-export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps) {
+export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
 
     const [token, setToken] = useState("");
     const [username, setUsername] = useState("");
@@ -307,7 +307,6 @@ export default function PopUpLogin({ onClick, isClose, isRole }: PopUpLoginProps
             <button
               onClick={() => {
                 setShowLogIn(false);
-                onClick;
                 if (isAdmin === "admin") {
                   handleGoogleLoginAdmin();
                 } else if (isAdmin === "guest") {

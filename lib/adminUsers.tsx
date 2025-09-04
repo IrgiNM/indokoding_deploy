@@ -243,7 +243,7 @@ export default function AdminUsers() {
                         className='h-8 w-8 absolute -right-3 top-2 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
                             <Image width={30} height={30} src='/arrow-solid.svg' alt="Dashboard" className={`w-2 h-2 ${edit === user.username ? '-rotate-90' : 'rotate-180' }`}/>
                         </button>
-                        <button onClick={()=>{(setHapusNama(user.username || ""),setId(user.id))}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                        <button onClick={()=>{setHapusNama(user.username || "");setId(user.id);}} className='h-8 w-8 absolute -right-3 top-11 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                             <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                         </button>
                         { edit === user.username &&

@@ -6,11 +6,11 @@ import NextCors from "nextjs-cors";
 // Response type
 interface Requirement {
   id: string;
-  [key: string]: any;
+  [key: string]: string | number | boolean | null | undefined | object;
 }
 
-function convertTimestamps(data: DocumentData): Record<string, any> {
-  const result: Record<string, any> = {};
+function convertTimestamps(data: DocumentData): Record<string, string | number | boolean | null | undefined | object> {
+  const result: Record<string, string | number | boolean | null | undefined | object> = {};
   for (const key in data) {
     const value = data[key];
     if (value && typeof value === "object" && "seconds" in value && "nanoseconds" in value) {

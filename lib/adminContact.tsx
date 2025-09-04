@@ -414,7 +414,8 @@ export default function Admincontacts() {
               </button>
               <button
                 onClick={() => {
-                  setHapusMessage(contact.id), setPickEmail(contact.email);
+                  setHapusMessage(contact.id);
+                  setPickEmail(contact.email);
                 }}
                 className="h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer"
               >
