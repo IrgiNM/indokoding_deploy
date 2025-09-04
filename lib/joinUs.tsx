@@ -165,23 +165,23 @@ export default function JoinUsPage() {
                 onChange={handleChangeJoinUsMessage}
                 type="text"
                 placeholder="Your Name"
-                className=" lg:bg-[#d9ebfc] lg:text-sm lg:text-[#00296c] lg:px-6 lg:py-3 lg:rounded-[40px] lg:w-[420px] bg-[#d9ebfc] text-sm text-[#00296c] px-6 py-3 border border-[#8eb0e5] rounded-lg w-[240px]"
+                className=" lg:bg-[#d9ebfc] lg:text-sm lg:text-[#00296c] lg:px-6 lg:py-3 lg:rounded-[40px] lg:w-[700px] bg-[#d9ebfc] text-sm text-[#00296c] px-6 py-3 border border-[#8eb0e5] rounded-lg w-[240px]"
               />
-              <input
+              {/* <input
                 name="rate"
                 value={formDataJoinUsMessage.rate}
                 onChange={handleChangeJoinUsMessage}
                 type="number"
                 placeholder="How much rate do you want?"
                 className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none lg:bg-[#d9ebfc] lg:text-sm lg:text-[#00296c] lg:px-6 lg:py-3 lg:pl-12 lg:rounded-[40px] lg:w-[260px] bg-[#d9ebfc] text-sm text-[#00296c] px-6 py-3 pl-11  rounded-lg w-[240px] border border-[#8eb0e5]"
-              />
-              <Image
+              /> */}
+              {/* <Image
                 width={140}
                 height={140}
                 src="/dollar.svg"
                 alt="MySQL"
                 className=" lg:w-2 lg:absolute lg:top-12 lg:right-67 w-2 absolute top-28 right-58"
-              />
+              /> */}
             </div>
             <div className=" lg:flex lg:flex-row lg:space-x-2 lg:gap-4 flex flex-col space-x-2 gap-4">
               <div className=" lg:flex lg:flex-col lg:space-y-2 lg:gap-2 flex flex-col space-y-2 gap-2">

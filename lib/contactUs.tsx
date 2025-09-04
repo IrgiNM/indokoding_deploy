@@ -14,7 +14,6 @@ import { db } from "../firebase/config"; // sesuaikan path
 import Cookies from "js-cookie";
 import { getCookies } from "@/utils/tokenController";
 import { GiToken } from "react-icons/gi";
-import Swal from "sweetalert2";
 
 interface User {
   id: string;
@@ -175,11 +174,6 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
       console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error.message,
-        });
         alert(error.message || "Terjadi kesalahan saat mengirim pesan");
       } else {
         alert("Terjadi kesalahan yang tidak diketahui");
