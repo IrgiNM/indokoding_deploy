@@ -3,7 +3,19 @@ import Image from 'next/image';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-const Footer: React.FC = () => {
+export default function Footer(
+  {
+    page,
+    onNavClick,
+  }: {
+    page: string;
+    onNavClick: {
+      ourWork?: () => void;
+      aboutUs?: () => void;
+      contactUs?: () => void;
+    };
+  }
+) {
   const router = useRouter();
 
   const onHandleClick = () => {
@@ -38,27 +50,31 @@ const Footer: React.FC = () => {
       <div>
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">EXPLORE</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
-          <li><a href="#" className=" lg:hover:text-gray-300 hover:text-gray-300">Home</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Our Work</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">About Us</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Contact</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Careers Online</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Book Online</a></li>
+          <li><button onClick={()=>{
+            router.push('/')
+          }} className=" lg:hover:text-gray-300 hover:text-gray-300">Home</button></li>
+          <li><button onClick={()=>{
+            onNavClick.ourWork?.();
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Work</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Contact</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Careers Online</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Book Online</button></li>
         </ul>
       </div>
       <div>
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">ABOUT</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">About Us</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Our Services</a></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Our Services</button></li>
         </ul>
       </div>
       <div>
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">CAREER</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Join Us</a></li>
-          <li><a href="#" className="lg:hover:text-gray-300 hover:text-gray-300">Last Careers</a></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Join Us</button></li>
+          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Last Careers</button></li>
         </ul>
       </div>
     </div>
@@ -68,5 +84,3 @@ const Footer: React.FC = () => {
 
   );
 };
-
-export default Footer;
