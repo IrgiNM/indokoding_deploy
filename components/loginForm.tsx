@@ -111,44 +111,66 @@ export default function LoginForm(props: { onSignUp: () => void }) {
     
   return (
     <>
-    {showLogIn && message !== "User berhasil disimpan" && token === "" ?
-    <>
-    <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
-    <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
+      {showLogIn && message !== "User berhasil disimpan" && token === "" ? (
+        <>
+          <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
+          <div className="fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
 
-    <div className='fixed lg:top-40 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7'>
-        <p className='text-2xl font-bold text-purple-900 mb-2'>Log In</p>
-        <input type="text" placeholder='Username'
-            name="username"
-            value={username ? username : formDataLogin.username}
-            onChange={handleChangeLogin}
-            className='border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900'/>
-        <input type="password" placeholder='Password'
-            name="password"
-            value={formDataLogin.password}
-            onChange={handleChangeLogin}
-            className='border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900'/>
-        <button onClick={handleLogin} type='submit' className='w-full rounded-full p-2 text-[12px] font-bold bg-blue-400 hover:bg-blue-600 text-white mt-2'>
-            {isLoading ? "Try LogIn..." : "Log In"}
-        </button>
-        <div className='w-full h-[1px] mt-2 bg-purple-100'></div>
-        <button 
-          onClick={() => (handleGoogleLogin())}
-          className='w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-purple-900 border font-semibold bg-white hover:bg-blue-50 mt-2'
-        >
-            <Image width={140} height={140} src="/google-color.svg" alt="" className="w-5"/>
-            LogIn with Google
-        </button>
-        <p className='text-[12px] mt-1 text-justify'>
-          Don't have an account? Please <button onClick={props.onSignUp} className='font-bold cursor-pointer'>sign up</button> first.
-        </p>
-    </div>
-    {/* <button onClick={props.onClose} className={`relative z-8 lg:-top-13 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+          <div className="fixed lg:top-40 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7">
+            <p className="text-2xl font-bold text-purple-900 mb-2">Log In</p>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={username ? username : formDataLogin.username}
+              onChange={handleChangeLogin}
+              className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={formDataLogin.password}
+              onChange={handleChangeLogin}
+              className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+            />
+            <button
+              onClick={handleLogin}
+              type="submit"
+              className="w-full rounded-full p-2 text-[12px] font-bold bg-blue-400 hover:bg-blue-600 text-white mt-2"
+            >
+              {isLoading ? "Try LogIn..." : "Log In"}
+            </button>
+            <div className="w-full h-[1px] mt-2 bg-purple-100"></div>
+            <button
+              onClick={() => handleGoogleLogin()}
+              className="w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-purple-900 border font-semibold bg-white hover:bg-blue-50 mt-2"
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/google-color.svg"
+                alt=""
+                className="w-5"
+              />
+              LogIn with Google
+            </button>
+            <p className="text-[12px] mt-1 text-justify">
+              Don&apos;t have an account? Please{" "}
+              <button
+                onClick={props.onSignUp}
+                className="font-bold cursor-pointer"
+              >
+                sign up
+              </button>{" "}
+              first.
+            </p>
+          </div>
+          {/* <button onClick={props.onClose} className={`relative z-8 lg:-top-13 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
         <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
     </button> */}
+        </>
+      ) : null}
     </>
-    : null
-}
-    </>
-  )
+  );
 }
