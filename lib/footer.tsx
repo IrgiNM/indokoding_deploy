@@ -1,6 +1,6 @@
 import { roRO } from '@mui/material/locale';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Footer(
@@ -13,10 +13,13 @@ export default function Footer(
       ourWork?: () => void;
       aboutUs?: () => void;
       contactUs?: () => void;
+      ourSkill?: () => void;
+      ourService?: () => void;
     };
   }
 ) {
   const router = useRouter();
+  const [bgNav, setBgNav] = useState(page);
 
   const onHandleClick = () => {
     router.push('/admin'); // Ganti '/loginAdmin' sesuai tujuan kamu
@@ -38,10 +41,12 @@ export default function Footer(
       <p className=" lg:text-sm lg:max-w-md lg:leading-relaxed lg:text-justify text-[10px] max-w-md leading-relaxed text-justify">
         We are a boutique software development company that started from a band of developers who excel in developing apps with great flexibility and always listen to client needs.
       </p>
-      <div className=" lg:flex lg:space-x-4 flex space-x-4 -mt-2">
-        <Image width={140} height={140} src="/fb.svg" alt="Facebook" className="cursor-pointer lg:w-6lg:h-6 w-6 h-6" />
+      <div className=" lg:flex flex gap-1 -mt-2">
+        <a href="https://www.instagram.com/indokoding/">
+          <Image width={140} height={140} src="/fb.svg" alt="Facebook" className="cursor-pointer lg:w-6lg:h-6 w-6 h-6" />
+        </a>
+        <a href="https://www.instagram.com/indokoding/"></a>
         <Image width={140} height={140} src="/ig.svg" alt="Instagram" className=" cursor-pointer lg:w-6 lg:h-6 w-6 h-6" />
-        <Image width={140} height={140} src="/x.svg" alt="Twitter" className=" cursor-pointer lg:w-6 lg:h-6 w-6 h-6" />
       </div>
     </div>
 
@@ -54,27 +59,65 @@ export default function Footer(
             router.push('/')
           }} className=" lg:hover:text-gray-300 hover:text-gray-300">Home</button></li>
           <li><button onClick={()=>{
+            setBgNav("Our Work");
+            console.log(bgNav," clicked");
             onNavClick.ourWork?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Work</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Contact</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Careers Online</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Book Online</button></li>
+          <li><button onClick={()=>{
+            setBgNav("About Us");
+            console.log(bgNav," clicked");
+            onNavClick.aboutUs?.();
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
+          <li><button onClick={()=>{
+            setBgNav("Contact");
+            console.log(bgNav," clicked");
+            onNavClick.contactUs?.();
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Contact</button></li>
+          <li><button onClick={()=>{
+            setBgNav("Career");
+            console.log(bgNav," clicked");
+            router.push("/career");
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Careers Online</button></li>
+          <li><button onClick={()=>{
+            setBgNav("Book Online");
+            console.log(bgNav," clicked");
+            router.push("/bookOnline");
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Book Online</button></li>
         </ul>
       </div>
       <div>
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">ABOUT</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Our Services</button></li>
+          <li><button onClick={()=>{
+            setBgNav("About Us");
+            console.log(bgNav," clicked");
+            onNavClick.aboutUs?.();
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
+          <li><button onClick={()=>{
+            setBgNav("About Us");
+            console.log("Our Skills clicked");
+            onNavClick.ourSkill?.();
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</button></li>
+          <li><button onClick={()=>{
+            setBgNav("About Us");
+            console.log("Our Services clicked");
+            onNavClick.ourService?.();
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Services</button></li>
         </ul>
       </div>
       <div>
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">CAREER</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Join Us</button></li>
-          <li><button onClick={()=>console.log("ad")} className="lg:hover:text-gray-300 hover:text-gray-300">Last Careers</button></li>
+          <li><button onClick={()=>{
+            setBgNav("Career");
+            console.log(bgNav," clicked");
+            router.push("/career");
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Join Us</button></li>
+          <li><button onClick={()=>{
+            setBgNav("Career");
+            console.log(bgNav," clicked");
+            router.push("/career");
+          }} className="lg:hover:text-gray-300 hover:text-gray-300">Last Careers</button></li>
         </ul>
       </div>
     </div>
