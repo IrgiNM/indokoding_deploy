@@ -1,10 +1,12 @@
 "use client";
 import NavLink from "@/components/navLink";
-import PopUpLogin from "@/components/popUpLogin";
-import { deleteCookies, getCookies } from "@/utils/tokenController";
+import React, { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+// import AuthPopUp from "@/components/authPopUp";
+import PopUpLogin from "@/components/popUpLogin";
+// import Cookies from "js-cookie";
+import { deleteCookies, getCookies } from "@/utils/tokenController";
 
 export default function Navbar({
   page,
@@ -24,7 +26,10 @@ export default function Navbar({
   const [isClick, setIsClick] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [showLogOut, setShowLogOut] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
+  // const [showSignup, setShowSignup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
+  // const [love, setLove] = useState(false);
 
   useEffect(() => {
     const fetchCookies = async () => {
@@ -78,8 +83,8 @@ export default function Navbar({
     const originalAlert = window.alert;
     window.alert = function (message) {
       if (
-        message.includes("Login successful") ||
-        message.includes("berhasil")
+        message?.includes("Login successful") ||
+        message?.includes("berhasil")
       ) {
         setTimeout(checkLoginSuccess, 100);
         setShowAuth(false); // ✅ Beri jeda sebelum menutup
@@ -146,7 +151,7 @@ export default function Navbar({
       link: () => {
         console.log("Our Work clicked");
         setBgNav("Our Work");
-        pathname === "/career" || pathname === "/bookOnline" ? router.push("/#our-work") : onNavClick.ourWork?.();
+        onNavClick.ourWork?.();
       },
     },
     {
@@ -157,7 +162,7 @@ export default function Navbar({
       link: () => {
         console.log("About Us clicked");
         setBgNav("About Us");
-        pathname === "/career" || pathname === "/bookOnline" ? router.push("/#about-us") : onNavClick.aboutUs?.();
+        onNavClick.aboutUs?.();
       },
     },
     {
@@ -168,7 +173,7 @@ export default function Navbar({
       link: () => {
         console.log("Contact clicked");
         setBgNav("Contact");
-        pathname === "/career" || pathname === "/bookOnline" ? router.push("/#contact-us") : onNavClick.contactUs?.();
+        onNavClick.contactUs?.();
       },
     },
     {
