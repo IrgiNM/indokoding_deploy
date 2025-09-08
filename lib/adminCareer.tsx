@@ -64,7 +64,6 @@ export default function AdminCareer() {
         setToken(undefined);
       }
     };
-
     fetchCookies();
   }, [router]);
 
@@ -844,7 +843,7 @@ export default function AdminCareer() {
               Yakin <span className="font-bold">dihapus</span> semua ?
             </p>
             <button
-              onClick={handleDeleteAll}
+              onClick={()=>handleDeleteAll()}
               className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold"
             >
               {isLoading ? "delete..." : "Yes"}
@@ -947,10 +946,10 @@ export default function AdminCareer() {
               Yakin <span className="font-bold">Semua Message</span> dibaca ?
             </p>
             <button
-              onClick={() => (handleBukaSemua("saya"), setReadMessage(false))}
+              onClick={() => (handleBukaSemua(token?.username || "saya"), setReadMessage(false))}
               className="p-2 w-full rounded-md bg-[#9fc7ff] hover:bg-[#0055ff] active:bg-[#001d93] text-[12px] text-[#005dcf] hover:text-white font-bold"
             >
-              Yes
+              {isLoading ? "Read all..." : "Yes"}
             </button>
             <button
               onClick={() => setReadMessage(false)}

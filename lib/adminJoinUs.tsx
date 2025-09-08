@@ -2,13 +2,23 @@ import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Career } from "./adminCareer";
+import { User } from "./adminDashboard";
 
 export default function AdminJoinUs() {
   const [edit, setEdit] = useState("none");
   const [hapus, setHapus] = useState(false);
   const [detail, setDetail] = useState(false);
   const [hapusNama, setHapusNama] = useState("none");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState<User>();
+  const [pickId, setPickId] = useState("");
+  const [loveTesting, setLoveTesting] = useState(false);
+  const [love, setLove] = useState(false);
+  const [date, setDate] = useState("");
+  const [readMessage, setReadMessage] = useState(false);
+  
+  
   // const [token, setToken] = useState<User>();
   const router = useRouter();
 
@@ -24,18 +34,18 @@ export default function AdminJoinUs() {
               ? JSON.parse(savedToken)
               : savedToken;
           // Ambil token dan simpan ke state
-          // setToken(parsed);
+          setToken(parsed);
           if (parsed.role === "guest") {
             router.push("/");
           }
           console.log("Token dari cookies:", parsed);
         } else {
-          // setToken(undefined);
+          setToken(undefined);
           router.push("/admin");
         }
       } catch (error) {
         console.error("Gagal mengambil cookies:", error);
-        // setToken(undefined);
+        setToken(undefined);
       }
     };
 
@@ -71,122 +81,214 @@ export default function AdminJoinUs() {
   const [pickEmail, setPickEmail] = useState("none@gmail.com");
   const [pickTanggal, setPickTanggal] = useState("0-0-2025");
   const [pickPesan, setPickPesan] = useState("none");
-  const pickGaji = 200.321;
+  const [pickPhone, setPickPhone] = useState("none");
+  const [pickGaji, setPickGaji] = useState(200.321);
   const pickPosition = "Web Frontend";
 
-  const listUsers = [
-    {
-      nama: "Andi Saputra",
-      tanggal: "2025-08-11",
-      email: "andi@example.com",
-      from: "Jakarta",
-      Position: "Web Frontend",
-      gaji: 500,
-      pesan: "Mengajukan kenaikan gaji karena penambahan tanggung jawab.",
-      dibacaOleh: ["admin1", "admin2"],
-      status: "baru",
-    },
-    {
-      nama: "Budi Hartono",
-      tanggal: "2025-08-10",
-      email: "budi@example.com",
-      from: "Bandung",
-      Position: "Web Backend",
-      gaji: 433.33,
-      pesan: "Meminta izin cuti selama 5 hari untuk keperluan keluarga.",
-      dibacaOleh: ["admin2"],
-      status: "proses",
-    },
-    {
-      nama: "Velly Rhis Faulina",
-      tanggal: "2025-08-09",
-      email: "citra@example.com",
-      from: "Surabaya",
-      Position: "Web Frontend",
-      gaji: 533.33,
-      pesan:
-        "Memberikan laporan progres proyek terakhir. Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ullam tenetur unde doloribus, tempore repudiandae accusantium perferendis nemo ducimus iusto architecto at laudantium! Voluptate tempora, earum, consequatur atque aperiam nesciunt possimus facilis officia assumenda veritatis dolorum, illum beatae dolorem. Numquam, doloremque quisquam! A odit magnam nobis! Impedit fugiat consequuntur libero odio, reiciendis alias doloremque optio, a modi, quasi beatae? In veniam ipsum quam adipisci, suscipit numquam aliquid debitis neque earum quo at voluptas? Voluptatem et porro, aliquam natus at, repellendus eum nihil velit culpa sed quos enim aspernatur illum fugit doloribus fugiat eligendi eaque ut? Modi esse sed libero voluptas. iusto architecto at laudantium! Voluptate tempora, earum, consequatur atque aperiam nesciunt possimus facilis officia assumenda veritatis dolorum, illum beatae dolorem. Numquam, doloremque quisquam! A odit magnam nobis! Impedit fugiat consequuntur libero odio, reiciendis alias doloremque optio, a modi, quasi beatae? In veniam ipsum quam adipisci, suscipit numquam aliquid debitis neque earum quo at voluptas? Voluptatem et porro, aliquam natus at, repellendus eum nihil velit culpa sed quos enim aspernatur illum fugit doloribus fugiat eligendi eaque ut? Modi esse sed libero voluptas.",
-      dibacaOleh: [],
-      status: "selesai",
-    },
-    {
-      nama: "Kireisa Hana Mustofa",
-      tanggal: "2025-08-08",
-      email: "dian@example.com",
-      from: "Yogyakarta",
-      Position: "Django Developer",
-      gaji: 466.67,
-      pesan: "Mengajukan permintaan pelatihan tambahan.",
-      dibacaOleh: ["admin1"],
-      status: "baru",
-    },
-    {
-      nama: "Eka Wulandari",
-      tanggal: "2025-08-07",
-      email: "eka@example.com",
-      from: "Semarang",
-      Position: "Android Developer",
-      gaji: 480,
-      pesan: "Melaporkan keterlambatan proyek karena faktor cuaca.",
-      dibacaOleh: ["admin3"],
-      status: "proses",
-    },
-    {
-      nama: "Fajar Nugroho",
-      tanggal: "2025-08-06",
-      email: "fajar@example.com",
-      from: "Makassar",
-      Position: "Android Developer",
-      gaji: 460,
-      pesan: "Meminta upgrade laptop kerja untuk menunjang performa.",
-      dibacaOleh: [],
-      status: "baru",
-    },
-    {
-      nama: "Gita Anggraini",
-      tanggal: "2025-08-05",
-      email: "gita@example.com",
-      from: "Medan",
-      Position: "IOS Developer",
-      gaji: 513.33,
-      pesan: "Memberikan testimoni positif atas kerja sama tim.",
-      dibacaOleh: ["admin1", "admin2"],
-      status: "selesai",
-    },
-    {
-      nama: "Hadi Santoso",
-      tanggal: "2025-08-04",
-      email: "hadi@example.com",
-      from: "Bali",
-      Position: "Web Frontend",
-      gaji: 500,
-      pesan: "Mengajukan perubahan jam kerja.",
-      dibacaOleh: [],
-      status: "baru",
-    },
-    {
-      nama: "Indah Permata",
-      tanggal: "2025-08-03",
-      email: "indah@example.com",
-      from: "Palembang",
-      Position: "Django Developer",
-      gaji: 486.67,
-      pesan: "Meminta klarifikasi terkait proyek baru.",
-      dibacaOleh: ["admin2"],
-      status: "proses",
-    },
-    {
-      nama: "Joko Susanto",
-      tanggal: "2025-08-02",
-      email: "joko@example.com",
-      from: "Lampung",
-      Position: "Administrator",
-      gaji: 520,
-      pesan: "Memberikan laporan akhir bulan.",
-      dibacaOleh: ["admin1", "admin3"],
-      status: "selesai",
-    },
-  ];
+  const [joins, setJoins] = useState<Career[]>([]);
+  useEffect(() => {
+    const fetchJoins = async () => {
+      try {
+        // panggil backend API
+        const res = await fetch("/api/getJoinUsMessage");
+        const data = await res.json();
+        console.log("Data Joins:", data);
+
+        // Urutkan data berdasarkan pilihan sorting
+        const sortedData = sortJoins(data, urutan);
+        setJoins(sortedData);
+      } catch (err) {
+        console.error("Gagal fetch Joins:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchJoins();
+  }, [urutan, detail, loveTesting, isLoading]);
+
+  const sortJoins = (data: Career[], order: string) => {
+    const sortedData = [...data];
+
+    switch (order) {
+      case "A - Z":
+        return sortedData.sort((a, b) => a.name.localeCompare(b.name));
+      case "Z - A":
+        return sortedData.sort((a, b) => b.name.localeCompare(a.name));
+      case "New":
+        return sortedData.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      case "Old":
+        return sortedData.sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+      default:
+        return sortedData;
+    }
+  };
+
+  async function handleBuka(id: string, email: string) {
+    try {
+      const res = await fetch("/api/openCareer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id, email: email }),
+      });
+
+      const data = await res.json();
+      console.log("id:", id, "email:", email);
+      console.log("Career message berhasil dibuka:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async function handleBukaSemua(email: string) {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/openAllCareer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      });
+
+      const data = await res.json();
+      console.log("Career message berhasil dibuka semua:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleLove(id: string) {
+    setIsLoading(true);
+    try {
+      await fetch("/api/loveCareer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          
+        },
+        body: JSON.stringify({ id: id }),
+      });
+      console.log("id:", id);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const searchLove = async () => {
+    try {
+      const res = await fetch("/api/searchJoinByLove", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("Data ditemukan:", data.careers || []);
+        const sortedData = sortJoins(data.careers || [], urutan);
+        setJoins(sortedData);
+      } else {
+        console.error("Error:", data.error);
+        setJoins([]);
+      }
+    } catch (error) {
+      console.error("Request error:", error);
+      setJoins([]);
+    }
+  };
+
+  const searchDate = async (selectedDate: string) => {
+    setDate(selectedDate);
+
+    try {
+      const res = await fetch("/api/searchCareersByDate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ date: selectedDate }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("Data ditemukan:", data.careers || []);
+        const sortedData = sortJoins(data.careers || [], urutan);
+        setJoins(sortedData);
+      } else {
+        console.error("Error:", data.error);
+        setJoins([]);
+      }
+    } catch (error) {
+      console.error("Request error:", error);
+      setJoins([]);
+    }
+  };
+
+  async function handleDelete(id: string, email: string) {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/removeCareerMessage", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id, email: email }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Gagal menghapus message");
+      }
+
+      const data = await res.json();
+      console.log("Career message berhasil dihapus:", data);
+      alert("Career message berhasil dihapus");
+      setHapusNama("none");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Gagal menghapus message. Silakan coba lagi nanti.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleDeleteAll() {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/removeAllCareer", {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Gagal menghapus semua message");
+      }
+
+      const data = await res.json();
+      console.log("Career message berhasil dihapus semua:", data);
+      alert("Career message berhasil dihapus semua");
+      setHapus(false);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
 
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
@@ -227,17 +329,29 @@ export default function AdminJoinUs() {
             </button>
           </div>
           <div className="relative flex flex-row gap-2">
-            <button className="hover:bg-purple-50 p-2 hover:border hover:border-[#e079ff] rounded-full">
+            <button
+              onClick={() => {
+                setLove(!love);
+                if (love === false) {
+                  searchLove();
+                } else if (love === true) {
+                  setLoveTesting(!loveTesting);
+                }
+              }}
+              className="hover:bg-purple-50 p-2 hover:border hover:border-[#e079ff] rounded-full"
+            >
               <Image
                 width={140}
                 height={140}
-                src="/love.svg"
+                src={love ? `/love-fill.svg` : "/love.svg"}
                 alt="MySQL"
                 className="w-4"
               />
             </button>
             <input
               type="date"
+              value={date}
+              onChange={(e) => searchDate(e.target.value)}
               className="hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start"
             />
             <button
@@ -256,7 +370,7 @@ export default function AdminJoinUs() {
               />
             </button>
             {urutanActive && (
-              <div className="absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-82 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4">
+              <div className="absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-52 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4">
                 <button
                   onClick={az}
                   className="text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full"
@@ -283,10 +397,10 @@ export default function AdminJoinUs() {
                 </button>
               </div>
             )}
-            <button className="text-[12px] font-bold p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer">
-              Reset
-            </button>
-            <button className="text-[12px] font-bold p-2 px-5 border-1 border-[#7e8bec] text-[#001893] flex flex-row gap-2 rounded-lg bg-[#e6edff] hover:bg-[#7e8bec] hover:text-white active:bg-[#001893] cursor-pointer">
+            <button
+              onClick={() => setReadMessage(true)}
+              className="text-[12px] font-bold p-2 px-5 border-1 border-[#7e8bec] text-[#001893] flex flex-row gap-2 rounded-lg bg-[#e6edff] hover:bg-[#7e8bec] hover:text-white active:bg-[#001893] cursor-pointer"
+            >
               <Image
                 width={30}
                 height={30}
@@ -309,7 +423,7 @@ export default function AdminJoinUs() {
 
         {/* LIST USERS */}
         <div className="flex flex-row flex-wrap gap-x-5 gap-y-1 p-5 pt-30">
-          {listUsers.map((user, index) => (
+          {joins.map((user, index) => (
             <div
               key={index}
               className={`w-full flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] hover:bg-purple-50 shadow-md gap-2 relative`}
@@ -318,17 +432,17 @@ export default function AdminJoinUs() {
                 width={30}
                 height={30}
                 src={
-                  user.Position === "Web Frontend"
+                  user.position === "Web Frontend"
                     ? "/code.svg"
-                    : user.Position === "Web Backend"
+                    : user.position === "Web Backend"
                     ? "/server.svg"
-                    : user.Position === "Django Developer"
+                    : user.position === "Django Developer"
                     ? "/django.svg"
-                    : user.Position === "Android Developer"
+                    : user.position === "Android Developer"
                     ? "/android.svg"
-                    : user.Position === "IOS Developer"
+                    : user.position === "IOS Developer"
                     ? "/apple.svg"
-                    : user.Position === "Administrator"
+                    : user.position === "Administrator"
                     ? "/admin.svg"
                     : "/code.svg"
                 }
@@ -339,23 +453,29 @@ export default function AdminJoinUs() {
                 key={index}
                 onClick={() => {
                   klikDetail();
-                  setPickNama(user.nama);
+                  setPickNama(user.name);
                   setPickEmail(user.email);
-                  setPickTanggal(user.tanggal);
-                  setPickPesan(user.pesan);
-                  user.status = "dibaca";
+                  setPickTanggal(user.createdAt);
+                  setPickPesan(user.message);
+                  setPickPhone(user.phone);
+                  setPickGaji(user.rate);
+                  handleBuka(user.id, token?.username || "saya");
                 }}
                 className="w-full flex items-start justify-start pl-10"
               >
                 <div className="flex flex-col items-start">
                   <p
                     className={`text-[13px] font-bold text-[#710093] ${
-                      user.dibacaOleh.length > 0 ? "opacity-30" : "opacity-100"
+                      (user.dibaca_oleh || []).some(
+                        (pembaca) => pembaca === (token?.username || "saya")
+                      )
+                        ? "opacity-30"
+                        : "opacity-100"
                     }`}
                   >
-                    {truncateTextByChar(user.nama, 60)}{" "}
+                    {truncateTextByChar(user.name, 60)}{" "}
                     <span className="font-light text-[10px] text-[#00930f] ml-2">
-                      {user.tanggal}
+                      {user.createdAt}
                     </span>
                   </p>
                   <p className="text-[12px] font-light">
@@ -365,13 +485,15 @@ export default function AdminJoinUs() {
                       {truncateTextByChar(user.from, 10)} -
                     </span>
                     <span className="text-[#004793]"> {user.email} -</span>
-                    <span> {truncateTextByChar(user.pesan, 70)}</span>
+                    <span> {truncateTextByChar(user.message, 70)}</span>
                   </p>
                 </div>
               </button>
               <button
                 onClick={() => {
-                  setHapusNama(user.nama);
+                  setHapusNama(user.name);
+                  setPickId(user.id);
+                  setPickEmail(user.email);
                 }}
                 className="h-8 w-8 absolute right-3 top-4 flex justify-center items-center rounded-full bg-[#ffa0c0] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer"
               >
@@ -383,15 +505,9 @@ export default function AdminJoinUs() {
                   className="w-3 h-3"
                 />
               </button>
-              {user.status === "bdibaca" ? (
-                <Image
-                  width={30}
-                  height={30}
-                  src="/email-blue.svg"
-                  alt="Dashboard"
-                  className="w-4 h-4 absolute right-15 top-6"
-                />
-              ) : (
+              {(user.dibaca_oleh || []).some(
+                (pembaca) => pembaca === (token?.username || "saya")
+              ) ? (
                 <Image
                   width={30}
                   height={30}
@@ -399,14 +515,22 @@ export default function AdminJoinUs() {
                   alt="Dashboard"
                   className="w-4 h-4 absolute right-15 top-6"
                 />
+              ) : (
+                <Image
+                  width={30}
+                  height={30}
+                  src="/email-blue.svg"
+                  alt="Dashboard"
+                  className="w-4 h-4 absolute right-15 top-6"
+                />
               )}
-              {user.dibacaOleh.length > 0 &&
-                user.dibacaOleh.map((admin, idx) => (
+              {user.dibaca_oleh.length > 0 &&
+                user.dibaca_oleh.map((admin, idx) => (
                   <button
                     key={idx}
                     onClick={() => {
-                      if (edit === "none" || edit !== user.nama) {
-                        setEdit(user.nama);
+                      if (edit === "none" || edit !== user.id) {
+                        setEdit(user.id);
                       } else {
                         setEdit("none");
                       }
@@ -421,14 +545,14 @@ export default function AdminJoinUs() {
                     />
                   </button>
                 ))}
-              {user.dibacaOleh.length > 0 && edit === user.nama ? (
+              {user.dibaca_oleh.length > 0 && edit === user.id ? (
                 <div className="absolute z-1 w-30 border-[1.5px] rounded-lg border-[#cb48f3] top-4 right-30 backdrop-blur-md flex flex-col justify-center items-center gap-2 py-4">
-                  {user.dibacaOleh.map((admin, idx) => (
+                  {user.dibaca_oleh.map((admin, idx) => (
                     <p
                       key={idx}
                       className="text-[12px] font-semibold text-[#710093]"
                     >
-                      {admin}
+                      {truncateTextByChar(admin, 10)}
                     </p>
                   ))}
                 </div>
@@ -441,16 +565,21 @@ export default function AdminJoinUs() {
                   alt="MySQL"
                   className="w-2"
                 />
-                {user.gaji.toFixed(2)}
+                {Number(user.rate).toFixed(2)}
               </p>
               <p className="absolute top-1 right-37 text-[12px] text-[#710093] p-0 px-2 rounded-md bg-purple-100">
                 Rate
               </p>
-              <button className="absolute top-4 right-55 p-2 hover:border hover:border-[#e079ff] rounded-full">
+              <button
+                onClick={() => (
+                  setLoveTesting(!loveTesting), handleLove(user.id)
+                )}
+                className="absolute top-4 right-55 p-2 hover:border hover:border-[#e079ff] rounded-full"
+              >
                 <Image
                   width={140}
                   height={140}
-                  src="/love.svg"
+                  src={user.favorite === true ? `/love-fill.svg` : "/love.svg"}
                   alt="MySQL"
                   className="w-4"
                 />
@@ -460,10 +589,10 @@ export default function AdminJoinUs() {
         </div>
 
         {/* EDIT USER */}
-        {hapus || hapusNama !== "none" || detail ? (
+        {hapus || hapusNama !== "none" || detail || readMessage ? (
           <div className="fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
         ) : null}
-        {hapus || hapusNama !== "none" || detail ? (
+        {hapus || hapusNama !== "none" || detail || readMessage ? (
           <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
         ) : null}
         {hapus && (
@@ -478,8 +607,11 @@ export default function AdminJoinUs() {
             <p className="text-[12px] text-[#930062] w-30 text-center">
               Yakin <span className="font-bold">dihapus</span> semua ?
             </p>
-            <button className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold">
-              Yes
+            <button
+              onClick={()=>handleDeleteAll()}
+              className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold"
+            >
+              {isLoading ? "delete..." : "Yes"}
             </button>
             <button
               onClick={() => setHapus(false)}
@@ -505,13 +637,49 @@ export default function AdminJoinUs() {
               className="w-10"
             />
             <p className="text-[12px] text-[#930062] w-30 text-center">
-              Yakin <span className="font-bold">Message ini</span> dihapus ?
+              Yakin <span className="font-bold">Message {hapusNama} ini</span>{" "}
+              dihapus ?
             </p>
-            <button className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold">
-              Yes
+            <button
+              onClick={() => handleDelete(pickId, pickEmail)}
+              className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold"
+            >
+              {isLoading ? "delete..." : "Yes"}
             </button>
             <button
               onClick={() => setHapusNama("none")}
+              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+          </div>
+        )}
+        {readMessage && (
+          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+            <Image
+              width={140}
+              height={140}
+              src="/warning-red.svg"
+              alt=""
+              className="w-10"
+            />
+            <p className="text-[12px] text-[#005dcf] w-30 text-center">
+              Yakin <span className="font-bold">Semua Message</span> dibaca ?
+            </p>
+            <button
+              onClick={() => (handleBukaSemua(token?.username || "saya"), setReadMessage(false))}
+              className="p-2 w-full rounded-md bg-[#9fc7ff] hover:bg-[#0055ff] active:bg-[#001d93] text-[12px] text-[#005dcf] hover:text-white font-bold"
+            >
+              {isLoading ? "Read all..." : "Yes"}
+            </button>
+            <button
+              onClick={() => setReadMessage(false)}
               className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
@@ -573,10 +741,14 @@ export default function AdminJoinUs() {
                   alt="MySQL"
                   className="w-2"
                 />
-                {pickGaji.toFixed(2)}
+                {Number(pickGaji).toFixed(2)}
               </div>
             </div>
 
+            <p className="max-h-50 pr-5 mt-3 overflow-auto text-[12px] text-justify">
+              <span className="text-[#710093] font-bold">Number Phone : </span>
+              {pickPhone}
+            </p>
             <p className="max-h-50 pr-5 mt-3 overflow-auto text-[12px] text-justify">
               <span className="text-[#710093] font-semibold">Pesan : </span>
               {pickPesan}
