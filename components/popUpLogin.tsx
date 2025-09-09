@@ -107,7 +107,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                 });
                 // alert(data.message || "Registrasi berhasil!");
                 } else {
-                alert(data.message || "Registrasi gagal");
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Registrasi gagal!",
+                  });
+                // alert(data.message || "Registrasi gagal");
                 }
             } catch (error) {
                 console.error("Error saat registrasi:", error);
@@ -116,7 +121,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                 setIsLoading(false);
             }
         }else {
-            alert("Username atau email sudah terdaftar");
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "sername atau email sudah terdaftar",
+            });
+            // alert("Username atau email sudah terdaftar");
         }
     };
 
@@ -167,7 +177,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           });
           // alert(data.message || "Login berhasil!");
         } else {
-          alert(data.error || "Login gagal");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Login gagal!",
+          });
+          // alert(data.error || "Login gagal");
         }
       } catch (error) {
         console.error("Error saat login:", error);
@@ -225,7 +240,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         });
         // alert(data.message || "Registrasi berhasil!");
         } else {
-        alert(data.error || "Registrasi gagal");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Registrasi gagal!",
+          });
+        // alert(data.error || "Registrasi gagal");
         }
     
         
@@ -280,7 +300,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           console.log("username yang dikirim:", user.displayName);
           console.log("email yang dikirim:", user.email);
           console.log("role yang dikirim:", 'admin');
-          alert(data.error || "Registrasi gagal!");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Registrasi gagal!",
+          });
+          // alert(data.error || "Registrasi gagal!");
           router.push("/");
         }
     
