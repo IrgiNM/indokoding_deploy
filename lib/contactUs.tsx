@@ -99,7 +99,12 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
       !formDataContact.subject ||
       !formDataContact.message
     ) {
-      alert("Harap isi semua field");
+      Swal.fire({
+        title: "Field Empty?",
+        text: "please fill all the fields",
+        icon: "question"
+      });
+      // alert("Harap isi semua field");
       return;
     }
 
@@ -136,9 +141,9 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         throw new Error(errorData.error || "Gagal mengirim pesan");
       }
 
-      const data = await res.json();
+      await res.json();
       Swal.fire({
-        title: "Pesan berhasil dikirim!",
+        title: "message sent successfully",
         icon: "success",
         draggable: true
       });
@@ -155,9 +160,21 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
       console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
-        alert(error.message || "Terjadi kesalahan saat mengirim pesan");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "an error occurred while sending the message",
+          // footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        // alert(error.message || "Terjadi kesalahan saat mengirim pesan");
       } else {
-        alert("Terjadi kesalahan yang tidak diketahui");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "an unknown error occurred",
+          // footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        // alert("Terjadi kesalahan yang tidak diketahui");
       }
     } finally {
       setIsLoading(false);

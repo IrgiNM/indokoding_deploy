@@ -7,6 +7,7 @@ import Image from "next/image";
 import PopUpLogin from "@/components/popUpLogin";
 // import Cookies from "js-cookie";
 import { deleteCookies, getCookies } from "@/utils/tokenController";
+import Swal from "sweetalert2";
 
 export default function Navbar({
   link,
@@ -126,7 +127,12 @@ export default function Navbar({
   const logout = (): void => {
     try {
       deleteCookies();
-      alert("Berhasil logout!");
+      Swal.fire({
+        title: "Logout successful",
+        icon: "success",
+        draggable: true
+      });
+      // alert("Berhasil logout!");
       console.log("Logout berhasil, data dihapus dari cookies");
     } catch (error) {
       console.error("Gagal logout:", error);

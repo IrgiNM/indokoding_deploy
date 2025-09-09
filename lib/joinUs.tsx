@@ -2,6 +2,7 @@ import PopUpLogin from "@/components/popUpLogin";
 import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function JoinUsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +75,12 @@ export default function JoinUsPage() {
       !formDataJoinUsMessage.rate ||
       !formDataJoinUsMessage.position
     ) {
-      alert("Harap isi semua field");
+      Swal.fire({
+        title: "Field Empty?",
+        text: "please fill in all fileds",
+        icon: "question"
+      });
+      // alert("Harap isi semua field");
       return;
     }
 
@@ -115,7 +121,12 @@ export default function JoinUsPage() {
       }
 
       const data = await res.json();
-      alert(data.message || "Pesan berhasil dikirim!");
+      Swal.fire({
+        title: data.message || "message sent successfully",
+        icon: "success",
+        draggable: true
+      });
+      // alert(data.message || "Pesan berhasil dikirim!");
 
       // Reset form setelah berhasil
       setFormData({
@@ -132,9 +143,21 @@ export default function JoinUsPage() {
       console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
-        alert(error.message || "Terjadi kesalahan saat mengirim pesan");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message || "an error occured while sending the message",
+          // footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        // alert(error.message || "Terjadi kesalahan saat mengirim pesan");
       } else {
-        alert("Terjadi kesalahan yang tidak diketahui");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "an unknown error occured",
+          // footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        // alert("Terjadi kesalahan yang tidak diketahui");
       }
     } finally {
       setIsLoading(false);

@@ -4,6 +4,7 @@ import { RequirementCareer } from "@/type/careerType";
 import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { forwardRef, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
   const [diKlik, setDiKlik] = useState("Django Developer");
@@ -90,7 +91,12 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
       !formDataCareerMessage.phone ||
       !formDataCareerMessage.rate
     ) {
-      alert("Harap isi semua field");
+      Swal.fire({
+        title: "The Internet?",
+        text: "please fill all the fields!",
+        icon: "question"
+      });
+      // alert("Harap isi semua field");
       return;
     }
 
@@ -130,8 +136,13 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         throw new Error(errorData.error || "Gagal mengirim pesan");
       }
 
-      const data = await res.json();
-      alert(data.message || "Pesan berhasil dikirim!");
+      await res.json();
+      Swal.fire({
+        title: "message sent successfully",
+        icon: "success",
+        draggable: true
+      });
+      // alert(data.message || "Pesan berhasil dikirim!");
       setShowPopup(false);
 
       // Reset form setelah berhasil
@@ -148,9 +159,21 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
       console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
-        alert(error.message || "Terjadi kesalahan saat mengirim pesan");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message || "an error occured while sending the message!",
+          // footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        // alert(error.message || "Terjadi kesalahan saat mengirim pesan");
       } else {
-        alert("Terjadi kesalahan yang tidak diketahui");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "an unknown error occured!",
+          // footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        // alert("Terjadi kesalahan yang tidak diketahui");
       }
     } finally {
       setIsLoading(false);

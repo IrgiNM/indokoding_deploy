@@ -101,7 +101,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                   router.push("/admin/dashboard");
                 }
                 Swal.fire({
-                  title: "Registrasi berhasil!",
+                  title: "Registration successful!",
                   icon: "success",
                   draggable: true
                 });
@@ -110,13 +110,18 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                   Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Registrasi gagal!",
+                    text: "Registration failed!",
                   });
                 // alert(data.message || "Registrasi gagal");
                 }
             } catch (error) {
                 console.error("Error saat registrasi:", error);
-                alert("Terjadi kesalahan saat registrasi");
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "an error occurred during registration",
+                });
+                // alert("Terjadi kesalahan saat registrasi");
             } finally {
                 setIsLoading(false);
             }
@@ -124,7 +129,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "sername atau email sudah terdaftar",
+              text: "username or email already registered",
             });
             // alert("Username atau email sudah terdaftar");
         }
@@ -171,7 +176,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
             router.push("/admin/dashboard");
           }
           Swal.fire({
-            title: "Login berhasil!",
+            title: "Login successful!",
             icon: "success",
             draggable: true
           });
@@ -180,7 +185,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Login gagal!",
+            text: "Login failed!",
           });
           // alert(data.error || "Login gagal");
         }
@@ -188,7 +193,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         console.error("Error saat login:", error);
         console.error("username saat login:", formDataLogin.username);
         console.error("password saat login:", formDataLogin.password);
-        alert("Terjadi kesalahan saat login");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "an error occurred during login",
+        });
+        // alert("Terjadi kesalahan saat login");
       }finally {
         setIsLoading(false);
       }
@@ -234,7 +244,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           router.push("/admin/dashboard");
         }
         Swal.fire({
-          title: "Registrasi berhasil!",
+          title: data.message || "Registrasi successful!",
           icon: "success",
           draggable: true
         });
@@ -243,16 +253,21 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Registrasi gagal!",
+            text: "Registrasi failed!",
           });
         // alert(data.error || "Registrasi gagal");
         }
     
-        
-        alert(`Welcome ${user.displayName || "Guest"}!`);
+        Swal.fire(`Welcome ${user.displayName || "Guest"}!`);
+        // alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (error) {
         console.error("Google login error:", error);
-        alert("Login Google gagal!");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Login Google failed!",
+        });
+        // alert("Login Google gagal!");
       }
     };
 
@@ -291,7 +306,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
             router.push("/admin/dashboard");
           }
           Swal.fire({
-            title: "Registrasi berhasil!",
+            title: data.message || "Registrasi successful!",
             icon: "success",
             draggable: true
           });
@@ -303,16 +318,22 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Registrasi gagal!",
+            text: "Registrasi failed!",
           });
           // alert(data.error || "Registrasi gagal!");
           router.push("/");
         }
-    
-        alert(`Welcome ${user.displayName || "Guest"}!`);
+        
+        Swal.fire(`Welcome ${user.displayName || "Guest"}!`);
+        // alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (error) {
         console.error("Google login error:", error);
-        alert("Login Google gagal!");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Login Google failed!",
+        });
+        // alert("Login Google gagal!");
       }
     };
     
