@@ -3,9 +3,9 @@ import PopUpLogin from "@/components/popUpLogin";
 import { RequirementCareer } from "@/type/careerType";
 import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 
-export default function CareerApply() {
+function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
   const [diKlik, setDiKlik] = useState("Django Developer");
   const [showLogOut, setShowLogOut] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
@@ -159,7 +159,7 @@ export default function CareerApply() {
 
   return (
     <div className=" lg:w-[1600px] lg:h-180 lg:mt-30 lg:flex lg:flex-row lg:justify-center lg:items-start lg:relative w-[300px] h-240 mt-0 flex flex-col justify-center items-start relative">
-      <div className=" lg:absolute lg:left-70 lg:flex lg:flex-col lg:justify-start lg:items-start absolute left-5 top-0 flex flex-col justify-start items-start">
+      <div ref={ref} id={props.id} className=" lg:absolute lg:left-70 lg:flex lg:flex-col lg:justify-start lg:items-start absolute left-5 top-0 flex flex-col justify-start items-start">
         <p className=" lg:text-sm lg:font-semibold lg:text-center lg:mb-2 text-[12px] font-semibold text-center mb-2">
           Stay tuned for updates!
         </p>
@@ -417,3 +417,6 @@ export default function CareerApply() {
     </div>
   );
 }
+
+const CareerApply = forwardRef(CareerApplyComponent);
+export default CareerApply;

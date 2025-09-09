@@ -12,6 +12,7 @@ export default function Page() {
   const contactUsRef = useRef<HTMLDivElement>(null);
   const ourSkillRef = useRef<HTMLDivElement>(null);
   const serviceRef = useRef<HTMLDivElement>(null);
+  const CareerApplyRef = useRef<HTMLDivElement>(null);
 
   const scrollToRef = (ref: React.RefObject<HTMLElement | null>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -20,12 +21,13 @@ export default function Page() {
 
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar page="Career" 
+      <Navbar link="career" page="Career" 
         onNavClick={{
         }}/>
       <JoinUsPage/>
-      <CareerApply />
+      <CareerApply id="CareerApply" ref={CareerApplyRef} />
       <Footer
+        link="career"
         page={page}
         onNavClick={{
           ourWork: () => {
@@ -47,6 +49,10 @@ export default function Page() {
           ourService: () => {
             scrollToRef(serviceRef);
             setPage("About Us");
+          },
+          careerApply: () => {
+            scrollToRef(CareerApplyRef);
+            setPage("Career");
           },
         }}
       />

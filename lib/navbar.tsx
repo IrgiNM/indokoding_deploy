@@ -9,9 +9,11 @@ import PopUpLogin from "@/components/popUpLogin";
 import { deleteCookies, getCookies } from "@/utils/tokenController";
 
 export default function Navbar({
+  link,
   page,
   onNavClick,
 }: {
+  link: string;
   page: string;
   onNavClick: {
     ourWork?: () => void;
@@ -149,6 +151,9 @@ export default function Navbar({
       active: "text-[#128900] bg-[#D4FFDB] font-bold",
       bg: "hover:bg-[#D4FFDB] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
+        if(link === "career") {
+          router.push("/#OurWork");
+        }
         console.log("Our Work clicked");
         setBgNav("Our Work");
         onNavClick.ourWork?.();
@@ -160,6 +165,9 @@ export default function Navbar({
       active: "text-[#004C6C] bg-[#D4F6FF] font-bold",
       bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
+        if(link === "career") {
+          router.push("/#AboutUs");
+        }
         console.log("About Us clicked");
         setBgNav("About Us");
         onNavClick.aboutUs?.();
@@ -171,6 +179,9 @@ export default function Navbar({
       active: "text-[#6C4E00] bg-[#FEFFD4] font-bold",
       bg: "hover:bg-[#FEFFD4] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
+        if(link === "career") {
+          router.push("/#ContactUs");
+        }
         console.log("Contact clicked");
         setBgNav("Contact");
         onNavClick.contactUs?.();

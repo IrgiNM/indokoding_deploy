@@ -26,6 +26,7 @@ export default function Page() {
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
       <Navbar
+        link="home"
         page={page}
         onNavClick={{
           ourWork: () => scrollToRef(ourWorkRef),
@@ -34,12 +35,13 @@ export default function Page() {
         }}
       />
       <Home/>
-      <OurWorkCenter ref={ourWorkRef}/>
-      <AboutUs ref={aboutUsRef}/>
-      <OurSkills ref={ourSkillRef} />
-      <Service ref={serviceRef} />
-      <ContactUs ref={contactUsRef} />
+      <OurWorkCenter id="OurWork" ref={ourWorkRef}/>
+      <AboutUs id="AboutUs" ref={aboutUsRef}/>
+      <OurSkills id="OurSkill" ref={ourSkillRef} />
+      <Service id="Service" ref={serviceRef} />
+      <ContactUs id="ContactUs" ref={contactUsRef} />
       <Footer
+        link="home"
         page={page}
         onNavClick={{
           ourWork: () => {

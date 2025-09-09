@@ -1,5 +1,5 @@
 import { db } from "@/firebase/config";
-import { collection, DocumentData, getDocs, query, where } from "firebase/firestore";
+import { collection, DocumentData, getDocs, query } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 

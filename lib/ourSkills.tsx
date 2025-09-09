@@ -2,7 +2,7 @@ import CardSkill from '@/components/cardSkill'
 import Image from 'next/image'
 import React, { forwardRef } from 'react'
 
-function OurSkillsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
+function OurSkillsComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
     const dataSkill = [
         {
             id: 1,
@@ -61,7 +61,7 @@ function OurSkillsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
         },
     ]
   return (
-    <div ref={ref} id="our-skill" className='flex flex-col justify-center items-center relative mt-50 w-full'>
+    <div ref={ref} id={props.id} className='flex flex-col justify-center items-center relative mt-50 w-full'>
         {/* ABSOLUTE */}
         <div className='relative'>
             <h1 className='text-[#005CB2] mb-8 lg:text-4xl text-xl font-extrabold'>Our Skills</h1>

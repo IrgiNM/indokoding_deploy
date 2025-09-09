@@ -4,9 +4,11 @@ import { useRouter } from 'next/navigation';
 
 export default function Footer(
   {
+    link,
     page,
     onNavClick,
   }: {
+    link: string;
     page: string;
     onNavClick: {
       ourWork?: () => void;
@@ -14,6 +16,7 @@ export default function Footer(
       contactUs?: () => void;
       ourSkill?: () => void;
       ourService?: () => void;
+      careerApply?: () => void;
     };
   }
 ) {
@@ -59,16 +62,25 @@ export default function Footer(
             router.push('/')
           }} className=" lg:hover:text-gray-300 hover:text-gray-300">Home</button></li>
           <li><button onClick={()=>{
+            if(link === "career" || link === "bookOnline") {
+              router.push("/#OurWork");
+            }
             setBgNav("Our Work");
             console.log(bgNav," clicked");
             onNavClick.ourWork?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Work</button></li>
           <li><button onClick={()=>{
+            if(link === "career" || link === "bookOnline") {
+              router.push("/#AboutUs");
+            }
             setBgNav("About Us");
             console.log(bgNav," clicked");
             onNavClick.aboutUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
           <li><button onClick={()=>{
+            if(link === "career" || link === "bookOnline") {
+              router.push("/#ContactUs");
+            }
             setBgNav("Contact");
             console.log(bgNav," clicked");
             onNavClick.contactUs?.();
@@ -89,16 +101,25 @@ export default function Footer(
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">ABOUT</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
           <li><button onClick={()=>{
+            if(link === "career" || link === "bookOnline") {
+              router.push("/#AboutUs");
+            }
             setBgNav("About Us");
             console.log(bgNav," clicked");
             onNavClick.aboutUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
           <li><button onClick={()=>{
+            if(link === "career" || link === "bookOnline") {
+              router.push("/#OurSkill");
+            }
             setBgNav("About Us");
             console.log("Our Skills clicked");
             onNavClick.ourSkill?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</button></li>
           <li><button onClick={()=>{
+            if(link === "career" || link === "bookOnline") {
+              router.push("/#Service");
+            }
             setBgNav("About Us");
             console.log("Our Services clicked");
             onNavClick.ourService?.();
@@ -114,9 +135,13 @@ export default function Footer(
             router.push("/career");
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Join Us</button></li>
           <li><button onClick={()=>{
+            if(link === "home" || link === "bookOnline") {
+              router.push("/career/#CareerApply");
+            }
             setBgNav("Career");
             console.log(bgNav," clicked");
-            router.push("/career");
+            // router.push("/career");
+            onNavClick.careerApply?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Last Careers</button></li>
         </ul>
       </div>

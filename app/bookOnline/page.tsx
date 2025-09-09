@@ -19,7 +19,8 @@ export default function Page() {
   const [page, setPage] = useState("home");
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
-      <Navbar 
+      <Navbar
+        link="career"
         page="Book Online" 
         onNavClick={{
         }}
@@ -27,6 +28,7 @@ export default function Page() {
       <BookOnline/>
       <Service2/>
       <Footer
+        link="bookOnline"
         page={page}
         onNavClick={{
           ourWork: () => {

@@ -3,7 +3,7 @@ import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { forwardRef, useEffect, useState } from "react";
 
-function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
+function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
   const [showPopup, setShowPopup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [token, setToken] = useState<string | null>(null);
@@ -160,7 +160,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
 
   return (
     <>
-      <div ref={ref} id="contact-us" className="relative top-20 right-0"></div>
+      <div ref={ref} id={props.id} className="relative top-20 right-0"></div>
       <div className=" lg:w-full lg:pl-20 lg:mb-0 lg:mt-50 lg:relative lg:flex lg:flex-col lg:justify-center lg:items-center lg:pr-20 w-full px-5 mb-0 mt-50 relative flex flex-col justify-center items-center">
         <div className=" lg:w-full lg:h-50 lg:bg-gradient-to-b lg:from-[#a9ff91] lg:to-[#17fbff] lg:absolute lg:-top-20 lg:-z-1 w-full h-30 bg-gradient-to-b from-[#a9ff91] to-[#17fbff] absolute -top-10 -z-1"></div>
         <div className="lg:relative relative z-3 flex flex-row lg:w-200 w-70">
@@ -299,7 +299,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                   Follow our social media
                 </p>
                 <div className=" lg:flex lg:gap-4 flex gap-4">
-                  <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                  <a href="https://www.instagram.com/indokoding/" className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                     <Image
                       width={140}
                       height={140}
@@ -307,8 +307,8 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                       alt=""
                       className=" lg:w-3 w-3"
                     />
-                  </div>
-                  <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                  </a>
+                  <a href="https://www.instagram.com/indokoding/" className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                     <Image
                       width={140}
                       height={140}
@@ -316,8 +316,8 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                       alt=""
                       className="lg:w-5 w-5"
                     />
-                  </div>
-                  <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
+                  </a>
+                  {/* <div className=" lg:bg-[#D9DFFC] cursor-pointer lg:w-10 lg:h-10 lg:rounded-full lg:flex lg:items-center lg:justify-center bg-[#D9DFFC] w-10 h-10 rounded-full flex items-center justify-center">
                     <Image
                       width={140}
                       height={140}
@@ -325,7 +325,7 @@ function ContactUsComponent(props: object, ref: React.Ref<HTMLDivElement>) {
                       alt=""
                       className="lg:w-4 w-4"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
