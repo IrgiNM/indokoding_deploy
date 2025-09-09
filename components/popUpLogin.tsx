@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
+import Swal from "sweetalert2";
 
 type PopUpLoginProps = {
   onClick: () => void;
@@ -99,7 +100,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                 if(data.role==='admin'){
                   router.push("/admin/dashboard");
                 }
-                alert(data.message || "Registrasi berhasil!");
+                Swal.fire({
+                  title: "Registrasi berhasil!",
+                  icon: "success",
+                  draggable: true
+                });
+                // alert(data.message || "Registrasi berhasil!");
                 } else {
                 alert(data.message || "Registrasi gagal");
                 }
@@ -154,7 +160,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           if(data.role==='admin'){
             router.push("/admin/dashboard");
           }
-          alert(data.message || "Login berhasil!");
+          Swal.fire({
+            title: "Login berhasil!",
+            icon: "success",
+            draggable: true
+          });
+          // alert(data.message || "Login berhasil!");
         } else {
           alert(data.error || "Login gagal");
         }
@@ -207,7 +218,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         if(data.role==='admin'){
           router.push("/admin/dashboard");
         }
-        alert(data.message || "Registrasi berhasil!");
+        Swal.fire({
+          title: "Registrasi berhasil!",
+          icon: "success",
+          draggable: true
+        });
+        // alert(data.message || "Registrasi berhasil!");
         } else {
         alert(data.error || "Registrasi gagal");
         }
@@ -254,7 +270,12 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           if(data.role==='admin'){
             router.push("/admin/dashboard");
           }
-          alert(data.message || "Registrasi berhasil!");
+          Swal.fire({
+            title: "Registrasi berhasil!",
+            icon: "success",
+            draggable: true
+          });
+          // alert(data.message || "Registrasi berhasil!");
         } else {
           console.log("username yang dikirim:", user.displayName);
           console.log("email yang dikirim:", user.email);
