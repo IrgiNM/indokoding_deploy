@@ -1,5 +1,6 @@
 import PopUpLogin from "@/components/popUpLogin";
 import { getCookies } from "@/utils/tokenController";
+import Swal from 'sweetalert2';
 import Image from "next/image";
 import React, { forwardRef, useEffect, useState } from "react";
 
@@ -136,7 +137,12 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
       }
 
       const data = await res.json();
-      alert(data.message || "Pesan berhasil dikirim!");
+      Swal.fire({
+        title: "Pesan berhasil dikirim!",
+        icon: "success",
+        draggable: true
+      });
+      // alert(data.message || "Pesan berhasil dikirim!");
 
       // Reset form setelah berhasil
       setFormData({
