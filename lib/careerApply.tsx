@@ -46,21 +46,34 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
       }
     };
 
-    // Untuk menangkap alert yang mungkin muncul
-    const originalAlert = window.alert;
-    window.alert = function (message) {
-      if (
-        message.includes("Login successful") ||
-        message.includes("berhasil")
-      ) {
-        setTimeout(checkLoginSuccess, 100); // Beri sedikit delay
-      }
-      return originalAlert.apply(this, []);
-    };
+    // // Untuk menangkap alert yang mungkin muncul
+    // const originalAlert = window.alert;
+    // window.alert = function (message) {
+    //   if (
+    //     message.includes("Login successful") ||
+    //     message.includes("berhasil")
+    //   ) {
+    //     setTimeout(checkLoginSuccess, 100); // Beri sedikit delay
+    //   }
+    //   return originalAlert.apply(this, []);
+    // };
 
-    return () => {
-      window.alert = originalAlert;
-    };
+    // return () => {
+    //   window.alert = originalAlert;
+    // };
+
+    // Interval untuk memantau swal
+    const interval = setInterval(() => {
+      // SweetAlert2 akan menambahkan elemen dengan class .swal2-container jika aktif
+      const swalExist = document.querySelector(".swal2-container");
+      
+      if (swalExist) {
+        checkLoginSuccess();
+        clearInterval(interval); // Stop deteksi setelah ditemukan swal
+      }
+    }, 300); // Cek setiap 300ms
+
+    return () => clearInterval(interval);
   }, [showAuth]);
 
   const [formDataCareerMessage, setFormData] = useState({

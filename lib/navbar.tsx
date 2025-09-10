@@ -82,22 +82,35 @@ export default function Navbar({
       }
     };
 
-    // Override alert bawaan browser
-    const originalAlert = window.alert;
-    window.alert = function (message) {
-      if (
-        message?.includes("Login successful") ||
-        message?.includes("berhasil")
-      ) {
-        setTimeout(checkLoginSuccess, 100);
-        setShowAuth(false); // ✅ Beri jeda sebelum menutup
-      }
-      return originalAlert.apply(this, []);
-    };
+    // // Override alert bawaan browser
+    // const originalAlert = window.alert;
+    // window.alert = function (message) {
+    //   if (
+    //     message?.includes("Login successful") ||
+    //     message?.includes("berhasil")
+    //   ) {
+    //     setTimeout(checkLoginSuccess, 100);
+    //     setShowAuth(false); // ✅ Beri jeda sebelum menutup
+    //   }
+    //   return originalAlert.apply(this, []);
+    // };
 
-    return () => {
-      window.alert = originalAlert; // Kembalikan alert bawaan saat unmount
-    };
+    // return () => {
+    //   window.alert = originalAlert; // Kembalikan alert bawaan saat unmount
+    // };
+
+    // Interval untuk memantau swal
+    const interval = setInterval(() => {
+      // SweetAlert2 akan menambahkan elemen dengan class .swal2-container jika aktif
+      const swalExist = document.querySelector(".swal2-container");
+      
+      if (swalExist) {
+        checkLoginSuccess();
+        clearInterval(interval); // Stop deteksi setelah ditemukan swal
+      }
+    }, 300); // Cek setiap 300ms
+
+    return () => clearInterval(interval);
   }, [showAuth]);
 
   const handleClick = () => {
