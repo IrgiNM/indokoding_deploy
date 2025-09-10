@@ -3,12 +3,14 @@ import { getCookies } from "@/utils/tokenController";
 import Swal from 'sweetalert2';
 import Image from "next/image";
 import React, { forwardRef, useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
   const [showPopup, setShowPopup] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCookies = async () => {
@@ -106,6 +108,14 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
   };
 
   const handleContact = async () => {
+    if (!captchaToken) {
+      Swal.fire({
+        title: "Verification Required",
+        text: "Please complete the reCAPTCHA verification",
+        icon: "warning"
+      });
+      return;
+    }
     if (
       !formDataContact.username ||
       !formDataContact.email ||
@@ -138,6 +148,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         email: formDataContact.email,
         subject: formDataContact.subject,
         message: formDataContact.message,
+        captcha: captchaToken,
       };
 
       const res = await fetch("/api/createContact", {
@@ -176,7 +187,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "an error occurred while sending the message",
+          text: error.message || "an error occurred while sending the message",
           // footer: '<a href="#">Why do I have this issue?</a>'
         });
         // alert(error.message || "Terjadi kesalahan saat mengirim pesan");
@@ -260,6 +271,21 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
                   setFormData((prev) => ({ ...prev, message: e.target.value }))
                 }
               ></textarea>
+
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                onChange={(token) => {
+                  setCaptchaToken(token);
+                  console.log("Captcha token:", token);
+                }}
+                onExpired={() => {
+                  console.log("Captcha expired! Akan dihapus dalam 30 detik...");
+                  setTimeout(() => {
+                    setCaptchaToken(null);
+                    console.log("Captcha token dihapus setelah 30 detik");
+                  }, 30000); // 30 detik
+                }}
+              />
 
               <button
                 onClick={() => handleContact()}

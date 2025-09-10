@@ -14,6 +14,7 @@ interface UserData {
   total_contact?: number;
   total_join?: number;
   total_career?: number;
+  captcha: string;
 }
 
 export default async function handler(
@@ -38,12 +39,32 @@ export default async function handler(
         total_contact,
         total_join,
         total_career,
+        captcha
       }: UserData = req.body;
 
       if (!username || !email || !password) {
         return res
           .status(400)
           .json({ error: "Username, email, dan password wajib diisi" });
+      }
+      if (!captcha) {
+        return res.status(400).json({ error: "Please complete the reCAPTCHA verification" });
+      }
+
+      // verifikasi captcha ke google
+      const params = new URLSearchParams();
+      params.append("secret", process.env.RECAPTCHA_SECRET_KEY || "");
+      params.append("response", captcha);
+
+      const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString(),
+      });
+
+      const captchaData = await captchaRes.json();
+      if (!captchaData.success) {
+        return res.status(400).json({ error: "reCAPTCHA verification failed" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);

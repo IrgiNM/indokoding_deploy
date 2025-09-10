@@ -4,6 +4,7 @@ import { RequirementCareer } from "@/type/careerType";
 import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { forwardRef, useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import Swal from "sweetalert2";
 
 function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
@@ -13,6 +14,8 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
   const [showAuthYet, setShowAuthYet] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [pickTitle, setPickTitle] = useState("Django Developer");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  
 
   const [isLoading, setIsLoading] = useState(false);
   const [RequirementsCareer, setRequirementsCareer] = useState<
@@ -97,6 +100,14 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
   };
 
   const handleCareerMessage = async () => {
+    if (!captchaToken) {
+      Swal.fire({
+        title: "Verification Required",
+        text: "Please complete the reCAPTCHA verification",
+        icon: "warning"
+      });
+      return;
+    }
     if (
       !formDataCareerMessage.name ||
       !formDataCareerMessage.email ||
@@ -132,6 +143,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         rate: formDataCareerMessage.rate,
         position: pickTitle,
         message: formDataCareerMessage.message,
+        captcha: captchaToken,
       };
       console.log("data yang dikirim : ", payload);
 
@@ -331,6 +343,20 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
               value={formDataCareerMessage.phone}
               onChange={handleChangeCareerMessage}
             />
+            <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                onChange={(token) => {
+                  setCaptchaToken(token);
+                  console.log("Captcha token:", token);
+                }}
+                onExpired={() => {
+                  console.log("Captcha expired! Akan dihapus dalam 30 detik...");
+                  setTimeout(() => {
+                    setCaptchaToken(null);
+                    console.log("Captcha token dihapus setelah 30 detik");
+                  }, 30000); // 30 detik
+                }}
+              />
             <button
               onClick={() => handleCareerMessage()}
               className="text-[12px] lg:flex justify-center items-center hidden font-bold text-white w-full border py-3 rounded-lg bg-[#007924] hover:bg-[#44975d]"

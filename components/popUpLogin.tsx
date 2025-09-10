@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
 import Swal from "sweetalert2";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type PopUpLoginProps = {
   onClick: () => void;
@@ -22,6 +23,8 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
     const signUpClose = isClose;
     const isAdmin = isRole;
     const router = useRouter();
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+    
 
     const [showLogIn, setShowLogIn] = useState(true);
 
@@ -56,6 +59,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
       password: "",
       confirmPassword: "",
       role: isAdmin,
+      captcha: captchaToken,
     });   
 
     const handleChangeRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +72,14 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
 
     const handleRegister = async () => {
         setIsLoading(true);
+        if (!captchaToken) {
+          Swal.fire({
+            title: "Verification Required",
+            text: "Please complete the reCAPTCHA verification",
+            icon: "warning"
+          });
+          return;
+        }
         // Query Firestore untuk cek username
         const checkUserQuery = query(
             collection(db, "users"),
@@ -453,6 +465,20 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                   value={formDataRegister.confirmPassword}
                   onChange={handleChangeRegister}
                   className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+                />
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                  onChange={(token) => {
+                    setCaptchaToken(token);
+                    console.log("Captcha token:", token);
+                  }}
+                  onExpired={() => {
+                    console.log("Captcha expired! Akan dihapus dalam 30 detik...");
+                    setTimeout(() => {
+                      setCaptchaToken(null);
+                      console.log("Captcha token dihapus setelah 30 detik");
+                    }, 30000); // 30 detik
+                  }}
                 />
                 <button
                   type="submit"

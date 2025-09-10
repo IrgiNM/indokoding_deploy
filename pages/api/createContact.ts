@@ -15,6 +15,7 @@ interface ContactData {
   email: string;
   subject: string;
   message: string;
+  captcha: string;
 }
 
 export default async function handler(
@@ -29,10 +30,29 @@ export default async function handler(
 
   if (req.method === "POST") {
     try {
-      const { username, email, subject, message }: ContactData = req.body;
+      const { username, email, subject, message, captcha }: ContactData = req.body;
 
       if (!username || !email || !subject || !message) {
         return res.status(400).json({ error: "All fields are required" });
+      }
+      if (!captcha) {
+        return res.status(400).json({ error: "Please complete the reCAPTCHA verification" });
+      }
+
+      // verifikasi captcha ke google
+      const params = new URLSearchParams();
+      params.append("secret", process.env.RECAPTCHA_SECRET_KEY || "");
+      params.append("response", captcha);
+
+      const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString(),
+      });
+
+      const captchaData = await captchaRes.json();
+      if (!captchaData.success) {
+        return res.status(400).json({ error: "reCAPTCHA verification failed" });
       }
 
       const usersRef = collection(db, "users");

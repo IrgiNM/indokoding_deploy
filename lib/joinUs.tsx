@@ -2,6 +2,7 @@ import PopUpLogin from "@/components/popUpLogin";
 import { getCookies } from "@/utils/tokenController";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import Swal from "sweetalert2";
 
 export default function JoinUsPage() {
@@ -9,6 +10,8 @@ export default function JoinUsPage() {
   const [showAuth, setShowAuth] = useState(false);
   const [showAuthYet, setShowAuthYet] = useState(false);
   const [pickTitle, setPickTitle] = useState("Django Developer");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  
 
   useEffect(() => {
     const checkLoginSuccess = async () => {
@@ -80,6 +83,14 @@ export default function JoinUsPage() {
   };
 
   const handleJoinUsMessage = async () => {
+    if (!captchaToken) {
+      Swal.fire({
+        title: "Verification Required",
+        text: "Please complete the reCAPTCHA verification",
+        icon: "warning"
+      });
+      return;
+    }
     if (
       !formDataJoinUsMessage.name ||
       !formDataJoinUsMessage.email ||
@@ -115,6 +126,7 @@ export default function JoinUsPage() {
         rate: formDataJoinUsMessage.rate,
         position: formDataJoinUsMessage.position,
         message: formDataJoinUsMessage.message,
+        captcha: captchaToken,
       };
       console.log("data yang dikirim : ", payload);
 
@@ -268,6 +280,20 @@ export default function JoinUsPage() {
                 className=" lg:bg-[#d9ebfc] lg:text-sm lg:text-[#00296c] lg:px-6 lg:py-3 lg: lg:rounded-[10px] lg:w-[260px] lg:h-[119px] bg-[#d9ebfc] text-sm text-[#00296c] px-6 py-3  rounded-[10px] w-[240px] h-[119px] border focus:border-[#498cff]"
               />
             </div>
+            <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                onChange={(token) => {
+                  setCaptchaToken(token);
+                  console.log("Captcha token:", token);
+                }}
+                onExpired={() => {
+                  console.log("Captcha expired! Akan dihapus dalam 30 detik...");
+                  setTimeout(() => {
+                    setCaptchaToken(null);
+                    console.log("Captcha token dihapus setelah 30 detik");
+                  }, 30000); // 30 detik
+                }}
+              />
             <button
               onClick={() => handleJoinUsMessage()}
               className="cursor-pointer lg:mt-3 lg:w-[705px] lg:py-3 lg:bg-[#181F38] lg:text-sm lg:font-bold lg:text-white lg:rounded-full mt-3 w-[240px] py-3 bg-[#181F38] text-sm font-bold text-white rounded-full"
