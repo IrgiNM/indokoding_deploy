@@ -72,7 +72,6 @@ export default function JoinUsPage() {
       !formDataJoinUsMessage.email ||
       !formDataJoinUsMessage.from ||
       !formDataJoinUsMessage.phone ||
-      !formDataJoinUsMessage.rate ||
       !formDataJoinUsMessage.position
     ) {
       Swal.fire({

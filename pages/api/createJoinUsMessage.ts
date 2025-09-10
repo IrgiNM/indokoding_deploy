@@ -16,7 +16,6 @@ interface ContactData {
   from: string;
   phone: string;
   position: string;
-  rate: 0,
   message: string;
 }
 
@@ -32,9 +31,9 @@ export default async function handler(
 
   if (req.method === "POST") {
     try {
-      const { name, from, phone, rate, email, message, position }: ContactData = req.body;
+      const { name, from, phone, email, message, position }: ContactData = req.body;
 
-      if (!name || !from || !phone || !rate || !email || !position) {
+      if (!name || !from || !phone || !email || !position) {
         return res.status(400).json({ error: "All fields are required" });
       }
 
@@ -65,7 +64,6 @@ export default async function handler(
         position,
         name,
         email,
-        rate,
         from,
         phone,
         message,
