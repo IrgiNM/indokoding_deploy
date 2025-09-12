@@ -18,6 +18,7 @@ export default function AdminOurWork() {
     const [tambahData, setTambahData] = useState(false);
     const [deleteAll, setDeleteAll] = useState(false);
     const [deleteData, setDeleteData] = useState("none");
+    const [id, setId] = useState("");
     const [editData, setEditData] = useState<OurWorkData | null>(null);
 
     const [title, setTitle] = useState("");
@@ -99,7 +100,7 @@ export default function AdminOurWork() {
         }
       };
       fetchOurWorks();
-    }, [urutan,]);
+    }, [urutan,deleteAll,deleteData,tambahData,editData]);
 
     // Fungsi untuk mengurutkan OurWorks
     const sortOurWorks = (data: OurWorkData[], order: string) => {
@@ -268,6 +269,56 @@ export default function AdminOurWork() {
       }
     };
 
+    async function handleDelete(id: string, fileName: string) {
+      setLoading(true);
+      console.log("Hapus ID:", id, "File:", fileName);
+      try {
+        const res = await fetch("/api/removeOurWork", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id, file: fileName }),
+        });
+  
+        if (!res.ok) {
+          throw new Error("Gagal menghapus message");
+        }
+  
+        const data = await res.json();
+        setDeleteData("none");
+        console.log("OurWork message berhasil dihapus:", data);
+        alert("OurWork message berhasil dihapus");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Gagal menghapus. Silakan coba lagi nanti.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function handleDeleteAll() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/removeAllOurWork", {
+          method: "DELETE",
+        });
+  
+        if (!res.ok) {
+          throw new Error("Gagal menghapus semua OurWork");
+        }
+  
+        const data = await res.json();
+        console.log("OurWork berhasil dihapus semua:", data);
+        alert("OurWork berhasil dihapus semua");
+        setDeleteAll(false);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Gagal menghapus semua OurWork. Silakan coba lagi nanti.");
+      } finally {
+        setLoading(false);
+      }
+    }
       
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
@@ -294,7 +345,6 @@ export default function AdminOurWork() {
                         setTambahData(!tambahData);
                     }} 
                     className='cursor-pointer text-[12px] font-bold p-2 px-5 text-white rounded-lg bg-[#ce2dff] hover:bg-[#e078ff] active:bg-[#390056]'>+ Data</button>
-                    <input type="date" className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
                     <button onClick={diKlik} className='cursor-pointer bg-white text-[#710093] font-semibold flex flex-row text-[12px] px-4 py-2 rounded-full hover:bg-[#f9e6ff] transition duration-200'>{urutan}
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
                     </button>
@@ -344,13 +394,17 @@ export default function AdminOurWork() {
                             className='rounded-sm mb-2 object-cover w-full h-48'
                         />
                         )}
-                            <p className='text-[14px] font-bold text-[#710093]'>{data.title}</p>
-                            <p className='text-[12px] font-light text-[#710093]'>{data.tags}</p>
-                            <p className='text-[12px] pr-5 font-light text-justify'>{data.description}</p>
                         </div>
+                            <p className='text-[14px] w-full font-bold text-[#710093]'>{data.title}</p>
+                            <div className='w-full flex flex-row gap-1'> 
+                              {data.tags.map((tag, idx) => (
+                                <p className='text-[10px] px-2 py-1 rounded-full font-light text-[#710093] bg-purple-100 text-center'>{tag}</p>
+                              ))}
+                            </div>
+                            <p className='text-[12px] w-full pr-5 mb-10 font-light text-justify'>{data.description}</p>
                         {/* Buttons at bottom right */}
                         <div className="absolute bottom-3 right-3 flex flex-row gap-2">
-                            <button onClick={()=>{setDeleteData(data.title);}} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                            <button onClick={()=>{setDeleteData(data.title); setFilePreview(data.fileName); setId(data.id??"")}} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
                             <button onClick={() => { setEditData(data); setFilePreview(data.fileName) }} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
@@ -374,7 +428,9 @@ export default function AdminOurWork() {
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
                 <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
+                <button onClick={() => handleDeleteAll()} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                  {loading ? "delete..." : "Yes"}
+                </button>
                 <button onClick={() => setDeleteAll(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
@@ -384,7 +440,9 @@ export default function AdminOurWork() {
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
                 <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{deleteData}</span> dihapus ?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
+                <button onClick={() => handleDelete(id,filePreview??"")} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                  {loading ? "delete..." : "Yes"}
+                </button>
                 <button onClick={() => setDeleteData("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
@@ -452,32 +510,6 @@ export default function AdminOurWork() {
                 
                 <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col gap-4 relative w-[500px]'>
                     <h2 className="text-lg font-bold text-[#710093] mb-2">Edit Data</h2>
-                    {/* {typeof filePreview === 'string' ? (
-                        <Image 
-                            width={300} 
-                            height={300} 
-                            src={filePreview ? `/uploads/${filePreview}` : "/default-image.png"} 
-                            alt="our work" 
-                            className='rounded-sm mb-2 object-cover w-50'
-                        />
-                    ) : file instanceof File ? (
-                    <div className="relative w-full h-48 mb-2">
-                        <Image 
-                        src={URL.createObjectURL(file)} 
-                        alt="our work" 
-                        fill
-                        className='rounded-sm object-cover'
-                        />
-                    </div>
-                    ) : (
-                    <Image 
-                        width={300} 
-                        height={300} 
-                        src="/default-image.png" 
-                        alt="our work"
-                        className='rounded-sm mb-2 object-cover w-full h-48'
-                    />
-                    )} */}
                     <input onChange={handleFileEditChange} type="file" accept="image/*" className="mb-2 border border-[#8eb0e5] rounded-lg p-2" />
                     <input type="text" defaultValue={editData.title} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
                     <input type="text" defaultValue={editData.tags} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
