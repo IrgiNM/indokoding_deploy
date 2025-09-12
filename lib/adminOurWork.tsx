@@ -4,10 +4,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 type OurWorkData = {
+    id?: string; // tambahkan ID untuk operasi edit/delete
     title: string;
     description: string;
-    image: string;
+    file: File;
+    newFile?: File; // URL gambar dari server
+    fileName: string; // nama file di server
     tags: string[];
+    createdAt: string;
 };
 
 export default function AdminOurWork() {
@@ -15,6 +19,15 @@ export default function AdminOurWork() {
     const [deleteAll, setDeleteAll] = useState(false);
     const [deleteData, setDeleteData] = useState("none");
     const [editData, setEditData] = useState<OurWorkData | null>(null);
+
+    const [title, setTitle] = useState("");
+    const [tag, setTag] = useState("");
+    const [description, setDescription] = useState("");
+    const [file, setFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [filePreview, setFilePreview] = useState<string | null>(null);
+    const [newfilePreview, setNewFilePreview] = useState<string | null>(null);
+
 
     // const [token, setToken] = useState<User>();
     const router = useRouter();
@@ -68,44 +81,192 @@ export default function AdminOurWork() {
         setUrutanActive(false);
     }
 
-    const listData = [
-        {
-            title: 'Equusbook',
-            description: 'Kami pernah mengembangkan Equusbook, marketplace berbasis Next.js dan Tailwind CSS untuk jual beli kuda, horsebox, dan properti equestrian di Inggris. Platform ini mendukung iklan gratis dan navigasi yang mudah bagi komunitas berkuda.',
-            image: '/assets/image/ourwork/porto1.avif',
-            tags: ['next js ', 'tailwindcss ', 'market place'],
-        },
-        {
-            title: 'Home and Gift Center',
-            description: 'Kami pernah mengembangkan Home and Gift Center, sebuah platform e-commerce berbasis Next.js dan Tailwind CSS yang dirancang untuk menjual produk dekorasi rumah dan hadiah. Toko online ini menawarkan fitur pencarian produk, kategori, filter harga, serta tampilan galeri yang ramah pengguna.',
-            image: '/assets/image/ourwork/porto2.avif',
-            tags: ['next js ', 'tailwindcss ', 'e-commerce']
-        },
-        {
-            title: 'Thirsty Camel',
-            description: 'Kami pernah mengembangkan Thirsty Camel, sebuah platform katalog produk dan sistem pemesanan internal berbasis Next.js dan Tailwind CSS. Platform ini memungkinkan pengguna untuk melihat detail produk seperti ukuran, harga, dan stok secara real-time, serta mempermudah proses pemesanan barang seperti seragam atau merchandise.',
-            image: '/assets/image/ourwork/porto3.avif',
-            tags: ['next js ', 'tailwindcss ', 'product catalog'],
-        },
-        {
-            title: 'Greene King Venue Finder',
-            description: 'Kami pernah mengembangkan Greene King Venue Finder, sebuah platform pencarian lokasi pub dan restoran di Inggris. Dibuat dengan Next.js dan Tailwind CSS, sistem ini memungkinkan pengguna mencari venue berdasarkan lokasi saat ini, radius jarak, dan ukuran grup. Platform ini terintegrasi dengan Google Maps untuk pengalaman pencarian yang interaktif dan mudah digunakan.',
-            image: '/assets/image/ourwork/porto4.avif',
-            tags: ['next js ', 'tailwindcss ', 'map integration '],
-        },
-        {
-            title: 'ASCC Artist-in-Residence Program',
-            description: 'Kami pernah membangun ASCC Artist-in-Residence Program, sebuah platform untuk mendukung seniman dalam program residensi di Sheikh Abdullah Al-Salem Cultural Centre, Kuwait. Dibuat dengan Next.js dan Tailwind CSS, sistem ini menyediakan informasi tentang fasilitas studio, tujuan program, dan akses pendaftaran daring yang mudah.',
-            image: '/assets/image/ourwork/porto5.avif',
-            tags: ['next js ', 'tailwindcss ', 'culture ', 'residency '],
-        },
-        {
-            title: 'Thermo Fisher - Who The One?',
-            description: 'Kami pernah mengembangkan Who The One?, sebuah platform untuk Thermo Fisher yang dirancang untuk membantu pengguna menemukan produk dan solusi yang tepat. Dibuat dengan Next.js dan Tailwind CSS, sistem ini menyediakan antarmuka yang intuitif dan mudah digunakan, memungkinkan pengguna untuk menjelajahi katalog produk dengan cepat dan efisien.',
-            image: '/assets/image/ourwork/porto6.avif',
-            tags: ['next js ', 'tailwindcss ', 'product discovery '],
-        },
-      ];
+    const [ourWorks, setOurWorks] = useState<OurWorkData[]>([]);
+    useEffect(() => {
+      const fetchOurWorks = async () => {
+        try {
+          // panggil backend API
+          const res = await fetch("/api/getOurWorks");
+          const data = await res.json();
+
+          // Urutkan data berdasarkan pilihan sorting
+          const sortedData = sortOurWorks(data, urutan);
+          setOurWorks(sortedData);
+        } catch (err) {
+          console.error("Gagal fetch OurWorks:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchOurWorks();
+    }, [urutan,]);
+
+    // Fungsi untuk mengurutkan OurWorks
+    const sortOurWorks = (data: OurWorkData[], order: string) => {
+      const sortedData = [...data];
+
+      switch (order) {
+        case "A - Z":
+          return sortedData.sort((a, b) => a.title.localeCompare(b.title));
+
+        case "Z - A":
+          return sortedData.sort((a, b) => b.title.localeCompare(a.title));
+
+        case "New":
+          return sortedData.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+
+        case "Old":
+          return sortedData.sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          );
+
+        default:
+          return sortedData;
+      }
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFile = e.target.files?.[0];
+      setFile(selectedFile ?? null);
+    
+      if (selectedFile && selectedFile.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setFilePreview(reader.result as string);
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setFilePreview(null);
+      }
+    };
+
+    const handleFileEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selectedFile = e.target.files?.[0];
+      if (editData) {
+        setEditData({ ...editData, newFile: selectedFile ?? undefined });
+      }
+    
+      if (selectedFile && selectedFile.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setNewFilePreview(reader.result as string);
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setNewFilePreview(null);
+      }
+    };
+
+    const handleOurWork = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!file) {
+        alert("Pilih file dulu!");
+        return;
+      }
+    
+      setLoading(true);
+    
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("tags", tag); // pastikan nama field sesuai dengan API
+      formData.append("description", description);
+      formData.append("file", file);
+      console.log("Form Data:", {
+        title: formData.get("title"),
+        tags: formData.get("tags"),
+        description: formData.get("description"),
+        file: formData.get("file"),
+      });
+
+      try {
+        const res = await fetch("/api/ourWork", {
+          method: "POST",
+          body: formData,
+        });
+    
+        if (res.ok) {
+          alert("Berhasil upload!");
+          // Reset form dan refresh data
+          setTitle("");
+          setTag("");
+          setDescription("");
+          setFile(null);
+          setTambahData(false);
+          
+        //   // Refresh data ourWorks
+        //   const updatedRes = await fetch("/api/getOurWork");
+        //   const updatedData = await updatedRes.json();
+        //   setOurWorks(sortOurWorks(updatedData, urutan));
+        } else {
+          const data = await res.json();
+          console.log("Upload failed:", data.fields);
+          console.log("Upload file:", data.files);
+          console.log("Upload title:", data.title);
+          console.log("Upload tag:", data.tag);
+          console.log("Upload description:", data.description);
+          console.log("Upload file:", data.fieldData);
+          console.log("error:", data.error);
+          alert("Error: " + data.error);
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        alert("Gagal upload!");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const handleEditOurWork = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!editData) {
+        alert("Data tidak valid!");
+        return;
+      }
+    
+      setLoading(true);
+      console.log("Edit Data:", editData);
+    
+      try {
+        // Membuat FormData untuk mengirim file dan data
+        const formData = new FormData();
+        formData.append("id", editData.id || "");
+        formData.append("title", editData.title || "");
+        formData.append("tags", editData.tags?.join(",") || "");
+        formData.append("description", editData.description || "");
+        formData.append("fileName", editData.fileName || "");
+        
+        // Jika ada file baru, tambahkan ke formData
+        if (editData.newFile) {
+          formData.append("file", editData.newFile);
+        }
+    
+        const res = await fetch("/api/editOurWork", {
+          method: "PUT", // Mengubah dari POST ke PUT
+          body: formData, // Mengubah dari JSON.stringify ke FormData
+          // Jangan set Content-Type header, browser akan mengatur otomatis untuk FormData
+        });
+    
+        if (res.ok) {
+          alert("Berhasil diedit!");
+          setEditData(null); 
+          setFilePreview(null);
+          // Refresh data jika diperlukan
+        } else {
+          const data = await res.json();
+          console.error("Upload failed:", data);
+          alert("Error: " + (data.error || "Terjadi kesalahan"));
+        }
+      } catch (err) {
+        console.log("Upload error:", err);
+        alert("Gagal upload!");
+      } finally {
+        setLoading(false);
+      }
+    };
 
       
     const today = new Date();
@@ -138,14 +299,13 @@ export default function AdminOurWork() {
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
                     </button>
                     { urutanActive && 
-                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-43 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
+                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-23 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
                             <button onClick={az} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>A - Z</button>
                             <button onClick={za} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Z - A</button>
                             <button onClick={newklik} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>New</button>
                             <button onClick={old} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Old</button>
                         </div>
                     }
-                    <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Reset</button>
                     <button onClick={() => {
                         setDeleteAll(true);
                     }} 
@@ -155,10 +315,35 @@ export default function AdminOurWork() {
 
             {/* LIST DATA */}
             <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-30'>
-                {listData.map((data, index) => (
+                {ourWorks.map((data, index) => (
                     <div key={index} className='w-80 flex flex-col justify-start items-center p-7 px-5 pr-4 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
                         <div className='flex flex-col gap-1'>
-                            <Image width={300} height={300} src={data.image ?? "/default-image.png"} alt="our work" className='rounded-sm mb-2' />
+                        {typeof data.fileName === 'string' ? (
+                        <Image 
+                            width={300} 
+                            height={300} 
+                            src={data.fileName ? `/uploads/${data.fileName}` : "/default-image.png"} 
+                            alt="our work" 
+                            className='rounded-sm mb-2 object-cover w-full h-48'
+                        />
+                        ) : data.file instanceof File ? (
+                        <div className="relative w-full h-48 mb-2">
+                            <Image 
+                            src={URL.createObjectURL(data.file)} 
+                            alt="our work" 
+                            fill
+                            className='rounded-sm object-cover'
+                            />
+                        </div>
+                        ) : (
+                        <Image 
+                            width={300} 
+                            height={300} 
+                            src="/default-image.png" 
+                            alt="our work" 
+                            className='rounded-sm mb-2 object-cover w-full h-48'
+                        />
+                        )}
                             <p className='text-[14px] font-bold text-[#710093]'>{data.title}</p>
                             <p className='text-[12px] font-light text-[#710093]'>{data.tags}</p>
                             <p className='text-[12px] pr-5 font-light text-justify'>{data.description}</p>
@@ -168,7 +353,7 @@ export default function AdminOurWork() {
                             <button onClick={()=>{setDeleteData(data.title);}} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
-                            <button onClick={() => { setEditData(data); }} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
+                            <button onClick={() => { setEditData(data); setFilePreview(data.fileName) }} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
                                 <Image width={30} height={30} src='/edit.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
                         </div>
@@ -209,11 +394,24 @@ export default function AdminOurWork() {
             <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
                 <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col gap-4 relative w-[500px]'>
                     <h2 className="text-lg font-bold text-[#710093] mb-2">Tambah Data</h2>
-                    <input type="file" accept="image/*" className="mb-2 border border-[#8eb0e5] rounded-lg p-2" />
-                    <input type="text" placeholder="Title" className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
-                    <input type="text" placeholder="Tags (pisahkan dengan koma)" className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
-                    <textarea placeholder="Description" className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg resize-none" rows={3} />
-                    <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Save</button>
+                    <input 
+                        onChange={handleFileChange}
+                        type="file" accept="image/*" className="mb-2 border border-[#8eb0e5] rounded-lg p-2" />
+                    <input 
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        type="text" placeholder="Title" className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
+                    <input
+                        value={tag}
+                        onChange={(e) => setTag(e.target.value)}
+                        type="text" placeholder="Tags (pisahkan dengan koma)" className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
+                    <textarea
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Description" className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg resize-none" rows={3} />
+
+                    <button onClick={handleOurWork} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                        {loading ? "Saving..." : "Save"}
+                    </button>
                     <button onClick={() => setTambahData(false)} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
                         <Image width={20} height={20} src="/close.svg" alt="Close" className="w-4"/>
                     </button>
@@ -223,15 +421,71 @@ export default function AdminOurWork() {
             {/* EDIT DATA POPUP */}
             {editData &&
             <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
+                {filePreview && (
+                    <div className="fixed z-6 top-0 left-230 w-100 h-full flex flex-col items-center justify-center bg-opacity-50" onClick={() => setFilePreview(null)}>
+                        <p className='font-semibold text-purple-900 w-full'>old file :</p>
+                        <div className="w-full">
+                          <Image 
+                              width={300} 
+                              height={300} 
+                              src={filePreview ? `/uploads/${filePreview}` : "/default-image.png"} 
+                              alt="our work" 
+                              className='rounded-sm mb-2 h-40'
+                          />
+                        </div>
+                        {newfilePreview && (
+                          <>
+                            <p className='font-semibold text-purple-900 w-full mt-5'>new file :</p>
+                            <div className="w-full">
+                              <Image 
+                                  width={300} 
+                                  height={300} 
+                                  src={newfilePreview ? newfilePreview : "/default-image.png"} 
+                                  alt="our work" 
+                                  className='rounded-sm mb-2 h-40'
+                              />
+                            </div>
+                          </>
+                        )}
+                    </div>
+                )}
+                
                 <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col gap-4 relative w-[500px]'>
                     <h2 className="text-lg font-bold text-[#710093] mb-2">Edit Data</h2>
-                    <Image width={160} height={160} src={editData.image ?? "/default-image.png"} alt="Edit Image" className='items-center rounded-sm mb-2' />
-                    <input type="file" accept="image/*" className="mb-2 border border-[#8eb0e5] rounded-lg p-2" />
+                    {/* {typeof filePreview === 'string' ? (
+                        <Image 
+                            width={300} 
+                            height={300} 
+                            src={filePreview ? `/uploads/${filePreview}` : "/default-image.png"} 
+                            alt="our work" 
+                            className='rounded-sm mb-2 object-cover w-50'
+                        />
+                    ) : file instanceof File ? (
+                    <div className="relative w-full h-48 mb-2">
+                        <Image 
+                        src={URL.createObjectURL(file)} 
+                        alt="our work" 
+                        fill
+                        className='rounded-sm object-cover'
+                        />
+                    </div>
+                    ) : (
+                    <Image 
+                        width={300} 
+                        height={300} 
+                        src="/default-image.png" 
+                        alt="our work"
+                        className='rounded-sm mb-2 object-cover w-full h-48'
+                    />
+                    )} */}
+                    <input onChange={handleFileEditChange} type="file" accept="image/*" className="mb-2 border border-[#8eb0e5] rounded-lg p-2" />
                     <input type="text" defaultValue={editData.title} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
                     <input type="text" defaultValue={editData.tags} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
                     <textarea defaultValue={editData.description} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg resize-none" rows={3} />
-                    <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Update</button>
-                    <button onClick={() => setEditData(null)} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
+                    <button onClick={handleEditOurWork} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                      {loading ? "Updating..." : "Update"}
+                    </button>
+                    <button onClick={() => (setEditData(null),setNewFilePreview(null))} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
                         <Image width={20} height={20} src="/close.svg" alt="Close" className="w-4"/>
                     </button>
                 </div>

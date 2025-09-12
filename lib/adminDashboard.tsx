@@ -178,7 +178,7 @@ export default function AdminDashboard() {
                         <p className='text-[12px] font-light'>Career Inbox</p>
                     </div>
                     <div className='w-full pl-5 flex flex-row justify-start items-center gap-2'>
-                        <p className='text-3xl font-bold'>{Careers.length}</p>
+                        <p className='text-3xl font-bold'>{Careers.length || 0}</p>
                         <p className='text-[10px] rounded-full font-bold text-white p-1 px-2 pr-3 bg-[#4ceb44]'>+0</p>
                         <p className='text-[10px] text-[#4ceb44]'>/ today</p>
                     </div>
