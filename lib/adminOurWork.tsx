@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-type OurWorkData = {
+export type OurWorkData = {
     id?: string; // tambahkan ID untuk operasi edit/delete
     title: string;
     description: string;
@@ -396,7 +396,7 @@ export default function AdminOurWork() {
                         )}
                         </div>
                             <p className='text-[14px] w-full font-bold text-[#710093]'>{data.title}</p>
-                            <div className='w-full flex flex-row gap-1'> 
+                            <div className='w-full flex flex-row flex-wrap gap-1'> 
                               {data.tags.map((tag, idx) => (
                                 <p className='text-[10px] px-2 py-1 rounded-full font-light text-[#710093] bg-purple-100 text-center'>{tag}</p>
                               ))}
@@ -450,6 +450,20 @@ export default function AdminOurWork() {
             }
             {tambahData &&
             <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
+                {filePreview && (
+                    <div className="fixed z-6 top-0 left-230 w-100 h-full flex flex-col items-center justify-center bg-opacity-50" onClick={() => setFilePreview(null)}>
+                        <p className='font-semibold text-purple-900 w-full'>old file :</p>
+                        <div className="w-full">
+                          <Image 
+                              width={300} 
+                              height={300} 
+                              src={filePreview ? filePreview : "/default-image.png"} 
+                              alt="our work" 
+                              className='rounded-sm mb-2 h-40'
+                          />
+                        </div>
+                    </div>
+                )}
                 <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col gap-4 relative w-[500px]'>
                     <h2 className="text-lg font-bold text-[#710093] mb-2">Tambah Data</h2>
                     <input 
