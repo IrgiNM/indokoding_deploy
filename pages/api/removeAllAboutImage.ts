@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // Contoh: hapus hanya messages yang sudah dibaca
     const ourWorksQuery = query(
-        collection(db, "ourWorks")
+        collection(db, "AboutImage")
     );
     
     const snapshot = await getDocs(ourWorksQuery);
@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await batch.commit();
 
     // 🔹 Hapus semua file di folder public/uploads
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
+    const uploadsDir = path.join(process.cwd(), "public", "uploads", "aboutUs");
 
     if (fs.existsSync(uploadsDir)) {
       const files = fs.readdirSync(uploadsDir);
@@ -50,11 +50,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     return res.status(200).json({
-        message: `${snapshot.size} ourworks berhasil dihapus`,
+        message: `${snapshot.size} About image berhasil dihapus`,
         deletedCount: snapshot.size
     });
   } catch (error) {
-    console.error("Error hapus semua ourworks:", error);
+    console.error("Error hapus semua about image:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }
 }

@@ -3,6 +3,19 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+export type AboutImage = {
+    id?: string; // tambahkan ID untuk operasi edit/delete
+    file: File;
+    fileName: string; // nama file di server
+    createdAt: string;
+};
+
+export type AboutText = {
+    id: string;
+    values: string[];
+    createdAt: string;
+}
+
 export default function AdminUsers() {
     const [tambah, setTambah] = useState(false);
     const [hapus, setHapus] = useState(false);
@@ -10,6 +23,18 @@ export default function AdminUsers() {
     const [full, setFull] = useState(false);
     const [fullGambar, setFullGambar] = useState('none');
     const [hapusNama, setHapusNama] = useState("none");
+    const [file, setFile] = useState<File | null>(null);
+    const [deleteData, setDeleteData] = useState("none");
+    const [id, setId] = useState("");
+
+    const [valuesShow, setValuesShow] = useState<AboutText[]>([]);
+    const [values, setValues] = useState<string[]>([""]);
+    const addInput = () => {
+      setValues([...values, ""]); // tambahkan input baru (kosong)
+    };
+    
+    const [loading, setLoading] = useState(false);
+    const [filePreview, setFilePreview] = useState<string | null>(null);
     
     // const [token, setToken] = useState<User>();
         const router = useRouter();
@@ -41,18 +66,10 @@ export default function AdminUsers() {
           fetchCookies();
         }, [router]);
 
-    const [urutan, setUrutan] = useState("A - Z");
+    const [urutan, setUrutan] = useState("New");
     const [urutanActive, setUrutanActive] = useState(false);
     const diKlik = () => {
         setUrutanActive(!urutanActive);
-    }
-    const az = () => {
-        setUrutan("A - Z");
-        setUrutanActive(false);
-    }
-    const za = () => {
-        setUrutan("Z - A");
-        setUrutanActive(false);
     }
     const newklik = () => {
         setUrutan("New");
@@ -85,6 +102,215 @@ export default function AdminUsers() {
             tanggal: "20-1-2024"
         },
       ];
+
+      const [aboutImage, setAboutImage] = useState<AboutImage[]>([]);
+      useEffect(() => {
+        const fetchAboutImage = async () => {
+          try {
+            // panggil backend API
+            const res = await fetch("/api/getAboutImage");
+            const data = await res.json();
+          
+            // Urutkan data berdasarkan pilihan sorting
+            const sortedData = sortAboutImage(data, urutan);
+            setAboutImage(sortedData);
+          } catch (err) {
+            console.error("Gagal fetch AboutImage:", err);
+          } finally {
+            setLoading(false);
+          }
+        };
+        fetchAboutImage();
+      }, [urutan,deleteData,tambah,hapus]);
+      
+      useEffect(() => {
+        const fetchAboutText = async () => {
+          try {
+            // panggil backend API
+            const res = await fetch("/api/getAboutText");
+            const data = await res.json();
+            console.log("Fetched AboutText:", data);
+            console.log("Fetched AboutText Values:", data[0]?.values);
+            // Urutkan data berdasarkan pilihan sorting
+            setValuesShow(data);
+            // setShowArray(data[0]?.values ?? []);
+          } catch (err) {
+            console.error("Gagal fetch AboutText:", err);
+          } finally {
+            setLoading(false);
+          }
+        };
+        fetchAboutText();
+      }, [values]);
+  
+      // Fungsi untuk mengurutkan AboutImage
+      const sortAboutImage = (data: AboutImage[], order: string) => {
+        const sortedData = [...data];
+      
+        switch (order) {
+      
+          case "New":
+            return sortedData.sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+          
+          case "Old":
+            return sortedData.sort(
+              (a, b) =>
+                new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            );
+          
+          default:
+            return sortedData;
+        }
+      };
+
+      const handleChangeAbout = (index: number, newValue: string) => {
+        const updated = [...values]; // copy array lama
+        updated[index] = newValue;   // update sesuai index
+        setValues(updated);          // simpan ke state
+      };
+
+      const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files?.[0];
+        setFile(selectedFile ?? null);
+      
+        if (selectedFile && selectedFile.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            setFilePreview(reader.result as string);
+          };
+          reader.readAsDataURL(selectedFile);
+        } else {
+          setFilePreview(null);
+        }
+      };
+
+      const handleAboutImage = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!file) {
+          alert("Pilih file dulu!");
+          return;
+        }
+      
+        setLoading(true);
+      
+        const formData = new FormData();
+        formData.append("file", file);
+        console.log("Form Data:", {
+          file: formData.get("file"),
+        });
+  
+        try {
+          const res = await fetch("/api/createAboutImage", {
+            method: "POST",
+            body: formData,
+          });
+      
+          if (res.ok) {
+            alert("Berhasil upload!");
+            // Reset form dan refresh data
+            setFile(null);
+            setTambah(false);
+            
+          //   // Refresh data AboutImages
+          //   const updatedRes = await fetch("/api/getAboutImage");
+          //   const updatedData = await updatedRes.json();
+          //   setAboutImages(sortAboutImages(updatedData, urutan));
+          } else {
+            const data = await res.json();
+            console.log("Upload failed:", data.fields);
+            console.log("Upload file:", data.files);
+            console.log("error:", data.error);
+            alert("Error: " + data.error);
+          }
+        } catch (err) {
+          console.error("Upload error:", err);
+          alert("Gagal upload!");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const handleAboutText = async (e: React.FormEvent) => {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/updateAboutText", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          });
+      
+          if (res.ok) {
+            alert("Berhasil disimpan!");
+            setValues([""]);
+          } else {
+            const data = await res.json();
+            alert("Error: " + data.error);
+            console.log("Save failed:", data.values);
+            console.log("error:", data.error);
+          }
+        } catch (err) {
+          console.error("Upload error:", err);
+          alert("Gagal disimpan!");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      async function handleDelete(id: string, fileName: string) {
+        setLoading(true);
+        console.log("Hapus ID:", id, "File:", fileName);
+        try {
+          const res = await fetch("/api/removeAboutImage", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: id, file: fileName }),
+          });
+    
+          if (!res.ok) {
+            throw new Error("Gagal menghapus message");
+          }
+    
+          const data = await res.json();
+          setHapusNama("none");
+          console.log("OurWork message berhasil dihapus:", data);
+          alert("OurWork message berhasil dihapus");
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Gagal menghapus. Silakan coba lagi nanti.");
+        } finally {
+          setLoading(false);
+        }
+      }
+  
+      async function handleDeleteAll() {
+        setLoading(true);
+        try {
+          const res = await fetch("/api/removeAllAboutImage", {
+            method: "DELETE",
+          });
+    
+          if (!res.ok) {
+            throw new Error("Gagal menghapus semua OurWork");
+          }
+    
+          const data = await res.json();
+          console.log("OurWork berhasil dihapus semua:", data);
+          alert("OurWork berhasil dihapus semua");
+          setHapus(false);
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Gagal menghapus semua OurWork. Silakan coba lagi nanti.");
+        } finally {
+          setLoading(false);
+        }
+      }
       
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
@@ -113,21 +339,16 @@ export default function AdminUsers() {
                         setTambah(!tambah);
                     }} 
                     className='cursor-pointer text-[12px] font-bold p-2 px-5 text-white rounded-lg bg-[#ce2dff] hover:bg-[#e078ff] active:bg-[#390056]'>+ Data</button>
-                    <input type="date" className='hover:bg-[#f9e6ff] text-[12px] font-semibold text-[#710093] px-4 rounded-full border-1 border-[#d37eec] flex justify-start'/>
                     
                     <button onClick={diKlik} className='cursor-pointer bg-white text-[#710093] font-semibold flex flex-row text-[12px] px-4 py-2 rounded-full hover:bg-[#f9e6ff] transition duration-200'>{urutan}
                         <Image width={30} height={30} src='/arrow-solid.svg' alt="Search" className={`w-2 h-2 mt-1.5 ${urutanActive ? 'rotate-0' : 'rotate-180'} ml-2`}/>
-                        
                     </button>
                     { urutanActive && 
-                        <div className='absolute z-2 w-30 h-50 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-43 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
-                            <button onClick={az} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>A - Z</button>
-                            <button onClick={za} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Z - A</button>
+                        <div className='absolute z-2 w-30 py-3 border-[1.5px] rounded-lg border-[#cb48f3] top-10 right-23 backdrop-blur-md flex flex-col justify-center items-center gap-2 px-4'>
                             <button onClick={newklik} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>New</button>
                             <button onClick={old} className='text-[12px] text-[#710093] hover:bg-[#f4e6ff] font-semibold w-full border py-2 rounded-full'>Old</button>
                         </div>
                     }
-                    <button className='text-[12px] font-bold p-2 px-5 border-1 border-[#d37eec] text-[#710093] rounded-lg bg-[#f9e6ff] hover:bg-[#d37eec] hover:text-white active:bg-[#710093] cursor-pointer'>Reset</button>
                     <button onClick={() => {
                         setHapus(true);
                     }} 
@@ -136,41 +357,49 @@ export default function AdminUsers() {
             </div>
 
         <div> {/* LIST USERS */}
-            <div className="relative  w-250 ml-5 border-1 border-[#cb48f3] p-4 shadow-md rounded-lg mt-25 ">
-                <button onClick={() => {
-                        setShow(true);
-                    }} 
-                     className='absolute top-8 left-5 text-[11px] text-blue-800'>
-                    <p>Show Current Text</p>
-                </button>
-                <label className="block text-xl font-bold text-center  text-purple-900 mb-2">SUBJECT</label>
-            
-            <input
-                type="text"
-                placeholder="Masukkan subject di sini"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#cb48f3]"
-            />
-            <button className=' mt-3 w-full h-10    font-bold text-purple-800  bg-purple-200 hover:bg-purple-400 active:hover:bg-emerald-500 rounded-md' >SUBMIT</button>
+            <div className="relative bg-white  w-250 ml-5 border-1 border-[#cb48f3] p-4 shadow-md rounded-lg mt-25 ">
+            <button onClick={() => {
+                    setShow(true);
+                }} 
+                 className='absolute top-4 hover:bg-blue-100 left-5 text-[11px] border rounded-md py-1 px-2 text-blue-800'>
+                <p>Show Current Text</p>
+            </button>
+            <label className="block text-xl font-bold text-center  text-purple-900 mb-2">SUBJECT</label>
+
+            {values.map((val, index) => (
+                <textarea
+                key={index}
+                value={val}
+                onChange={(e) => handleChangeAbout(index, e.target.value)}
+                placeholder={`Masukkan paragraf ${index+1} di sini`}
+                className="w-full border text-purple-900 rounded-lg p-2 text-[12px] focus:outline-none focus:ring-2 border-purple-900 focus:ring-[#cb48f3]"
+                />
+            ))}
+
+            <button onClick={addInput} className='p-2 w-full rounded-lg hover:bg-purple-50 text-[12px] font-semibold text-purple-800 border-purple-800'>+ add new paragraph</button>
+
+            <button onClick={handleAboutText} className=' mt-3 w-full h-10 text-[12px] font-bold text-purple-800  bg-purple-200 hover:bg-purple-400 active:hover:bg-emerald-500 rounded-md'>
+            {loading ? "submit..." : `Submit`}
+            </button>
             </div>
             <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-5 '>
-                {listUsers.map((user, index) => (
+                {aboutImage.map((user, index) => (
                     
                     <div key={index} className='w-80  flex flex-col justify-start items-center p-3 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
-                    <p className='text-[12px] font-bold text-purple-900'>Tanggal : <span className='font-semibold'>{user.tanggal}</span></p>
+                    <p className='text-[12px] font-bold text-purple-900'>Tanggal : <span className='font-semibold'>{user.createdAt}</span></p>
                     <div className='w-full flex justify-center items-center '>
                         <button onClick={() => {
                             setFull(true);
-                            setFullGambar(user.gambar);
+                            setFullGambar(user.fileName);
                         }} 
                         className='w-full'>
-                        <Image width={70} height={70} src={`/assets/image/aboutus/${user.gambar}`} alt="Dashboard" className='w-full '/>
+                        <Image width={70} height={70} src={`/uploads/aboutUs/${user.fileName}`} alt="Dashboard" className='w-full '/>
                         </button>
                     </div>
-                        
 
-                        <button onClick={()=>{setHapusNama(user.gambar);}} className='h-8 w-8 absolute -right-3 top-1 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
-                            <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
-                        </button>
+                    <button onClick={()=>{setHapusNama(user.fileName);setDeleteData(user.fileName); setFilePreview(user.fileName); setId(user.id??"")}} className='h-8 w-8 absolute -right-3 top-1 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
+                        <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
+                    </button>
                         
                         {/* { edit === user.nama &&
                         <div className='absolute z-2 p-2 border-[1.5px] rounded-lg border-[#cb48f3] -top-3 right-7 backdrop-blur-xl flex flex-col justify-center items-center gap-2 px-4'>
@@ -186,18 +415,20 @@ export default function AdminUsers() {
 
             {/* EDIT USER */}
             {hapus || hapusNama !== "none" || tambah || show ||  full ?
-            <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'>n</div>
+            <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
             : null
             }
             {hapus || hapusNama !== "none" || tambah || show ||  full ?
-            <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'>n</div>
+            <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
             : null
             }
             {hapus &&
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
                 <p className='text-[10px] text-[#930062] w-50 text-center  font-bold'>Remove All Images? <span className='font-normal'>You won’t be able to recover them</span></p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Remove</button>
+                <button onClick={() => handleDeleteAll()} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {loading ? "Removing all..." : `Remove`}
+                </button>
                 <button onClick={() => setHapus(false)} className={`fixed z-6 top-37 right-115 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
@@ -207,20 +438,22 @@ export default function AdminUsers() {
             <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
                 <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
                 <p className='text-[12px] text-[#930062] w-30 text-center'>Confirm deletion?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
+                <button onClick={() => handleDelete(id,filePreview??"")} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {loading ? "Removing..." : `Yes`}
+                </button>
                 <button onClick={() => setHapusNama("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>
             }
             {show &&
-            <div className='fixed w-150  z-6 top-15 left-85 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <h1 className='text-xl text-purple-900 font-bold'>About Us</h1>    
-                <p className='lg:w-130 lg:mb-5 lg:text-justify lg:text-lg w-70 mb-5 text-justify text-xs'>We are an boutique software development started from a band of developers that excel in developing apps with great flexibility and always listen to client needs.</p>
-                <p className='lg:w-130 lg:mb-5 lg:text-justify lg:text-lg w-70 mb-5 text-justify text-xs'>We always develop using agile methodologies in mind, means that a big features in chopped into small chunks. Each chunk can be done in two weeks. And we always do a weekly or twice a week meeting over skype or using trello so you can see your apps as it progressing.</p>
-                <p className='lg:w-130 lg:mb-5 lg:text-justify lg:text-lg w-70 mb-5 text-justify text-xs'>Our goal is to make software development to adapt clients needs and deliver results as quickly as possible</p>
+            <div className='fixed w-150  z-6 top-30 left-85 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                <h1 className='text-xl text-purple-900 font-bold'>About Us</h1>  
+                {valuesShow[0].values.map((val, index) => (
+                    <p key={index} className='lg:w-130 text-[12px] mb-1 lg:text-justify w-70 text-justify text-xs'>{val}</p>
+                ))}
                 
-                <button onClick={() => setShow(false)} className={`fixed z-6 top-13 right-80 w-10 h-10 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                <button onClick={() => setShow(false)} className={`fixed z-6 top-26 right-78 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>
@@ -234,17 +467,29 @@ export default function AdminUsers() {
             </div>
             }
             {tambah &&
-            <div className='fixed z-6 top-30 left-120 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <input type="file" className=" lg:bg-[#d9ebfc]  lg:px-6 lg:py-3 lg:rounded-[40px] lg:w-[320px] lg:h-[220px] bg-[#d9ebfc]  px-6 py-3 border border-[#8eb0e5] rounded-lg w-[240px]" />
-                
-                
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Submit</button>
-                <button onClick={() => {
-                    setTambah(!tambah);
-                }}  className={`fixed z-6 top-27 right-84 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
-            </div>
+            <div className='fixed z-6 -top-20 left-0 w-full h-full flex items-center justify-center'>
+                <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col items-center gap-4 relative w-[500px]'>
+                    <h2 className="text-lg font-bold text-[#710093] mb-2">Tambah Data</h2>
+                    {filePreview && (
+                        <Image 
+                            width={300} 
+                            height={300} 
+                            src={filePreview ? filePreview : "/default-image.png"} 
+                            alt="our work" 
+                            className='rounded-sm mb-2 w-auto h-40'
+                        />
+                    )}
+                    <input 
+                        onChange={handleFileChange}
+                        type="file" accept="image/*" className="mb-2 border w-full border-[#8eb0e5] rounded-lg p-2" />
+                    <button onClick={handleAboutImage} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                        {loading ? "Saving..." : "Save"}
+                    </button>
+                    <button onClick={() => setTambah(false)} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
+                        <Image width={20} height={20} src="/close.svg" alt="Close" className="w-4"/>
+                    </button>
+                </div>
+            </div>
             }
             {/* <div className='fixed z-6 top-30 p-5 border-1 rounded-lg border-[#710093] bg-white flex flex-col gap-3'>
                 <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
