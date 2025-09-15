@@ -80,29 +80,6 @@ export default function AdminUsers() {
         setUrutanActive(false);
     }
 
-    const listUsers = [
-        {
-            gambar: "about-1.jpeg",
-            tanggal: "20-1-2024"
-        },
-        {
-            gambar: "about-2.jpeg",
-            tanggal: "20-1-2024"
-        },
-        {
-            gambar: "about-3.jpeg",
-            tanggal: "20-1-2024"
-        },
-        {
-            gambar: "about-4.jpeg",
-            tanggal: "20-1-2024"
-        },
-        {
-            gambar: "about-1.jpeg",
-            tanggal: "20-1-2024"
-        },
-      ];
-
       const [aboutImage, setAboutImage] = useState<AboutImage[]>([]);
       useEffect(() => {
         const fetchAboutImage = async () => {
@@ -233,7 +210,7 @@ export default function AdminUsers() {
         }
       };
 
-      const handleAboutText = async (e: React.FormEvent) => {
+      const handleAboutText = async () => {
         setLoading(true);
         try {
           const res = await fetch("/api/updateAboutText", {

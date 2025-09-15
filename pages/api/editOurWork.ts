@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp, collection } from "firebase/firestore";
 import formidable from "formidable";
+import type { Fields, Files } from "formidable";
 import fs from "fs";
 import path from "path";
 
@@ -21,7 +22,7 @@ export default async function handler(
   try {
     // Parsing form-data
     const form = formidable({ multiples: false });
-    const [fields, files]: any = await new Promise((resolve, reject) => {
+    const [fields, files]: [Fields, Files] = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) reject(err);
         else resolve([fields, files]);
@@ -67,7 +68,9 @@ export default async function handler(
 
       // Hapus file lama kalau ada dan berbeda
       if (oldFileName && oldFileName !== newFileName) {
-        const oldPath = path.join(uploadDir, oldFileName);
+        // const oldPath = path.join(uploadDir, oldFileName);
+        const safeOldFileName = Array.isArray(oldFileName) ? oldFileName[0] : oldFileName;
+        const oldPath = path.join(uploadDir, safeOldFileName);
         if (fs.existsSync(oldPath)) {
           fs.unlinkSync(oldPath);
         }
@@ -75,10 +78,12 @@ export default async function handler(
     }
 
     // ✅ Update metadata ke Firestore
-    const docRef = doc(db, "ourWorks", id);
+    const safeId = Array.isArray(id) ? id[0] : id;
+
+    const docRef = doc(collection(db, "ourWorks"), safeId);
     await updateDoc(docRef, {
       title,
-      tags: tags.split(",").map((t: string) => t.trim()),
+      tags: (typeof tags === "string" ? tags.split(",") : tags)?.map((t) => t.trim()).filter(Boolean),
       description,
       fileName: newFileName,
       updatedAt: serverTimestamp(),

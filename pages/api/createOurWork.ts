@@ -3,6 +3,7 @@ import { app, db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import formidable from "formidable";
+import type { Fields, Files } from "formidable";
 import fs from "fs";
 
 // Matikan bodyParser bawaan Next.js
@@ -24,7 +25,7 @@ export default async function handler(
     try {
       // ✅ Parsing form-data
       const form = formidable({ multiples: false });
-      const [fields, files]: any = await new Promise((resolve, reject) => {
+      const [fields, files]: [Fields, Files] = await new Promise((resolve, reject) => {
         form.parse(req, (err, fields, files) => {
           if (err) reject(err);
           else resolve([fields, files]);
@@ -48,13 +49,13 @@ export default async function handler(
       const storageRef = ref(storage, fileName);
 
       await uploadBytes(storageRef, fileBuffer, {
-        contentType: fileData.mimetype,
+        contentType: fileData.mimetype ?? undefined,
       });
 
       const downloadURL = await getDownloadURL(storageRef);
 
       // ✅ Pisahkan tag berdasarkan koma
-      const tagsArray = tags.split(",").map((t: string) => t.trim()).filter(Boolean);
+      const tagsArray = (typeof tags === "string" ? tags.split(",") : tags)?.map((t) => t.trim()).filter(Boolean) ?? [];
 
       // ✅ Simpan data ke Firestore
       const contactsRef = collection(db, "ourWorks");

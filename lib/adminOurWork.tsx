@@ -398,7 +398,7 @@ export default function AdminOurWork() {
                             <p className='text-[14px] w-full font-bold text-[#710093]'>{data.title}</p>
                             <div className='w-full flex flex-row flex-wrap gap-1'> 
                               {data.tags.map((tag, idx) => (
-                                <p className='text-[10px] px-2 py-1 rounded-full font-light text-[#710093] bg-purple-100 text-center'>{tag}</p>
+                                <p key={idx} className='text-[10px] px-2 py-1 rounded-full font-light text-[#710093] bg-purple-100 text-center'>{tag}</p>
                               ))}
                             </div>
                             <p className='text-[12px] w-full pr-5 mb-10 font-light text-justify'>{data.description}</p>

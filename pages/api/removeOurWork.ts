@@ -1,8 +1,8 @@
 import { db } from "@/firebase/config";
-import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
+import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
-import fs from "fs";
 import path from "path";
 
 interface OurWorkData {

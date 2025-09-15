@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import formidable from "formidable";
+import type { Fields, Files } from "formidable";
 import fs from "fs";
 import path from "path";
 
@@ -21,7 +22,7 @@ export default async function handler(
   try {
     // Parsing form-data
     const form = formidable({ multiples: false });
-    const [fields, files]: any = await new Promise((resolve, reject) => {
+    const [fields, files]: [Fields, Files] = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) reject(err);
         else resolve([fields, files]);

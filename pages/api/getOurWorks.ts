@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { collection, getDocs, doc, getDoc, DocumentData } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { collection, DocumentData, getDocs } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 
 // Response type
