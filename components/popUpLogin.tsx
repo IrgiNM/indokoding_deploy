@@ -356,67 +356,80 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         <>
           <div className="fixed z-11 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
           <div className="fixed z-10 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
-
-          <div className="fixed lg:top-30 top-40 lg:left-108 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-12">
-            <p className="text-2xl font-bold text-purple-900 mb-2">Log In</p>
-            <input
-              type="text"
-              placeholder="Username"
-              name="username"
-              value={username ? username : formDataLogin.username}
-              onChange={handleChangeLogin}
-              className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={formDataLogin.password}
-              onChange={handleChangeLogin}
-              className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
-            />
-            <button
-              onClick={handleLogin}
-              type="submit"
-              className="w-full rounded-full p-2 text-[12px] font-bold bg-blue-400 hover:bg-blue-600 text-white mt-2"
-            >
-              {isLoading ? "Try LogIn..." : "Log In"}
-            </button>
-            <div className="w-full h-[1px] mt-2 bg-purple-100"></div>
-            <button
-              onClick={() => {
-                setShowLogIn(false);
-                if (isAdmin === "admin") {
-                  handleGoogleLoginAdmin();
-                } else if (isAdmin === "guest") {
-                  handleGoogleLogin();
-                }
-              }}
-              className="w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-purple-900 border font-semibold bg-white hover:bg-blue-50 mt-2"
-            >
-              <Image
-                width={140}
-                height={140}
-                src="/google-color.svg"
-                alt=""
-                className="w-5"
+          <div className="fixed z-12 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+            <div className="relative lg:-top-10 top-0 lg:left-0 left-0 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-12">
+              <p className="text-2xl font-bold text-purple-900 mb-2">Log In</p>
+              <input
+                type="text"
+                placeholder="Username"
+                name="username"
+                value={username ? username : formDataLogin.username}
+                onChange={handleChangeLogin}
+                className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
               />
-              LogIn with Google
-            </button>
-            <p className="text-[12px] mt-1 text-justify">
-              Don&apos;t have an account? Please{" "}
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formDataLogin.password}
+                onChange={handleChangeLogin}
+                className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+              />
               <button
-                onClick={() => setShowSignUp(!showSignUp)}
-                className="font-bold cursor-pointer"
+                onClick={handleLogin}
+                type="submit"
+                className="w-full rounded-full p-2 text-[12px] font-bold bg-blue-400 hover:bg-blue-600 text-white mt-2"
               >
-                sign up
-              </button>{" "}
-              first.
-            </p>
+                {isLoading ? "Try LogIn..." : "Log In"}
+              </button>
+              <div className="w-full h-[1px] mt-2 bg-purple-100"></div>
+              <button
+                onClick={() => {
+                  setShowLogIn(false);
+                  if (isAdmin === "admin") {
+                    handleGoogleLoginAdmin();
+                  } else if (isAdmin === "guest") {
+                    handleGoogleLogin();
+                  }
+                }}
+                className="w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-purple-900 border font-semibold bg-white hover:bg-blue-50 mt-2"
+              >
+                <Image
+                  width={140}
+                  height={140}
+                  src="/google-color.svg"
+                  alt=""
+                  className="w-5"
+                />
+                LogIn with Google
+              </button>
+              <p className="text-[12px] mt-1 text-justify">
+                Don&apos;t have an account? Please{" "}
+                <button
+                  onClick={() => setShowSignUp(!showSignUp)}
+                  className="font-bold cursor-pointer"
+                >
+                  sign up
+                </button>{" "}
+                first.
+              </p>
+              <button
+                onClick={() => setShowLogIn(false)}
+                className={`absolute z-8 lg:-top-4 lg:-right-4 -top-4 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              >
+                <Image
+                  width={140}
+                  height={140}
+                  src="/close.svg"
+                  alt=""
+                  className="w-3"
+                />
+              </button>
+            </div>
           </div>
-          <button
+          {/* <button
             onClick={() => setShowLogIn(false)}
-            className={`relative z-8 lg:-top-16 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            className={`relative z-13 lg:-top-16 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
           >
             <Image
               width={140}
@@ -425,107 +438,110 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
               alt=""
               className="w-3"
             />
-          </button>
+          </button> */}
           {showSignUp &&
           message !== "User berhasil disimpan" &&
           token === "" ? (
-            <div className="fixed top-30 right-10 z-12">
-              <div className="fixed lg:top-30 lg:left-108 top-40 left-12 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7">
-                <p className="text-2xl font-bold text-purple-900 mb-2">
-                  Sign Up
-                </p>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                  value={formDataRegister.username}
-                  onChange={handleChangeRegister}
-                  className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email@gmail.com"
-                  value={formDataRegister.email}
-                  onChange={handleChangeRegister}
-                  className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
-                />
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formDataRegister.password}
-                  onChange={handleChangeRegister}
-                  className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
-                />
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={formDataRegister.confirmPassword}
-                  onChange={handleChangeRegister}
-                  className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
-                />
-                <ReCAPTCHA
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                  onChange={(token) => {
-                    setCaptchaToken(token);
-                    console.log("Captcha token:", token);
-                  }}
-                  onExpired={() => {
-                    console.log("Captcha expired! Akan dihapus dalam 30 detik...");
-                    setTimeout(() => {
-                      setCaptchaToken(null);
-                      console.log("Captcha token dihapus setelah 30 detik");
-                    }, 30000); // 30 detik
-                  }}
-                />
-                <button
-                  type="submit"
-                  onClick={handleRegister}
-                  className="w-full rounded-full p-2 text-[12px] font-bold bg-[#ff097c] hover:bg-[#ae0051] text-white mt-2"
-                >
-                  {isLoading ? "Try SignUp..." : "Sign Up"}
-                </button>
-
-                <div className="w-full h-[1px] mt-2 bg-purple-100"></div>
-                <button
-                  onClick={() => (setShowSignUp(false), handleGoogleLogin())}
-                  className="w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-red-900 border font-semibold bg-white hover:bg-blue-50 mt-2"
-                >
-                  <Image
-                    width={140}
-                    height={140}
-                    src="/google-color.svg"
-                    alt=""
-                    className="w-5"
+            <div className="fixed z-12 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+              <div className="fixed flex justify-center items-center top-0 right-0 bottom-0 left-0 z-12">
+                <div className="relative lg:top-11 lg:left-0 top-18 left-0 lg:w-100 w-72 rounded-xl p-8 bg-white border border-purple-900 flex flex-col justify-start items-center gap-2 z-7">
+                  <p className="text-2xl font-bold text-purple-900 mb-2">
+                    Sign Up
+                  </p>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={formDataRegister.username}
+                    onChange={handleChangeRegister}
+                    className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
                   />
-                  LogIn with Google
-                </button>
-                <p className="text-[12px] mt-1">
-                  have an account? Please{" "}
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email@gmail.com"
+                    value={formDataRegister.email}
+                    onChange={handleChangeRegister}
+                    className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formDataRegister.password}
+                    onChange={handleChangeRegister}
+                    className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+                  />
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={formDataRegister.confirmPassword}
+                    onChange={handleChangeRegister}
+                    className="border border-purple-400 bg-purple-50 w-full p-2 rounded-full text-[12px] px-4 text-purple-900"
+                  />
+                  <ReCAPTCHA
+                    className="w-68"
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                    onChange={(token) => {
+                      setCaptchaToken(token);
+                      console.log("Captcha token:", token);
+                    }}
+                    onExpired={() => {
+                      console.log("Captcha expired! Akan dihapus dalam 30 detik...");
+                      setTimeout(() => {
+                        setCaptchaToken(null);
+                        console.log("Captcha token dihapus setelah 30 detik");
+                      }, 30000); // 30 detik
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    onClick={handleRegister}
+                    className="w-full rounded-full p-2 text-[12px] font-bold bg-[#ff097c] hover:bg-[#ae0051] text-white mt-2"
+                  >
+                    {isLoading ? "Try SignUp..." : "Sign Up"}
+                  </button>
+
+                  <div className="w-full h-[1px] mt-2 bg-purple-100"></div>
+                  <button
+                    onClick={() => (setShowSignUp(false), handleGoogleLogin())}
+                    className="w-full rounded-full p-3 flex flex-row gap-2 justify-center items-center text-[12px] text-red-900 border font-semibold bg-white hover:bg-blue-50 mt-2"
+                  >
+                    <Image
+                      width={140}
+                      height={140}
+                      src="/google-color.svg"
+                      alt=""
+                      className="w-5"
+                    />
+                    LogIn with Google
+                  </button>
+                  <p className="text-[12px] mt-1">
+                    have an account? Please{" "}
+                    <button
+                      onClick={() => setShowSignUp(false)}
+                      className="font-bold cursor-pointer"
+                    >
+                      Log In
+                    </button>
+                  </p>
+                </div>
+                {signUpClose && (
                   <button
                     onClick={() => setShowSignUp(false)}
-                    className="font-bold cursor-pointer"
+                    className={`relative z-8 lg:-top-3 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
                   >
-                    Log In
+                    <Image
+                      width={140}
+                      height={140}
+                      src="/close.svg"
+                      alt=""
+                      className="w-3"
+                    />
                   </button>
-                </p>
+                )}
               </div>
-              {signUpClose && (
-                <button
-                  onClick={() => setShowSignUp(false)}
-                  className={`relative z-8 lg:-top-3 lg:right-95 -top-14 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-                >
-                  <Image
-                    width={140}
-                    height={140}
-                    src="/close.svg"
-                    alt=""
-                    className="w-3"
-                  />
-                </button>
-              )}
             </div>
           ) : null}
         </>

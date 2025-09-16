@@ -3,9 +3,7 @@ import NavLink from "@/components/navLink";
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
-// import AuthPopUp from "@/components/authPopUp";
 import PopUpLogin from "@/components/popUpLogin";
-// import Cookies from "js-cookie";
 import { deleteCookies, getCookies } from "@/utils/tokenController";
 import Swal from "sweetalert2";
 
@@ -82,23 +80,6 @@ export default function Navbar({
       }
     };
 
-    // // Override alert bawaan browser
-    // const originalAlert = window.alert;
-    // window.alert = function (message) {
-    //   if (
-    //     message?.includes("Login successful") ||
-    //     message?.includes("berhasil")
-    //   ) {
-    //     setTimeout(checkLoginSuccess, 100);
-    //     setShowAuth(false); // ✅ Beri jeda sebelum menutup
-    //   }
-    //   return originalAlert.apply(this, []);
-    // };
-
-    // return () => {
-    //   window.alert = originalAlert; // Kembalikan alert bawaan saat unmount
-    // };
-
     // Interval untuk memantau swal
     const interval = setInterval(() => {
       // SweetAlert2 akan menambahkan elemen dengan class .swal2-container jika aktif
@@ -129,11 +110,6 @@ export default function Navbar({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // useEffect(() => {
-  //   const storedToken: string = Cookies.get("token") || '';
-  //   setToken(storedToken);
-  // }, [showLogOut, showAuth]);
 
   console.log(pathname);
 
@@ -397,60 +373,67 @@ export default function Navbar({
         <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
       ) : null}
       {showLogOut && token !== "" ? (
-        <div className="fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
-          <Image
-            width={140}
-            height={140}
-            src="/warning-red.svg"
-            alt=""
-            className="w-10"
-          />
-          <p className="text-[12px] text-purple-900 w-30 text-center">
-            Are you sure you want to log out?
-          </p>
-          <button
-            onClick={() => (logout(), setShowLogOut(false))}
-            className="text-[12px] font-bold text-[#f00070] w-full border py-1 rounded-md hover:bg-red-50"
-          >
-            Log Out
-          </button>
-          <button
-            onClick={() => setShowLogOut(false)}
-            className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-          >
+        <div className="fixed z-6 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative z-6 lg:-top-10 lg:left-0 -top-10 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
-              src="/close.svg"
+              src="/warning-red.svg"
               alt=""
-              className="w-3"
+              className="w-10"
             />
-          </button>
+            <p className="text-[12px] text-purple-900 w-30 text-center">
+              Are you sure you want to log out?
+            </p>
+            <button
+              onClick={() => (logout(), setShowLogOut(false))}
+              className="text-[12px] font-bold text-[#f00070] w-full border py-1 rounded-md hover:bg-red-50"
+            >
+              Log Out
+            </button>
+            <button
+              onClick={() => setShowLogOut(false)}
+              className={`absolute z-6 lg:-top-4 lg:-right-3 lg:mr-0 -mr-40 -top-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+          </div>
         </div>
       ) : null}
 
       {showAuth && (token === "" || token === null) ? (
-        <button
-          onClick={() => setShowAuth(false)}
-          className={`fixed z-25 lg:top-27 lg:right-105 top-37 right-8 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-        >
-          <Image
-            width={140}
-            height={140}
-            src="/close.svg"
-            alt=""
-            className="w-3"
-          />
-        </button>
+        <div className="fixed z-25 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative">
+            <button
+              onClick={() => setShowAuth(false)}
+              className={`absolute z-25 lg:-top-58 lg:-right-54 -top-50 -right-39 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+            <PopUpLogin
+              onClick={() => setShowAuth(false)}
+              isClose={false}
+              isRole="guest"
+            />
+          </div>
+        </div>
       ) : null}
 
-      {showAuth && (
-        <PopUpLogin
-          onClick={() => setShowAuth(false)}
-          isClose={false}
-          isRole="guest"
-        />
-      )}
+      {/* {showAuth && (
+        
+      )} */}
     </>
   );
 }
