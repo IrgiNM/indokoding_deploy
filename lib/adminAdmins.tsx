@@ -93,7 +93,8 @@ export default function AdminAdmins() {
     }
 
     const [formDataAdmin, setFormData] = useState({
-      update: isUpdate,
+      id: "",
+      update: false,
       username: "",
       email: "",
       password: "",
@@ -122,6 +123,7 @@ export default function AdminAdmins() {
         setIsLoading(true);
     
         try {
+            console.log("Data yang dikirim:", formDataAdmin);
             const res = await fetch("/api/createAdmin", {
                 method: "POST",
                 headers: {
@@ -142,6 +144,7 @@ export default function AdminAdmins() {
     
             // Reset form setelah berhasil
             setFormData({
+                id: "",
                 update: false,
                 username: "",
                 email: "",
@@ -374,6 +377,8 @@ export default function AdminAdmins() {
                                 }
                                 formDataAdmin.username = user.username;
                                 formDataAdmin.email = user.email;
+                                formDataAdmin.update = true;
+                                formDataAdmin.id = user.id;
                                 setIsUpdate(true);
                                 setAddAdmin(true);
                             }}
@@ -438,7 +443,7 @@ export default function AdminAdmins() {
                 <button onClick={() => (handleCreateAdmin())} className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>
                     {isLoading ? "Creating..." : "Create"}
                 </button>
-                <button onClick={() => (setAddAdmin(false),formDataAdmin.username = '',formDataAdmin.email = '',setIsUpdate(false))} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                <button onClick={() => (setAddAdmin(false),formDataAdmin.username = '',formDataAdmin.email = '',setIsUpdate(false),formDataAdmin.update = false)} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>
