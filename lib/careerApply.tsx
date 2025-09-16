@@ -15,7 +15,31 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
   const [showPopup, setShowPopup] = useState(false);
   const [pickTitle, setPickTitle] = useState("Django Developer");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCookies = async () => {
+      try {
+        const savedToken = await getCookies(); // <- pakai await  
+        if (savedToken) {
+          // Parse JSON kalau cookies disimpan sebagai string
+          const parsed =
+            typeof savedToken === "string"
+              ? JSON.parse(savedToken)
+              : savedToken;
+          setShowAuth(false);
+          // Ambil token dan simpan ke state
+          setToken(parsed?.token || "");
+        } else {
+          setToken("");
+        }
+      } catch (error) {
+        console.error("Gagal mengambil cookies:", error);
+        setToken("");
+      }
+    };  
+    fetchCookies();
+  }, [showAuth]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [RequirementsCareer, setRequirementsCareer] = useState<
@@ -303,124 +327,125 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
       ) : null}
       {showPopup ? (
-        <>
-          <div className="fixed z-7 lg:w-80 w-75 lg:top-40 lg:left-70 top-27 p-5 lg:border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
-            <h1 className="font-bold text-xl text-[#00a50b] w-full">
-              Apply Career
-            </h1>
-            <p className="text-[12px] text-green-900 w-full text-justify">
-              Chosen Career : <span className="font-bold">{pickTitle}</span>
-            </p>
-            <input
-              type="text"
-              className="w-full py-2 px-4 border border-green-900 bg-green-100 rounded-full text-[12px]"
-              placeholder="Your Name"
-              name="name"
-              value={formDataCareerMessage.name}
-              onChange={handleChangeCareerMessage}
-            />
-            <input
-              type="email"
-              className="w-full py-2 px-4 border border-green-900 bg-green-50 rounded-full text-[12px]"
-              placeholder="Your@email.com"
-              name="email"
-              value={formDataCareerMessage.email}
-              onChange={handleChangeCareerMessage}
-            />
-            <input
-              type="text"
-              className="w-full py-2 px-4 border border-green-900 bg-green-100 rounded-full text-[12px]"
-              placeholder="Where are you come from ?"
-              name="from"
-              value={formDataCareerMessage.from}
-              onChange={handleChangeCareerMessage}
-            />
-            <input
-              type="text"
-              className="w-full py-2 px-4 border border-green-900 bg-green-50 rounded-full text-[12px]"
-              placeholder="Your Phone"
-              name="phone"
-              value={formDataCareerMessage.phone}
-              onChange={handleChangeCareerMessage}
-            />
-            <ReCAPTCHA
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                onChange={(token) => {
-                  setCaptchaToken(token);
-                  console.log("Captcha token:", token);
-                }}
-                onExpired={() => {
-                  console.log("Captcha expired! Akan dihapus dalam 30 detik...");
-                  setTimeout(() => {
-                    setCaptchaToken(null);
-                    console.log("Captcha token dihapus setelah 30 detik");
-                  }, 30000); // 30 detik
-                }}
-              />
-            <button
-              onClick={() => handleCareerMessage()}
-              className="text-[12px] lg:flex justify-center items-center hidden font-bold text-white w-full border py-3 rounded-lg bg-[#007924] hover:bg-[#44975d]"
-            >
-              {isLoading ? "Try Send..." : "Send"}
-            </button>
-            <button
-              onClick={() => setShowPopup(false)}
-              className={`fixed z-6 lg:top-37 lg:right-45 lg:mr-0 -mr-40 top-24 right-45 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-            >
-              <Image
-                width={140}
-                height={140}
-                src="/close.svg"
-                alt=""
-                className="w-3"
-              />
-            </button>
-          </div>
-          <div className="fixed lg:z-6 z-7 lg:w-115 w-75 lg:top-40 lg:right-50 top-94 p-5 lg:border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
-            <div className="w-full relative flex flex-row items-center">
-              <p className="text-[12px] font-bold text-green-900 w-13 text-justify">
-                Rate :{" "}
+        <div className="fixed flex justify-center items-center top-0 bottom-0 right-0 left-0 z-25">
+          <div className="relative flex lg:flex-row flex-col -top-35">
+            <div className="relative z-7 lg:w-80 w-75 lg:top-40 lg:left-0 left-0 top-50 p-5 lg:border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
+              <h1 className="font-bold text-xl text-[#00a50b] w-full">
+                Apply Career
+              </h1>
+              <p className="text-[12px] text-green-900 w-full text-justify">
+                Chosen Career : <span className="font-bold">{pickTitle}</span>
               </p>
               <input
-                type="number"
-                className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none w-full py-2 px-4 pl-7 border border-green-900 bg-green-100 rounded-full text-[12px]"
-                placeholder="0"
-                name="rate"
-                value={formDataCareerMessage.rate}
+                type="text"
+                className="w-full py-2 px-4 border border-green-900 bg-green-100 rounded-full text-[12px]"
+                placeholder="Your Name"
+                name="name"
+                value={formDataCareerMessage.name}
                 onChange={handleChangeCareerMessage}
               />
-              <Image
-                width={140}
-                height={140}
-                src="/dollar.svg"
-                alt="MySQL"
-                className=" lg:w-2 lg:absolute lg:top-3 lg:left-15 w-2 absolute top-3 left-14"
+              <input
+                type="email"
+                className="w-full py-2 px-4 border border-green-900 bg-green-50 rounded-full text-[12px]"
+                placeholder="Your@email.com"
+                name="email"
+                value={formDataCareerMessage.email}
+                onChange={handleChangeCareerMessage}
               />
+              <input
+                type="text"
+                className="w-full py-2 px-4 border border-green-900 bg-green-100 rounded-full text-[12px]"
+                placeholder="Where are you come from ?"
+                name="from"
+                value={formDataCareerMessage.from}
+                onChange={handleChangeCareerMessage}
+              />
+              <input
+                type="text"
+                className="w-full py-2 px-4 border border-green-900 bg-green-50 rounded-full text-[12px]"
+                placeholder="Your Phone"
+                name="phone"
+                value={formDataCareerMessage.phone}
+                onChange={handleChangeCareerMessage}
+              />
+              <ReCAPTCHA
+                  className="w-60 lg:w-75"
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                  onChange={(token) => {
+                    setCaptchaToken(token);
+                    console.log("Captcha token:", token);
+                  }}
+                  onExpired={() => {
+                    console.log("Captcha expired! Akan dihapus dalam 30 detik...");
+                    setTimeout(() => {
+                      setCaptchaToken(null);
+                      console.log("Captcha token dihapus setelah 30 detik");
+                    }, 30000); // 30 detik
+                  }}
+                />
+              <button
+                onClick={() => handleCareerMessage()}
+                className="text-[12px] lg:flex justify-center items-center hidden font-bold text-white w-full border py-3 rounded-lg bg-[#007924] hover:bg-[#44975d]"
+              >
+                {isLoading ? "Try Send..." : "Send"}
+              </button>
+              <button
+                onClick={() => setShowPopup(false)}
+                className={`absolute z-6 lg:-top-4 lg:-right-122 lg:mr-0 -mr-40 -top-2 right-38 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              >
+                <Image
+                  width={140}
+                  height={140}
+                  src="/close.svg"
+                  alt=""
+                  className="w-3"
+                />
+              </button>
             </div>
-            <textarea
-              name="message"
-              id="message"
-              className="w-full lg:h-64 h-20 py-2 px-4 border border-green-900 bg-green-50 rounded-lg text-[12px]"
-              placeholder="Some more words, maybe?"
-              value={formDataCareerMessage.message}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, message: e.target.value }))
-              }
-            ></textarea>
-            <button
-              onClick={() => handleCareerMessage()}
-              className="text-[12px] flex justify-center items-center lg:hidden font-bold text-white w-full border py-3 rounded-lg bg-[#007924] hover:bg-[#44975d]"
-            >
-              {isLoading ? "Try Send..." : "Send"}
-            </button>
+            <div className="relative  lg:z-6 z-7 lg:w-115 w-75 lg:top-40 lg:-right-3 top-41 p-5 lg:border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
+              <div className="w-full relative flex flex-row items-center">
+                <p className="text-[12px] font-bold text-green-900 w-13 text-justify">
+                  Rate :{" "}
+                </p>
+                <input
+                  type="number"
+                  className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none w-full py-2 px-4 pl-7 border border-green-900 bg-green-100 rounded-full text-[12px]"
+                  placeholder="0"
+                  name="rate"
+                  value={formDataCareerMessage.rate}
+                  onChange={handleChangeCareerMessage}
+                />
+                <Image
+                  width={140}
+                  height={140}
+                  src="/dollar.svg"
+                  alt="MySQL"
+                  className=" lg:w-2 lg:absolute lg:top-3 lg:left-15 w-2 absolute top-3 left-14"
+                />
+              </div>
+              <textarea
+                name="message"
+                id="message"
+                className="w-full lg:h-64 h-20 py-2 px-4 border border-green-900 bg-green-50 rounded-lg text-[12px]"
+                placeholder="Some more words, maybe?"
+                value={formDataCareerMessage.message}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, message: e.target.value }))
+                }
+              ></textarea>
+              <button
+                onClick={() => handleCareerMessage()}
+                className="text-[12px] flex justify-center items-center lg:hidden font-bold text-white w-full border py-3 rounded-lg bg-[#007924] hover:bg-[#44975d]"
+              >
+                {isLoading ? "Try Send..." : "Send"}
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       ) : null}
       {showAuthYet ? (
-        <>
-          <div className="fixed z-7 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
-          <div className="fixed z-8 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
-          <div className="fixed z-9 lg:top-40 lg:left-140 top-50 left-27 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative z-6 lg:-top-10 lg:left-0 -top-15 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -433,14 +458,14 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
               before filling out the form.
             </p>
             <button
-              onClick={() => (setShowAuth(true), setShowPopup(false))}
+              onClick={() => (setShowAuth(true), setShowAuthYet(false))}
               className="text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50"
             >
               Log In
             </button>
             <button
               onClick={() => setShowAuthYet(false)}
-              className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-46 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              className={`absolute z-6 lg:-top-4 lg:-right-4 lg:mr-0 -mr-40 -top-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -451,23 +476,32 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
               />
             </button>
           </div>
-        </>
+        </div>
       ) : null}
-      {showAuth ? (
-        <button
-          onClick={() => setShowAuth(false)}
-          className={`fixed z-13 lg:top-27 lg:right-105 top-36 right-7 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-        >
-          <Image
-            width={140}
-            height={140}
-            src="/close.svg"
-            alt=""
-            className="w-3"
-          />
-        </button>
+      {showAuth && token === "" ? (
+        <div className="fixed z-25 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative">
+            <button
+              onClick={() => setShowAuth(false)}
+              className={`absolute z-25 lg:-top-58 lg:-right-54 -top-50 -right-39 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+            <PopUpLogin
+              onClick={() => setShowAuth(false)}
+              isClose={false}
+              isRole="guest"
+            />
+          </div>
+        </div>
       ) : null}
-      {showAuth && (
+      {/* {showAuth && (
         <PopUpLogin
           onClick={() => {
             setShowAuth(false);
@@ -475,7 +509,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
           isClose={false}
           isRole="guest"
         />
-      )}
+      )} */}
     </div>
   );
 }

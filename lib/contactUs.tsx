@@ -416,53 +416,64 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
       ) : null}
       {showPopup && (token === "" || token === null) ? (
-        <div className="fixed z-6 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
-          <Image
-            width={140}
-            height={140}
-            src="/warning-red.svg"
-            alt=""
-            className="w-10"
-          />
-          <p className="text-[12px] text-purple-900 w-30 text-justify">
-            Oops! You need to <span className="font-bold">Log In</span> first
-            before filling out the form.
-          </p>
-          <button
-            onClick={() => (setShowAuth(true), setShowPopup(false))}
-            className="text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50"
-          >
-            Log In
-          </button>
-          <button
-            onClick={() => setShowPopup(false)}
-            className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-          >
+        <div className="fixed z-6 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative z-6 lg:-top-10 lg:left-0 -top-15 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
-              src="/close.svg"
+              src="/warning-red.svg"
               alt=""
-              className="w-3"
+              className="w-10"
             />
-          </button>
+            <p className="text-[12px] text-purple-900 w-30 text-justify">
+              Oops! You need to <span className="font-bold">Log In</span> first
+              before filling out the form.
+            </p>
+            <button
+              onClick={() => (setShowAuth(true), setShowPopup(false))}
+              className="text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50"
+            >
+              Log In
+            </button>
+            <button
+              onClick={() => setShowPopup(false)}
+              className={`absolute z-6 lg:-top-4 lg:-right-4 lg:mr-0 -mr-40 -top-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+          </div>
         </div>
       ) : null}
       {showAuth && token === "" ? (
-        <button
-          onClick={() => setShowAuth(false)}
-          className={`fixed z-13 lg:top-27 lg:right-105 top-37 right-8 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-        >
-          <Image
-            width={140}
-            height={140}
-            src="/close.svg"
-            alt=""
-            className="w-3"
-          />
-        </button>
+        <div className="fixed z-25 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative">
+            <button
+              onClick={() => setShowAuth(false)}
+              className={`absolute z-25 lg:-top-58 lg:-right-54 -top-50 -right-39 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+            <PopUpLogin
+              onClick={() => setShowAuth(false)}
+              isClose={false}
+              isRole="guest"
+            />
+          </div>
+        </div>
       ) : null}
-      {showAuth && (
+      {/* {showAuth && (
         <PopUpLogin
           onClick={() => {
             setShowAuth(false);
@@ -470,7 +481,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
           isClose={false}
           isRole="guest"
         />
-      )}
+      )} */}
     </>
   );
 }

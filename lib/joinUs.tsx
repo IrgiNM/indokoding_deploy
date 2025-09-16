@@ -11,7 +11,33 @@ export default function JoinUsPage() {
   const [showAuthYet, setShowAuthYet] = useState(false);
   const [pickTitle, setPickTitle] = useState("Django Developer");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCookies = async () => {
+      try {
+        const savedToken = await getCookies(); // <- pakai await  
+        if (savedToken) {
+          // Parse JSON kalau cookies disimpan sebagai string
+          const parsed =
+            typeof savedToken === "string"
+              ? JSON.parse(savedToken)
+              : savedToken;
+          setShowAuth(false);
+          // Ambil token dan simpan ke state
+          setToken(parsed?.token || "");
+        } else {
+          setToken("");
+        }
+      } catch (error) {
+        console.error("Gagal mengambil cookies:", error);
+        setToken("");
+      }
+    };  
+    fetchCookies();
+  }, [showAuth]);
+
+
 
   useEffect(() => {
     const checkLoginSuccess = async () => {
@@ -364,11 +390,16 @@ export default function JoinUsPage() {
           className="lg:w-35 lg:-rotate-20 lg:absolute lg:-right-6 lg:-bottom-25 w-10 rotate-10 scale-x-[-1] absolute -right-10 -bottom-20"
         />
       </div>
+
+      {showAuthYet && token === "" ? (
+        <div className="fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
+      ) : null}
+      {showAuthYet && token === "" ? (
+        <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
+      ) : null}
       {showAuthYet ? (
-        <>
-          <div className="fixed z-7 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
-          <div className="fixed z-8 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
-          <div className="fixed z-9 lg:top-40 lg:left-140 top-50 left-27 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative z-6 lg:-top-10 lg:left-0 -top-15 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -381,14 +412,14 @@ export default function JoinUsPage() {
               before filling out the form.
             </p>
             <button
-              onClick={() => (setShowAuth(true))}
+              onClick={() => (setShowAuth(true), setShowAuthYet(false))}
               className="text-[12px] font-bold text-blue-600 w-full border py-1 rounded-md hover:bg-blue-50"
             >
               Log In
             </button>
             <button
               onClick={() => setShowAuthYet(false)}
-              className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-46 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              className={`absolute z-6 lg:-top-4 lg:-right-4 lg:mr-0 -mr-40 -top-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -399,23 +430,32 @@ export default function JoinUsPage() {
               />
             </button>
           </div>
-        </>
+        </div>
       ) : null}
-      {showAuth ? (
-        <button
-          onClick={() => setShowAuth(false)}
-          className={`fixed z-13 lg:top-27 lg:right-105 top-36 right-7 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
-        >
-          <Image
-            width={140}
-            height={140}
-            src="/close.svg"
-            alt=""
-            className="w-3"
-          />
-        </button>
+      {showAuth && token === "" ? (
+        <div className="fixed z-25 right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+          <div className="relative">
+            <button
+              onClick={() => setShowAuth(false)}
+              className={`absolute z-25 lg:-top-58 lg:-right-54 -top-50 -right-39 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+            >
+              <Image
+                width={140}
+                height={140}
+                src="/close.svg"
+                alt=""
+                className="w-3"
+              />
+            </button>
+            <PopUpLogin
+              onClick={() => setShowAuth(false)}
+              isClose={false}
+              isRole="guest"
+            />
+          </div>
+        </div>
       ) : null}
-      {showAuth && (
+      {/* {showAuth && (
         <PopUpLogin
           onClick={() => {
             setShowAuth(false);
@@ -423,7 +463,7 @@ export default function JoinUsPage() {
           isClose={false}
           isRole="guest"
         />
-      )}
+      )} */}
     </>
   );
 }

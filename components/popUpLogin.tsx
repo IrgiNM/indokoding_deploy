@@ -413,7 +413,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                 </button>{" "}
                 first.
               </p>
-              <button
+              {/* <button
                 onClick={() => setShowLogIn(false)}
                 className={`absolute z-8 lg:-top-4 lg:-right-4 -top-4 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
               >
@@ -424,7 +424,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                   alt=""
                   className="w-3"
                 />
-              </button>
+              </button> */}
             </div>
           </div>
           {/* <button
