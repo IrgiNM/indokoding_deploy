@@ -47,7 +47,9 @@ export default async function handler(
     const newFileName = `${Date.now()}-${fileData.originalFilename}`;
     const newPath = path.join(uploadDir, newFileName);
 
-    fs.renameSync(fileData.filepath, newPath);
+    // fs.renameSync(fileData.filepath, newPath);
+    fs.copyFileSync(fileData.filepath, newPath);
+    fs.unlinkSync(fileData.filepath);
 
     // ✅ Simpan metadata + nama file ke Firestore
     const worksRef = collection(db, "ourWorks");
@@ -72,6 +74,6 @@ export default async function handler(
     });
   } catch (error) {
     console.error("Upload error:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: error });
   }
 }
