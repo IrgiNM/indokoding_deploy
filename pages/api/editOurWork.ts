@@ -82,9 +82,9 @@ export default async function handler(
 
     const docRef = doc(collection(db, "ourWorks"), safeId);
     await updateDoc(docRef, {
-      title,
+      title: title,
       tags: (typeof tags === "string" ? tags.split(",") : tags)?.map((t) => t.trim()).filter(Boolean),
-      description,
+      description: description,
       fileName: newFileName,
       updatedAt: serverTimestamp(),
     });

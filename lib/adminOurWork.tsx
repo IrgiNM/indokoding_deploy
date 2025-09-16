@@ -24,6 +24,9 @@ export default function AdminOurWork() {
     const [title, setTitle] = useState("");
     const [tag, setTag] = useState("");
     const [description, setDescription] = useState("");
+    const [newTitle, setNewTitle] = useState("");
+    const [newTag, setNewTag] = useState("");
+    const [newDescription, setNewDescription] = useState("");
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -60,7 +63,7 @@ export default function AdminOurWork() {
       fetchCookies();
     }, [router]);
 
-    const [urutan, setUrutan] = useState("A - Z");
+    const [urutan, setUrutan] = useState("New");
     const [urutanActive, setUrutanActive] = useState(false);
     const diKlik = () => {
         setUrutanActive(!urutanActive);
@@ -168,6 +171,10 @@ export default function AdminOurWork() {
         alert("Pilih file dulu!");
         return;
       }
+      if (!title || !tag || !description) {
+        alert("isi field nya dulu!");
+        return;
+      }
     
       setLoading(true);
     
@@ -196,6 +203,7 @@ export default function AdminOurWork() {
           setTag("");
           setDescription("");
           setFile(null);
+          setFilePreview(null);
           setTambahData(false);
           
         //   // Refresh data ourWorks
@@ -235,9 +243,9 @@ export default function AdminOurWork() {
         // Membuat FormData untuk mengirim file dan data
         const formData = new FormData();
         formData.append("id", editData.id || "");
-        formData.append("title", editData.title || "");
-        formData.append("tags", editData.tags?.join(",") || "");
-        formData.append("description", editData.description || "");
+        formData.append("title", newTitle || "");
+        formData.append("tags", newTag || "");
+        formData.append("description", newDescription || "");
         formData.append("fileName", editData.fileName || "");
         
         // Jika ada file baru, tambahkan ke formData
@@ -407,7 +415,7 @@ export default function AdminOurWork() {
                             <button onClick={()=>{setDeleteData(data.title); setFilePreview(data.fileName); setId(data.id??"")}} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#ff4986] text-[#cf008a] border-[1px] border-[#930062] hover:bg-[#cf008a] cursor-pointer'>
                                 <Image width={30} height={30} src='/trash.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
-                            <button onClick={() => { setEditData(data); setFilePreview(data.fileName) }} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
+                            <button onClick={() => { setEditData(data); setNewTitle(data.title); setNewDescription(data.description); setNewTag((data.tags).join(",")); setFilePreview(data.fileName) }} className='h-8 w-8 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
                                 <Image width={30} height={30} src='/edit.svg' alt="Dashboard" className='w-3 h-3'/>
                             </button>
                         </div>
@@ -494,7 +502,7 @@ export default function AdminOurWork() {
             {editData &&
             <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
                 {filePreview && (
-                    <div className="fixed z-6 top-0 left-230 w-100 h-full flex flex-col items-center justify-center bg-opacity-50" onClick={() => setFilePreview(null)}>
+                    <div className="fixed z-6 top-0 left-230 w-100 h-full flex flex-col items-center justify-center bg-opacity-50">
                         <p className='font-semibold text-purple-900 w-full'>old file :</p>
                         <div className="w-full">
                           <Image 
@@ -525,13 +533,13 @@ export default function AdminOurWork() {
                 <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col gap-4 relative w-[500px]'>
                     <h2 className="text-lg font-bold text-[#710093] mb-2">Edit Data</h2>
                     <input onChange={handleFileEditChange} type="file" accept="image/*" className="mb-2 border border-[#8eb0e5] rounded-lg p-2" />
-                    <input type="text" defaultValue={editData.title} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
-                    <input type="text" defaultValue={editData.tags} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
-                    <textarea defaultValue={editData.description} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg resize-none" rows={3} />
+                    <input onChange={(e) => setNewTitle(e.target.value)} type="text" defaultValue={editData.title} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
+                    <input onChange={(e) => setNewTag(e.target.value)} type="text" defaultValue={editData.tags} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg" />
+                    <textarea onChange={(e) => setNewDescription(e.target.value)} defaultValue={editData.description} className="bg-[#d9ebfc] text-sm text-[#00296c] px-4 py-2 border border-[#8eb0e5] rounded-lg resize-none" rows={3} />
                     <button onClick={handleEditOurWork} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
                       {loading ? "Updating..." : "Update"}
                     </button>
-                    <button onClick={() => (setEditData(null),setNewFilePreview(null))} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
+                    <button onClick={() => (setEditData(null),setNewFilePreview(null),setFilePreview(null))} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
                         <Image width={20} height={20} src="/close.svg" alt="Close" className="w-4"/>
                     </button>
                 </div>
