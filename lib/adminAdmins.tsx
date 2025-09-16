@@ -28,8 +28,6 @@ export default function AdminAdmins() {
     const [hapusNama, setHapusNama] = useState("none");
     const [idUser, setIdUser] = useState("none");
     const [isLoading, setIsLoading] = useState(false);
-    
-    const [isUpdate, setIsUpdate] = useState(false);
 
     const [urutan, setUrutan] = useState("New");
     const pickPosition = "web Frontend";
@@ -379,7 +377,6 @@ export default function AdminAdmins() {
                                 formDataAdmin.email = user.email;
                                 formDataAdmin.update = true;
                                 formDataAdmin.id = user.id;
-                                setIsUpdate(true);
                                 setAddAdmin(true);
                             }}
                             className='h-8 w-8 absolute -right-3 top-2 flex justify-center items-center rounded-full bg-[#fbecff] text-[#710093] border-[1px] border-[#AD48FF] hover:bg-[#deb6ff] cursor-pointer'>
@@ -443,7 +440,7 @@ export default function AdminAdmins() {
                 <button onClick={() => (handleCreateAdmin())} className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>
                     {isLoading ? "Creating..." : "Create"}
                 </button>
-                <button onClick={() => (setAddAdmin(false),formDataAdmin.username = '',formDataAdmin.email = '',setIsUpdate(false),formDataAdmin.update = false)} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                <button onClick={() => (setAddAdmin(false),formDataAdmin.username = '',formDataAdmin.email = '',formDataAdmin.update = false)} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
                     <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
                 </button>
             </div>
