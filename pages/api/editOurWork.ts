@@ -64,7 +64,9 @@ export default async function handler(
       newFileName = `${Date.now()}-${fileData.originalFilename}`;
       const newPath = path.join(uploadDir, newFileName);
 
-      fs.renameSync(fileData.filepath, newPath);
+      // fs.renameSync(fileData.filepath, newPath);
+      fs.copyFileSync(fileData.filepath, newPath);
+      fs.unlinkSync(fileData.filepath);
 
       // Hapus file lama kalau ada dan berbeda
       if (oldFileName && oldFileName !== newFileName) {
