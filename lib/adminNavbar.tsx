@@ -24,7 +24,7 @@ export default function AdminNavbar(props: AdminNavbarProps) {
   };
 
   return (
-    <div className='fixed z-100 top-0 w-50 h-158 flex flex-col justify-start items-center pt-8 border-r-[3px] border-[#9e1ac3] bg-[#ffffff]'>
+    <div className='fixed z-100 top-0 bottom-0 flex flex-col justify-start items-center pt-8 border-r-[3px] border-[#9e1ac3] bg-[#ffffff]'>
         <Image width={140} height={140} src="/logo2.svg" alt="" className='w-15 mb-10'/>
         <button onClick={() => {router.push("/admin/dashboard")}} className='w-full px-7 py-2 flex flex-row items-center gap-2 hover:bg-[#f1e7ff] cursor-pointer'>
             <Image width={30} height={30} src={navActive === 'dashboard' ? `/dashboard-active.svg` : '/dashboard.svg'} alt="Dashboard" className='w-3 h-3'/>

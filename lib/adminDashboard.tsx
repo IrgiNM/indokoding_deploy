@@ -116,7 +116,7 @@ export default function AdminDashboard() {
 
   return (
     <>
-        <div className='w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]'>
+        <div className='w-full fixed top-0 right-0 left-45 bottom-0 flex flex-col bg-[#eff3ff]'>
             {/* TITLE */}
             <div className='flex flex-row p-2 pl-4 bg-white border-b-[1px] border-[#f6d7ff]'>
                 <h1 className='font-semibold text-sm text-[#710093]'>Dashboard Admin</h1>

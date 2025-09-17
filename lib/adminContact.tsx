@@ -262,9 +262,9 @@ export default function Admincontacts() {
 
   return (
     <>
-      <div className="w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]">
+      <div className="fixed top-0 bottom-0 right-0 left-45 flex flex-col bg-[#eff3ff]">
         {/* TITLE */}
-        <div className="fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]">
+        <div className="relative z-2 w-full flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]">
           <h1 className="font-semibold text-sm text-[#710093]">
             Contact Inbox List
           </h1>
@@ -274,7 +274,7 @@ export default function Admincontacts() {
         </div>
 
         {/* SEARCH */}
-        <div className="fixed z-2 w-266 top-8 p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4">
+        <div className="relative z-2 w-full p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4">
           <div className="relative">
             <input
               type="text"
@@ -367,7 +367,7 @@ export default function Admincontacts() {
         </div>
 
         {/* LIST contactS */}
-        <div className="flex flex-row flex-wrap gap-x-5 gap-y-1 p-5 pt-30">
+        <div className="flex flex-row flex-wrap h-full overflow-auto gap-x-5 gap-y-1 p-5 pt-5">
           {contacts.map((contact, index) => (
             <div
               key={index}

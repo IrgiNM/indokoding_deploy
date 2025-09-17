@@ -294,15 +294,15 @@ export default function AdminUsers() {
     
   return (
     <>
-        <div className='w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]'>
+        <div className='fixed top-0 bottom-0 right-0 left-45 flex flex-col bg-[#eff3ff]'>
             {/* TITLE */}
-            <div className='fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
+            <div className='relative z-2 w-full flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
                 <h1 className='font-semibold text-sm text-[#710093]'>Users List</h1>
                 <p className='font-light text-[12px] text-[#00930f]'>today : <span className='font-bold'>{formattedDate}</span></p>
             </div>
 
             {/* SEARCH */}
-            <div className='fixed z-2 w-266 top-8 p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4'>
+            <div className='relative z-2 w-full p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4'>
                 <div className='relative'>
                     
                     <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full text-[#930062]' placeholder='Search'/>
@@ -333,8 +333,8 @@ export default function AdminUsers() {
                 </div>
             </div>
 
-        <div> {/* LIST USERS */}
-            <div className="relative bg-white  w-250 ml-5 border-1 border-[#cb48f3] p-4 shadow-md rounded-lg mt-25 ">
+        <div className='w-full relative pr-10'> {/* LIST USERS */}
+            <div className="relative bg-white  w-full ml-5 border-1 border-[#cb48f3] p-4 shadow-md rounded-lg mt-5">
             <button onClick={() => {
                     setShow(true);
                 }} 
@@ -359,10 +359,10 @@ export default function AdminUsers() {
             {loading ? "submit..." : `Submit`}
             </button>
             </div>
-            <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-5 '>
+            <div className='flex flex-row flex-wrap h-full overflow-auto gap-x-5 gap-y-5 p-5 pt-5 '>
                 {aboutImage.map((user, index) => (
                     
-                    <div key={index} className='w-80  flex flex-col justify-start items-center p-3 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
+                    <div key={index} className='w-80 h-70 flex flex-col justify-start items-center p-3 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
                     <p className='text-[12px] font-bold text-purple-900'>Tanggal : <span className='font-semibold'>{user.createdAt}</span></p>
                     <div className='w-full flex justify-center items-center '>
                         <button onClick={() => {

@@ -188,15 +188,15 @@ export default function AdminUsers() {
     
   return (
     <>
-        <div className='w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]'>
+        <div className='fixed top-0 right-0 left-45 bottom-0 flex flex-col bg-[#eff3ff]'>
             {/* TITLE */}
-            <div className='fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
+            <div className='relative z-2 w-full flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]'>
                 <h1 className='font-semibold text-sm text-[#710093]'>Users List</h1>
                 <p className='font-light text-[12px] text-[#00930f]'>today : <span className='font-bold'>{formattedDate}</span></p>
             </div>
 
             {/* SEARCH */}
-            <div className='fixed z-2 w-266 top-8 p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4'>
+            <div className='relative z-2 w-full top-0 p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4'>
                 <div className='relative'>
                     <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full text-[#930062]' placeholder='Search'/>
                     <button className='cursor-pointer w-8 h-8 pt-1 absolute top-0 right-1'>
@@ -224,7 +224,7 @@ export default function AdminUsers() {
             </div>
 
             {/* LIST USERS */}
-            <div className='flex flex-row flex-wrap gap-x-5 gap-y-5 p-5 pt-30'>
+            <div className='flex flex-row flex-wrap h-full overflow-auto gap-x-5 gap-y-5 p-5 pt-5'>
                 {listUsers.map((user, index) => (
                     <div key={index} className='w-80 flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
                     <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.username?.charAt(0)}</div>

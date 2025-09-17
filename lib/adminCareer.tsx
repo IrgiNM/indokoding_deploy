@@ -452,9 +452,9 @@ export default function AdminCareer() {
 
   return (
     <>
-      <div className="w-full h-1000 pl-50 flex flex-col bg-[#eff3ff]">
+      <div className="fixed top-0 bottom-0 right-0 left-45 flex flex-col bg-[#eff3ff]">
         {/* TITLE */}
-        <div className="fixed z-2 w-266 flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]">
+        <div className="relative z-2 w-full flex flex-row justify-between p-2 px-4 bg-white border-b-[1px] border-[#f6d7ff]">
           <h1 className="font-semibold text-sm text-[#710093]">
             Career Requirment Inbox List
           </h1>
@@ -464,7 +464,7 @@ export default function AdminCareer() {
         </div>
 
         {/* SEARCH */}
-        <div className="fixed z-4 w-266 top-8 p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4">
+        <div className="relative z-4 w-full p-3 pl-5 border-t-[1px] border-[#f6d7ff] bg-white flex flex-row  justify-between gap-4">
           <div className="relative">
             <input
               type="text"
@@ -575,7 +575,7 @@ export default function AdminCareer() {
         </div>
 
         {/* CAREER CONTROL */}
-        <div className="fixed z-3 top-23 w-full pr-55 flex flex-row gap-2 justify-between items-center p-3 backdrop-blur-lg border-b-1 border-[#cb48f3]">
+        <div className="relative z-3 top-0 w-full pr-5 flex flex-row gap-2 justify-between items-center p-3 backdrop-blur-lg border-b-1 border-[#cb48f3]">
           <div className="flex flex-row gap-2 items-center">
             <p className="text-[12px] font-semibold text-[#710093]">
               Required :
@@ -634,8 +634,8 @@ export default function AdminCareer() {
         </div>
 
         {/* LIST USERS */}
-        <div className="flex flex-row flex-wrap gap-x-5 gap-y-1 p-5 pt-42">
-          <div className="flex flex-row items-center gap-2 pl-1 w-full mb-3">
+        <div className="flex flex-row flex-wrap h-full overflow-auto gap-x-5 gap-y-1 p-5 pt-5">
+          <div className="flex flex-row items-start gap-2 pl-1 w-full mb-3">
             <p className="font-bold text-xl text-[#710093]">{pickTitle}</p>
             {pickTitle !== "All" ? (
               <button
