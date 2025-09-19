@@ -4,7 +4,6 @@ import Image from 'next/image';
 
 
 export function ServiceCard(props: Service) {
-    console.log(props.id);
     return (
         <>
             <div className={`lg:w-72 lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-3 lg:p-4 w-28 flex flex-col justify-start items-center gap-1 p-2}`}>  

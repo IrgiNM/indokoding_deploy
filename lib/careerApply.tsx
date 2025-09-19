@@ -169,7 +169,6 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         message: formDataCareerMessage.message,
         captcha: captchaToken,
       };
-      console.log("data yang dikirim : ", payload);
 
       const res = await fetch("/api/createCareerMessage", {
         method: "POST",
@@ -250,7 +249,6 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
           <CardCareer
             key={index}
             onClick={() => {
-              console.log(`${career.title} clicked`);
               setDiKlik(career.title);
             }}
             applyClick={() => {
@@ -373,13 +371,10 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                   onChange={(token) => {
                     setCaptchaToken(token);
-                    console.log("Captcha token:", token);
                   }}
                   onExpired={() => {
-                    console.log("Captcha expired! Akan dihapus dalam 30 detik...");
                     setTimeout(() => {
                       setCaptchaToken(null);
-                      console.log("Captcha token dihapus setelah 30 detik");
                     }, 30000); // 30 detik
                   }}
                 />

@@ -24,7 +24,6 @@ const AdminPage = () => {
               router.push("/");
           }
           router.push("/admin/dashboard");
-          console.log("Token dari cookies:", parsed);
         } else {
           // setToken(undefined);
         }

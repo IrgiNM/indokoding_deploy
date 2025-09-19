@@ -1,7 +1,7 @@
 "use client";
 import NavLink from "@/components/navLink";
 import React, { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import PopUpLogin from "@/components/popUpLogin";
 import { deleteCookies, getCookies } from "@/utils/tokenController";
@@ -22,7 +22,7 @@ export default function Navbar({
 }) {
   const [bgNav, setBgNav] = useState(page);
   const router = useRouter();
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [token, setToken] = useState<string | null>(null);
@@ -111,7 +111,6 @@ export default function Navbar({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log(pathname);
 
   const logout = (): void => {
     try {
@@ -121,8 +120,6 @@ export default function Navbar({
         icon: "success",
         draggable: true
       });
-      // alert("Berhasil logout!");
-      console.log("Logout berhasil, data dihapus dari cookies");
     } catch (error) {
       console.error("Gagal logout:", error);
     }
@@ -135,7 +132,6 @@ export default function Navbar({
       active: "text-[#4F006C] bg-[#D9C6FF] font-bold",
       bg: "hover:bg-[#D9C6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Home clicked");
         setBgNav("Home");
         router.push("/");
       },
@@ -149,7 +145,6 @@ export default function Navbar({
         if(link === "career") {
           router.push("/#OurWork");
         }
-        console.log("Our Work clicked");
         setBgNav("Our Work");
         onNavClick.ourWork?.();
       },
@@ -163,7 +158,6 @@ export default function Navbar({
         if(link === "career") {
           router.push("/#AboutUs");
         }
-        console.log("About Us clicked");
         setBgNav("About Us");
         onNavClick.aboutUs?.();
       },
@@ -177,7 +171,6 @@ export default function Navbar({
         if(link === "career") {
           router.push("/#ContactUs");
         }
-        console.log("Contact clicked");
         setBgNav("Contact");
         onNavClick.contactUs?.();
       },
@@ -188,7 +181,6 @@ export default function Navbar({
       active: "text-[#004C6C] bg-[#D4F6FF] font-bold",
       bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Career clicked");
         setBgNav("Career");
         router.push("/career");
       },
@@ -199,17 +191,11 @@ export default function Navbar({
       active: "text-[#4F006C] bg-[#D9C6FF] font-bold",
       bg: "hover:bg-[#D9C6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Book Online clicked");
         setBgNav("Book Online");
         router.push("/bookOnline");
       },
     },
   ];
-
-  useEffect(() => {
-    console.log("showAuth", showAuth);
-    console.log("token", token);
-  }, [token, showAuth]);
 
   return (
     <>
@@ -298,7 +284,6 @@ export default function Navbar({
               <div className="flex flex-col justify-start gap-3 items-start pl-5 pt-30 h-200 w-60 absolute z-20 right-0 top-0 bg-[#412E57]">
                 <button
                   onClick={() => {
-                    console.log("Home clicked");
                     setBgNav("Home");
                     router.push("/");
                   }}
@@ -315,7 +300,6 @@ export default function Navbar({
                 </button>
                 <button
                   onClick={() => {
-                    console.log("Career clicked");
                     setBgNav("Career");
                     router.push("/career");
                   }}
@@ -332,7 +316,6 @@ export default function Navbar({
                 </button>
                 <button
                   onClick={() => {
-                    console.log("Book Online clicked");
                     setBgNav("Book Online");
                     router.push("/bookOnline");
                   }}

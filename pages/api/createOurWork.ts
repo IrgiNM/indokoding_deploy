@@ -31,7 +31,6 @@ export default async function handler(
           else resolve([fields, files]);
         });
       });
-      console.log("Fields:", fields);
 
       const title = fields.title?.[0] || fields.title;
       const tags = fields.tags?.[0] || fields.tags;

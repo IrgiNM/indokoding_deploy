@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { auth, db, provider, signInWithPopup } from '../firebase/config'; // sesuaikan path
 import Swal from "sweetalert2";
 import ReCAPTCHA from "react-google-recaptcha";
+import { FirebaseError } from "firebase/app";
 
 type PopUpLoginProps = {
   onClick: () => void;
@@ -102,7 +103,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                 });
 
                 const data = await res.json();
-                console.log("Respon dari server:", data);
 
                 if (res.ok) {
                 await setCookies(data.token, data.username, data.email, data.role);
@@ -177,7 +177,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         });
     
         const data = await res.json();
-        console.log("Respon dari server:", data);
     
         if (res.ok) {
           await setCookies(data.token, data.username, data.email, data.role);
@@ -221,7 +220,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
       try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-        console.log("User Info:", user);
     
         // Ambil token dari Firebase
         const token = await user.getIdToken();
@@ -246,7 +244,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         });
 
         const data = await res.json();
-        console.log("Respon dari server:", data);
 
         if (res.ok) {
         setUsername(data.username);
@@ -272,13 +269,23 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
     
         Swal.fire(`Welcome ${user.displayName || "Guest"}!`);
         // alert(`Welcome ${user.displayName || "Guest"}!`);
-      } catch (error) {
-        console.error("Google login error:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Login Google failed!",
-        });
+      } catch (err: unknown) {
+        const error = err as FirebaseError;
+        // console.error("Google login error:", error);
+
+        if (error.code === "auth/popup-closed-by-user") {
+          Swal.fire({
+            icon: "warning",
+            title: "Login canceled",
+            text: "You closed the Google login popup.",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Google login failed!",
+          });
+        }
         // alert("Login Google gagal!");
       }
     };
@@ -287,7 +294,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
       try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-        console.log("User Info:", user);
     
         // Ambil token dari Firebase
         await user.getIdToken();
@@ -307,7 +313,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         });
         
         const data = await res.json();
-        console.log("Respon dari server:", data);
 
         if (res.ok) {
           await setCookies(data.token, data.username, data.email, data.role);
@@ -324,9 +329,6 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           });
           // alert(data.message || "Registrasi berhasil!");
         } else {
-          console.log("username yang dikirim:", user.displayName);
-          console.log("email yang dikirim:", user.email);
-          console.log("role yang dikirim:", 'admin');
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -338,13 +340,23 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         
         Swal.fire(`Welcome ${user.displayName || "Guest"}!`);
         // alert(`Welcome ${user.displayName || "Guest"}!`);
-      } catch (error) {
-        console.error("Google login error:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Login Google failed!",
-        });
+      } catch (err: unknown) {
+        const error = err as FirebaseError;
+        // console.error("Google login error:", error);
+
+        if (error.code === "auth/popup-closed-by-user") {
+          Swal.fire({
+            icon: "warning",
+            title: "Login canceled",
+            text: "You closed the Google login popup.",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Google login failed!",
+          });
+        }
         // alert("Login Google gagal!");
       }
     };
@@ -485,13 +497,10 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                     onChange={(token) => {
                       setCaptchaToken(token);
-                      console.log("Captcha token:", token);
                     }}
                     onExpired={() => {
-                      console.log("Captcha expired! Akan dihapus dalam 30 detik...");
                       setTimeout(() => {
                         setCaptchaToken(null);
-                        console.log("Captcha token dihapus setelah 30 detik");
                       }, 30000); // 30 detik
                     }}
                   />

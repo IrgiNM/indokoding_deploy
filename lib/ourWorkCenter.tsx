@@ -41,7 +41,6 @@ import { OurWorkData } from "./adminOurWork";
         // panggil backend API
         const res = await fetch("/api/getOurWorks");
         const data = await res.json();
-        console.log("Fetched ourWorks:", data);
 
         // Urutkan data berdasarkan pilihan sorting
         setOurWorks(data);

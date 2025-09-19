@@ -154,7 +154,6 @@ export default function JoinUsPage() {
         message: formDataJoinUsMessage.message,
         captcha: captchaToken,
       };
-      console.log("data yang dikirim : ", payload);
 
       const res = await fetch("/api/createJoinUsMessage", {
         method: "POST",
@@ -310,13 +309,10 @@ export default function JoinUsPage() {
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                 onChange={(token) => {
                   setCaptchaToken(token);
-                  console.log("Captcha token:", token);
                 }}
                 onExpired={() => {
-                  console.log("Captcha expired! Akan dihapus dalam 30 detik...");
                   setTimeout(() => {
                     setCaptchaToken(null);
-                    console.log("Captcha token dihapus setelah 30 detik");
                   }, 30000); // 30 detik
                 }}
               />

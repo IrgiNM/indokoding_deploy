@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Footer(
   {
     link,
-    page,
+    // page,
     onNavClick,
   }: {
     link: string;
@@ -22,7 +22,7 @@ export default function Footer(
 ) {
   const router = useRouter();
   // const pathname = usePathname();
-  const [bgNav, setBgNav] = useState(page);
+  // const [bgNav, setBgNav] = useState(page);
 
   const onHandleClick = () => {
     router.push('/admin'); // Ganti '/loginAdmin' sesuai tujuan kamu
@@ -65,34 +65,29 @@ export default function Footer(
             if(link === "career" || link === "bookOnline") {
               router.push("/#OurWork");
             }
-            setBgNav("Our Work");
-            console.log(bgNav," clicked");
+            // setBgNav("Our Work");
             onNavClick.ourWork?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Work</button></li>
           <li><button onClick={()=>{
             if(link === "career" || link === "bookOnline") {
               router.push("/#AboutUs");
             }
-            setBgNav("About Us");
-            console.log(bgNav," clicked");
+            // setBgNav("About Us");
             onNavClick.aboutUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
           <li><button onClick={()=>{
             if(link === "career" || link === "bookOnline") {
               router.push("/#ContactUs");
             }
-            setBgNav("Contact");
-            console.log(bgNav," clicked");
+            // setBgNav("Contact");
             onNavClick.contactUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Contact</button></li>
           <li><button onClick={()=>{
-            setBgNav("Career");
-            console.log(bgNav," clicked");
+            // setBgNav("Career");
             router.push("/career");
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Careers Online</button></li>
           <li><button onClick={()=>{
-            setBgNav("Book Online");
-            console.log(bgNav," clicked");
+            // setBgNav("Book Online");
             router.push("/bookOnline");
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Book Online</button></li>
         </ul>
@@ -104,24 +99,21 @@ export default function Footer(
             if(link === "career" || link === "bookOnline") {
               router.push("/#AboutUs");
             }
-            setBgNav("About Us");
-            console.log(bgNav," clicked");
+            // setBgNav("About Us");
             onNavClick.aboutUs?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">About Us</button></li>
           <li><button onClick={()=>{
             if(link === "career" || link === "bookOnline") {
               router.push("/#OurSkill");
             }
-            setBgNav("About Us");
-            console.log("Our Skills clicked");
+            // setBgNav("About Us");
             onNavClick.ourSkill?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Skills</button></li>
           <li><button onClick={()=>{
             if(link === "career" || link === "bookOnline") {
               router.push("/#Service");
             }
-            setBgNav("About Us");
-            console.log("Our Services clicked");
+            // setBgNav("About Us");
             onNavClick.ourService?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Our Services</button></li>
         </ul>
@@ -130,16 +122,14 @@ export default function Footer(
         <h3 className=" lg:text-lg lg:font-semibold lg:mb-2 text-xm font-semibold mb-2">CAREER</h3>
         <ul className=" lg:space-y-2 lg:text-sm space-y-2 text-[10px]">
           <li><button onClick={()=>{
-            setBgNav("Career");
-            console.log(bgNav," clicked");
+            // setBgNav("Career");
             router.push("/career");
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Join Us</button></li>
           <li><button onClick={()=>{
             if(link === "home" || link === "bookOnline") {
               router.push("/career/#CareerApply");
             }
-            setBgNav("Career");
-            console.log(bgNav," clicked");
+            // setBgNav("Career");
             // router.push("/career");
             onNavClick.careerApply?.();
           }} className="lg:hover:text-gray-300 hover:text-gray-300">Last Careers</button></li>

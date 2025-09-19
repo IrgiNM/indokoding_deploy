@@ -135,7 +135,6 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
     const token = await getCookies();
     if (!token) {
       // alert("Anda harus login terlebih dahulu untuk mengirim pesan");
-      console.log("No token found, showing popup", token);
       setShowPopup(true);
       return;
     }
@@ -276,13 +275,10 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
                 onChange={(token) => {
                   setCaptchaToken(token);
-                  console.log("Captcha token:", token);
                 }}
                 onExpired={() => {
-                  console.log("Captcha expired! Akan dihapus dalam 30 detik...");
                   setTimeout(() => {
                     setCaptchaToken(null);
-                    console.log("Captcha token dihapus setelah 30 detik");
                   }, 30000); // 30 detik
                 }}
               />

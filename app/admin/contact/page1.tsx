@@ -13,7 +13,6 @@ export default function ContactsPage() {
   useEffect(() => {
   fetcher<Contact[]>('http://localhost:3000/api/contacts')
     .then((data) => {
-      console.log(data);
       setContacts(data);
     })
     .catch((err) => console.error(err))

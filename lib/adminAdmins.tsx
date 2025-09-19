@@ -69,7 +69,6 @@ export default function AdminAdmins() {
             if(parsed.role==="guest"){
                 router.push("/");
             }
-            console.log("Token dari cookies:", parsed);
           } else {
             // setToken(undefined);
             router.push("/admin");
@@ -121,7 +120,6 @@ export default function AdminAdmins() {
         setIsLoading(true);
     
         try {
-            console.log("Data yang dikirim:", formDataAdmin);
             const res = await fetch("/api/createAdmin", {
                 method: "POST",
                 headers: {
@@ -131,7 +129,6 @@ export default function AdminAdmins() {
             });
     
             const data = await res.json();
-            console.log("Respon dari server:", data);
     
             if (!res.ok) {
                 alert(data.error || "Create Admin gagal");
@@ -244,8 +241,7 @@ export default function AdminAdmins() {
           throw new Error("Gagal menghapus user");
         }
     
-        const data = await res.json();
-        console.log("User berhasil dihapus:", data);
+        await res.json();
         alert("User berhasil dihapus");
         setHapusNama("none");
       } catch (error) {
@@ -271,8 +267,7 @@ export default function AdminAdmins() {
           throw new Error("Gagal menghapus semua message");
         }
     
-        const data = await res.json();
-        console.log("user admin berhasil dihapus semua:", data);
+        await res.json();
         alert("user admin berhasil dihapus semua");
         setHapus(false);
       } catch (error) {

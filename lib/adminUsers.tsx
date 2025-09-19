@@ -33,10 +33,9 @@ export default function AdminUsers() {
     
           if (savedToken) {
             // Parse JSON kalau cookies disimpan sebagai string
-            const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+            // const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
             // setToken(parsed);
-            console.log("Token dari cookies:", parsed);
           } else {
             // setToken(undefined);
             router.push("/admin");
@@ -144,7 +143,6 @@ export default function AdminUsers() {
         const data = await res.json();
 
         if (res.ok) {
-          console.log("Data ditemukan:", data.contacts || []);
           const sortedData = sortContacts(data.contacts || [], urutan);
           setUsers(sortedData);
         } else {
@@ -172,8 +170,7 @@ export default function AdminUsers() {
           throw new Error("Gagal menghapus user");
         }
     
-        const data = await res.json();
-        console.log("User berhasil dihapus:", data);
+        await res.json();
         alert("User berhasil dihapus");
         setHapusNama("none");
       } catch (error) {

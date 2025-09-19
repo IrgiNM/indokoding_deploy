@@ -23,8 +23,6 @@ export async function setCookies(
       httpOnly: true,
       path: "/", // pastikan cookie bisa diakses di seluruh path
     });
-
-    console.log("Cookies berhasil disimpan");
   } catch (error) {
     console.error("Gagal menyimpan cookies:", error);
     throw new Error("Terjadi kesalahan saat menyimpan cookies");

@@ -54,7 +54,6 @@ export default function AdminCareer() {
           if (parsed.role === "guest") {
             router.push("/");
           }
-          console.log("Token dari cookies:", parsed);
         } else {
           setToken(undefined);
           router.push("/admin");
@@ -160,8 +159,7 @@ export default function AdminCareer() {
         throw new Error("Gagal menghapus Requirement Career");
       }
 
-      const data = await res.json();
-      console.log("Requirement Career berhasil dihapus:", data);
+      await res.json();
       alert("Requirement Career berhasil dihapus");
       setHapusRequirement(false);
       setDetailRequest(false);
@@ -236,7 +234,6 @@ export default function AdminCareer() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Data ditemukan:", data.careers || []);
         const sortedData = sortCareers(data.careers || [], urutan);
         setCareers(sortedData);
       } else {
@@ -274,7 +271,6 @@ export default function AdminCareer() {
 
     if (checkSnap.empty) {
       try {
-        console.log("Mengirim data ke server:", formDataRequirement);
         const res = await fetch(
           "/api/createRequirementCareer",
           {
@@ -295,7 +291,6 @@ export default function AdminCareer() {
         );
 
         const data = await res.json();
-        console.log("Respon dari server:", data);
 
         if (res.ok) {
           setIsUpdate(false);
@@ -331,7 +326,6 @@ export default function AdminCareer() {
         },
         body: JSON.stringify({ id: id }),
       });
-      console.log("id:", id);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -347,9 +341,7 @@ export default function AdminCareer() {
         body: JSON.stringify({ id: id, email: email }),
       });
 
-      const data = await res.json();
-      console.log("id:", id, "email:", email);
-      console.log("Career message berhasil dibuka:", data);
+      await res.json();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -370,7 +362,6 @@ export default function AdminCareer() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Data ditemukan:", data.careers || []);
         const sortedData = sortCareers(data.careers || [], urutan);
         setCareers(sortedData);
       } else {
@@ -393,8 +384,7 @@ export default function AdminCareer() {
         body: JSON.stringify({ email: email }),
       });
 
-      const data = await res.json();
-      console.log("Career message berhasil dibuka semua:", data);
+      await res.json();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -415,8 +405,7 @@ export default function AdminCareer() {
         throw new Error("Gagal menghapus message");
       }
 
-      const data = await res.json();
-      console.log("Career message berhasil dihapus:", data);
+      await res.json();
       alert("Career message berhasil dihapus");
       setHapusNama("none");
     } catch (error) {
@@ -438,8 +427,7 @@ export default function AdminCareer() {
         throw new Error("Gagal menghapus semua message");
       }
 
-      const data = await res.json();
-      console.log("Career message berhasil dihapus semua:", data);
+      await res.json();
       alert("Career message berhasil dihapus semua");
       setHapus(false);
     } catch (error) {

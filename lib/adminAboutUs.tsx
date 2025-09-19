@@ -52,7 +52,6 @@ export default function AdminUsers() {
                 if(parsed.role==="guest"){
                     router.push("/");
                 }
-                console.log("Token dari cookies:", parsed);
               } else {
                 // setToken(undefined);
                 router.push("/admin");
@@ -106,8 +105,6 @@ export default function AdminUsers() {
             // panggil backend API
             const res = await fetch("/api/getAboutText");
             const data = await res.json();
-            console.log("Fetched AboutText:", data);
-            console.log("Fetched AboutText Values:", data[0]?.values);
             // Urutkan data berdasarkan pilihan sorting
             setValuesShow(data);
             // setShowArray(data[0]?.values ?? []);
@@ -175,9 +172,6 @@ export default function AdminUsers() {
       
         const formData = new FormData();
         formData.append("file", file);
-        console.log("Form Data:", {
-          file: formData.get("file"),
-        });
   
         try {
           const res = await fetch("/api/createAboutImage", {
@@ -197,9 +191,6 @@ export default function AdminUsers() {
           //   setAboutImages(sortAboutImages(updatedData, urutan));
           } else {
             const data = await res.json();
-            console.log("Upload failed:", data.fields);
-            console.log("Upload file:", data.files);
-            console.log("error:", data.error);
             alert("Error: " + data.error);
           }
         } catch (err) {
@@ -227,8 +218,6 @@ export default function AdminUsers() {
           } else {
             const data = await res.json();
             alert("Error: " + data.error);
-            console.log("Save failed:", data.values);
-            console.log("error:", data.error);
           }
         } catch (err) {
           console.error("Upload error:", err);
@@ -240,7 +229,6 @@ export default function AdminUsers() {
 
       async function handleDelete(id: string, fileName: string) {
         setLoading(true);
-        console.log("Hapus ID:", id, "File:", fileName);
         try {
           const res = await fetch("/api/removeAboutImage", {
             method: "DELETE",
@@ -254,9 +242,8 @@ export default function AdminUsers() {
             throw new Error("Gagal menghapus message");
           }
     
-          const data = await res.json();
+          await res.json();
           setHapusNama("none");
-          console.log("OurWork message berhasil dihapus:", data);
           alert("OurWork message berhasil dihapus");
         } catch (error) {
           console.error("Error:", error);
@@ -277,8 +264,7 @@ export default function AdminUsers() {
             throw new Error("Gagal menghapus semua OurWork");
           }
     
-          const data = await res.json();
-          console.log("OurWork berhasil dihapus semua:", data);
+          await res.json();
           alert("OurWork berhasil dihapus semua");
           setHapus(false);
         } catch (error) {

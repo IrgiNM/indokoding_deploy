@@ -3,7 +3,6 @@ import Image from "next/image";
 
 
 export function ServiceCard2(props: Service2) {
-    console.log(props.id);
     return (
         <>
             <div className={`lg:w-80 lg:h-85 lg:flex lg:flex-col lg:justify-start lg:items-center lg:gap-3 lg:py-8 lg:px-10 lg:border-1 lg:rounded-lg w-35 h-40 flex flex-col justify-start items-center gap-1 py-3 px-3 border-1 rounded-lg ${props.border} ${props.bg}`}>

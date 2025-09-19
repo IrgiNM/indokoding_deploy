@@ -49,7 +49,6 @@ export default function AdminOurWork() {
             if(parsed.role==="guest"){
                 router.push("/");
             }
-            console.log("Token dari cookies:", parsed);
           } else {
             // setToken(undefined);
             router.push("/admin");
@@ -183,12 +182,6 @@ export default function AdminOurWork() {
       formData.append("tags", tag); // pastikan nama field sesuai dengan API
       formData.append("description", description);
       formData.append("file", file);
-      console.log("Form Data:", {
-        title: formData.get("title"),
-        tags: formData.get("tags"),
-        description: formData.get("description"),
-        file: formData.get("file"),
-      });
 
       try {
         const res = await fetch("/api/ourWork", {
@@ -212,13 +205,6 @@ export default function AdminOurWork() {
         //   setOurWorks(sortOurWorks(updatedData, urutan));
         } else {
           const data = await res.json();
-          console.log("Upload failed:", data.fields);
-          console.log("Upload file:", data.files);
-          console.log("Upload title:", data.title);
-          console.log("Upload tag:", data.tag);
-          console.log("Upload description:", data.description);
-          console.log("Upload file:", data.fieldData);
-          console.log("error:", data.error);
           alert("Error: " + data.error);
         }
       } catch (err) {
@@ -237,7 +223,6 @@ export default function AdminOurWork() {
       }
     
       setLoading(true);
-      console.log("Edit Data:", editData);
     
       try {
         // Membuat FormData untuk mengirim file dan data
@@ -269,8 +254,7 @@ export default function AdminOurWork() {
           console.error("Upload failed:", data);
           alert("Error: " + (data.error || "Terjadi kesalahan"));
         }
-      } catch (err) {
-        console.log("Upload error:", err);
+      } catch {
         alert("Gagal upload!");
       } finally {
         setLoading(false);
@@ -279,7 +263,6 @@ export default function AdminOurWork() {
 
     async function handleDelete(id: string, fileName: string) {
       setLoading(true);
-      console.log("Hapus ID:", id, "File:", fileName);
       try {
         const res = await fetch("/api/removeOurWork", {
           method: "DELETE",
@@ -293,9 +276,8 @@ export default function AdminOurWork() {
           throw new Error("Gagal menghapus message");
         }
   
-        const data = await res.json();
+        await res.json();
         setDeleteData("none");
-        console.log("OurWork message berhasil dihapus:", data);
         alert("OurWork message berhasil dihapus");
       } catch (error) {
         console.error("Error:", error);
@@ -316,8 +298,7 @@ export default function AdminOurWork() {
           throw new Error("Gagal menghapus semua OurWork");
         }
   
-        const data = await res.json();
-        console.log("OurWork berhasil dihapus semua:", data);
+        await res.json();
         alert("OurWork berhasil dihapus semua");
         setDeleteAll(false);
       } catch (error) {

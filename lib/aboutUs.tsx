@@ -46,8 +46,6 @@ function AboutUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDiv
         // panggil backend API
         const res = await fetch("/api/getAboutText");
         const data = await res.json();
-        console.log("Fetched AboutText:", data);
-        console.log("Fetched AboutText Values:", data[0]?.values);
         // Urutkan data berdasarkan pilihan sorting
         setValuesShow(data);
         // setShowArray(data[0]?.values ?? []);

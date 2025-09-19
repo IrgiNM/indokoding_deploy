@@ -52,7 +52,6 @@ export default function AdminDashboard() {
             if(parsed.role==="guest"){
                 router.push("/");
             }
-            console.log("Token dari cookies:", parsed);
           } else {
             setToken(undefined);
             router.push("/admin");

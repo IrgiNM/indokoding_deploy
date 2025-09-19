@@ -43,7 +43,6 @@ export default function Admincontacts() {
           if (parsed.role === "guest") {
             router.push("/");
           }
-          console.log("Token dari cookies:", parsed);
         } else {
           setToken(undefined);
           router.push("/admin");
@@ -162,7 +161,6 @@ export default function Admincontacts() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Data ditemukan:", data.contacts || []);
         const sortedData = sortContacts(data.contacts || [], urutan);
         setContacts(sortedData);
       } else {
@@ -190,8 +188,7 @@ export default function Admincontacts() {
         throw new Error("Gagal menghapus message");
       }
 
-      const data = await res.json();
-      console.log("Contact message berhasil dihapus:", data);
+      await res.json();
       alert("Contact message berhasil dihapus");
       setHapusMessage("none");
     } catch (error) {
@@ -213,8 +210,7 @@ export default function Admincontacts() {
         throw new Error("Gagal menghapus semua message");
       }
 
-      const data = await res.json();
-      console.log("Contact message berhasil dihapus semua:", data);
+      await res.json();
       alert("Contact message berhasil dihapus semua");
       setHapusMessage("none");
     } catch (error) {
@@ -235,9 +231,7 @@ export default function Admincontacts() {
         body: JSON.stringify({ id: id, email: email }),
       });
 
-      const data = await res.json();
-      console.log("id:", id, "email:", email);
-      console.log("Contact message berhasil dibuka:", data);
+      await res.json();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -253,8 +247,7 @@ export default function Admincontacts() {
         body: JSON.stringify({ email: email }),
       });
 
-      const data = await res.json();
-      console.log("Contact message berhasil dibuka semua:", data);
+      await res.json();
     } catch (error) {
       console.error("Error:", error);
     }

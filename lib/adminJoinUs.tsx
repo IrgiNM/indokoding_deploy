@@ -38,7 +38,6 @@ export default function AdminJoinUs() {
           if (parsed.role === "guest") {
             router.push("/");
           }
-          console.log("Token dari cookies:", parsed);
         } else {
           setToken(undefined);
           router.push("/admin");
@@ -92,7 +91,6 @@ export default function AdminJoinUs() {
         // panggil backend API
         const res = await fetch("/api/getJoinUsMessage");
         const data = await res.json();
-        console.log("Data Joins:", data);
 
         // Urutkan data berdasarkan pilihan sorting
         const sortedData = sortJoins(data, urutan);
@@ -139,9 +137,7 @@ export default function AdminJoinUs() {
         body: JSON.stringify({ id: id, email: email }),
       });
 
-      const data = await res.json();
-      console.log("id:", id, "email:", email);
-      console.log("Career message berhasil dibuka:", data);
+      await res.json();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -158,8 +154,7 @@ export default function AdminJoinUs() {
         body: JSON.stringify({ email: email }),
       });
 
-      const data = await res.json();
-      console.log("Career message berhasil dibuka semua:", data);
+      await res.json();
     } catch (error) {
       console.error("Error:", error);
     }finally {
@@ -178,7 +173,6 @@ export default function AdminJoinUs() {
         },
         body: JSON.stringify({ id: id }),
       });
-      console.log("id:", id);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -198,7 +192,6 @@ export default function AdminJoinUs() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Data ditemukan:", data.careers || []);
         const sortedData = sortJoins(data.careers || [], urutan);
         setJoins(sortedData);
       } else {
@@ -226,7 +219,6 @@ export default function AdminJoinUs() {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Data ditemukan:", data.careers || []);
         const sortedData = sortJoins(data.careers || [], urutan);
         setJoins(sortedData);
       } else {
@@ -254,8 +246,7 @@ export default function AdminJoinUs() {
         throw new Error("Gagal menghapus message");
       }
 
-      const data = await res.json();
-      console.log("Career message berhasil dihapus:", data);
+      await res.json();
       alert("Career message berhasil dihapus");
       setHapusNama("none");
     } catch (error) {
@@ -277,8 +268,7 @@ export default function AdminJoinUs() {
         throw new Error("Gagal menghapus semua message");
       }
 
-      const data = await res.json();
-      console.log("Career message berhasil dihapus semua:", data);
+      await res.json();
       alert("Career message berhasil dihapus semua");
       setHapus(false);
     } catch (error) {
