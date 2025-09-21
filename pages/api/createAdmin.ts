@@ -168,7 +168,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       token,
     });
   } catch (error) {
-    console.error("Error di Create/Update Admin:", error);
+    // console.error("Error di Create/Update Admin:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }
 }

@@ -43,7 +43,7 @@ export default function AdminJoinUs() {
           router.push("/admin");
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // console.error("Gagal mengambil cookies:", error);
         setToken(undefined);
       }
     };
@@ -96,7 +96,7 @@ export default function AdminJoinUs() {
         const sortedData = sortJoins(data, urutan);
         setJoins(sortedData);
       } catch (err) {
-        console.error("Gagal fetch Joins:", err);
+        // console.error("Gagal fetch Joins:", err);
       } finally {
         setIsLoading(false);
       }
@@ -139,7 +139,7 @@ export default function AdminJoinUs() {
 
       await res.json();
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   }
 
@@ -156,7 +156,7 @@ export default function AdminJoinUs() {
 
       await res.json();
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }finally {
       setIsLoading(false);
     }
@@ -174,7 +174,7 @@ export default function AdminJoinUs() {
         body: JSON.stringify({ id: id }),
       });
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -195,11 +195,11 @@ export default function AdminJoinUs() {
         const sortedData = sortJoins(data.careers || [], urutan);
         setJoins(sortedData);
       } else {
-        console.error("Error:", data.error);
+        // console.error("Error:", data.error);
         setJoins([]);
       }
     } catch (error) {
-      console.error("Request error:", error);
+      // console.error("Request error:", error);
       setJoins([]);
     }
   };
@@ -222,11 +222,11 @@ export default function AdminJoinUs() {
         const sortedData = sortJoins(data.careers || [], urutan);
         setJoins(sortedData);
       } else {
-        console.error("Error:", data.error);
+        // console.error("Error:", data.error);
         setJoins([]);
       }
     } catch (error) {
-      console.error("Request error:", error);
+      // console.error("Request error:", error);
       setJoins([]);
     }
   };
@@ -250,7 +250,7 @@ export default function AdminJoinUs() {
       alert("Career message berhasil dihapus");
       setHapusNama("none");
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       alert("Gagal menghapus message. Silakan coba lagi nanti.");
     } finally {
       setIsLoading(false);
@@ -272,7 +272,7 @@ export default function AdminJoinUs() {
       alert("Career message berhasil dihapus semua");
       setHapus(false);
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
     } finally {
       setIsLoading(false);

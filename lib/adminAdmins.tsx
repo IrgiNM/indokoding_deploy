@@ -74,7 +74,7 @@ export default function AdminAdmins() {
             router.push("/admin");
           }
         } catch (error) {
-          console.error("Gagal mengambil cookies:", error);
+          // console.error("Gagal mengambil cookies:", error);
         //   setToken(undefined);
         }
       };
@@ -158,7 +158,7 @@ export default function AdminAdmins() {
     
             setAddAdmin(false);
         } catch (error) {
-            console.error("Error saat Create Admin:", error);
+            // console.error("Error saat Create Admin:", error);
             alert("Terjadi kesalahan saat Create Admin");
         } finally {
             setIsLoading(false);
@@ -187,7 +187,7 @@ export default function AdminAdmins() {
             setFirstUser(data[0]);
           }
         } catch (err) {
-          console.error("Gagal fetch users:", err);
+          // console.error("Gagal fetch users:", err);
         } finally {
           setLoading(false);
         }
@@ -245,7 +245,7 @@ export default function AdminAdmins() {
         alert("User berhasil dihapus");
         setHapusNama("none");
       } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         alert("Gagal menghapus user. Silakan coba lagi nanti.");
       }finally {
         setIsLoading(false);
@@ -271,7 +271,7 @@ export default function AdminAdmins() {
         alert("user admin berhasil dihapus semua");
         setHapus(false);
       } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         alert("Gagal menghapus semua admin. Silakan coba lagi nanti.");
       }finally {
         setIsLoading(false);

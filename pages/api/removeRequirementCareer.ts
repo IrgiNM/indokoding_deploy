@@ -59,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
   } catch (error) {
-    console.error("Error menghapus requirement:", error);
+    // console.error("Error menghapus requirement:", error);
     return res.status(500).json({ 
       error: "Terjadi kesalahan server",
       details: error instanceof Error ? error.message : "Unknown error"

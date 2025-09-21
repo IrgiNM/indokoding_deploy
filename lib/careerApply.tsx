@@ -34,7 +34,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
           setToken("");
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
     };  
@@ -55,7 +55,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         const data = await res.json();
         setRequirementsCareer(data);
       } catch (err) {
-        console.error("Gagal fetch RequirementsCareer:", err);
+        // console.error("Gagal fetch RequirementsCareer:", err);
       } finally {
         setIsLoading(false);
       }
@@ -204,7 +204,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         message: "",
       });
     } catch (error: unknown) {
-      console.error("Error saat mengirim kontak:", error);
+      // console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
         Swal.fire({

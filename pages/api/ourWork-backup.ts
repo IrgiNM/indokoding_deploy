@@ -70,7 +70,7 @@
 //       },
 //     });
 //   } catch (error) {
-//     console.error("Upload error:", error);
+//     // console.error("Upload error:", error);
 //     return res.status(500).json({ error: "Internal server error" });
 //   }
 // }

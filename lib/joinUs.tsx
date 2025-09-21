@@ -30,7 +30,7 @@ export default function JoinUsPage() {
           setToken("");
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
     };  
@@ -189,7 +189,7 @@ export default function JoinUsPage() {
       });
       setPickTitle("Django Developer");
     } catch (error: unknown) {
-      console.error("Error saat mengirim kontak:", error);
+      // console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
         Swal.fire({

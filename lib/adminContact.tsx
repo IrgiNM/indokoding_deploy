@@ -48,7 +48,7 @@ export default function Admincontacts() {
           router.push("/admin");
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // console.error("Gagal mengambil cookies:", error);
         setToken(undefined);
       }
     };
@@ -107,7 +107,7 @@ export default function Admincontacts() {
         const sortedData = sortContacts(data, urutan);
         setContacts(sortedData);
       } catch (err) {
-        console.error("Gagal fetch contacts:", err);
+        // console.error("Gagal fetch contacts:", err);
       } finally {
         setIsLoading(false);
       }
@@ -164,11 +164,11 @@ export default function Admincontacts() {
         const sortedData = sortContacts(data.contacts || [], urutan);
         setContacts(sortedData);
       } else {
-        console.error("Error:", data.error);
+        // console.error("Error:", data.error);
         setContacts([]);
       }
     } catch (error) {
-      console.error("Request error:", error);
+      // console.error("Request error:", error);
       setContacts([]);
     }
   };
@@ -192,7 +192,7 @@ export default function Admincontacts() {
       alert("Contact message berhasil dihapus");
       setHapusMessage("none");
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       alert("Gagal menghapus message. Silakan coba lagi nanti.");
     } finally {
       setIsLoading(false);
@@ -214,7 +214,7 @@ export default function Admincontacts() {
       alert("Contact message berhasil dihapus semua");
       setHapusMessage("none");
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
     } finally {
       setIsLoading(false);
@@ -233,7 +233,7 @@ export default function Admincontacts() {
 
       await res.json();
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   }
 
@@ -249,7 +249,7 @@ export default function Admincontacts() {
 
       await res.json();
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   }
 

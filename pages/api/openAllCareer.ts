@@ -50,7 +50,7 @@ export default async function handler(
         message: "Semua data Careers berhasil diperbarui",
       });
     } catch (error) {
-      console.error("Error processing Careers:", error);
+      // console.error("Error processing Careers:", error);
       return res.status(500).json({ error: "Internal server error" });
     }
   } else {

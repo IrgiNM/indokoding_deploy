@@ -73,7 +73,7 @@ export default async function handler(
       },
     });
   } catch (error) {
-    console.error("Upload error:", error);
+    // console.error("Upload error:", error);
     return res.status(500).json({ error: error });
   }
 }

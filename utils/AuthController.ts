@@ -44,7 +44,7 @@ export const loginAuth = async (
       };
     }
   } catch (error) {
-    console.error("Error saat login:", error);
+    // console.error("Error saat login:", error);
     // Jika terjadi error, tetap kembalikan data dengan tipe yang sama
     return {
       token: "",

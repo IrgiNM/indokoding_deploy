@@ -47,7 +47,7 @@ export default async function handler(
         favorite: !currentFavorite
       });
     } catch (error) {
-      console.error("Error processing Career:", error);
+      // console.error("Error processing Career:", error);
       return res.status(500).json({ error: "Internal server error" });
     }
   } else {

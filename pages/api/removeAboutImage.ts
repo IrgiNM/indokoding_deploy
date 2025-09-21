@@ -54,7 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       message: `OurWork message dengan id ${id} berhasil dihapus`,
     });
   } catch (error) {
-    console.error("Error hapus user:", error);
+    // console.error("Error hapus user:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }
 }

@@ -14,7 +14,7 @@ type PopUpLoginProps = {
   isRole: string;
 };
 
-export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
+export default function PopUpLogin({isClose, isRole, onClick }: PopUpLoginProps) {
 
     const [token, setToken] = useState("");
     const [username, setUsername] = useState("");
@@ -44,7 +44,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
             setToken("");
           }
         } catch (error) {
-          console.error("Gagal mengambil cookies:", error);
+          // // console.error("Gagal mengambil cookies:", error);
           setToken("");
         }
       };
@@ -127,7 +127,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
                 // alert(data.message || "Registrasi gagal");
                 }
             } catch (error) {
-                console.error("Error saat registrasi:", error);
+                // // console.error("Error saat registrasi:", error);
                 Swal.fire({
                   icon: "error",
                   title: "Oops...",
@@ -201,9 +201,9 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           // alert(data.error || "Login gagal");
         }
       } catch (error) {
-        console.error("Error saat login:", error);
-        console.error("username saat login:", formDataLogin.username);
-        console.error("password saat login:", formDataLogin.password);
+        // // console.error("Error saat login:", error);
+        // // console.error("username saat login:", formDataLogin.username);
+        // // console.error("password saat login:", formDataLogin.password);
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -220,6 +220,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
       try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
+
     
         // Ambil token dari Firebase
         const token = await user.getIdToken();
@@ -271,7 +272,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         // alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (err: unknown) {
         const error = err as FirebaseError;
-        // console.error("Google login error:", error);
+        // // console.error("Google login error:", error);
 
         if (error.code === "auth/popup-closed-by-user") {
           Swal.fire({
@@ -287,6 +288,8 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
           });
         }
         // alert("Login Google gagal!");
+      } finally {
+
       }
     };
 
@@ -342,7 +345,7 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
         // alert(`Welcome ${user.displayName || "Guest"}!`);
       } catch (err: unknown) {
         const error = err as FirebaseError;
-        // console.error("Google login error:", error);
+        // // console.error("Google login error:", error);
 
         if (error.code === "auth/popup-closed-by-user") {
           Swal.fire({
@@ -397,6 +400,8 @@ export default function PopUpLogin({isClose, isRole }: PopUpLoginProps) {
               <div className="w-full h-[1px] mt-2 bg-purple-100"></div>
               <button
                 onClick={() => {
+                  onClick();
+
                   setShowLogIn(false);
                   if (isAdmin === "admin") {
                     handleGoogleLoginAdmin();

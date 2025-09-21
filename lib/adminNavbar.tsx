@@ -18,7 +18,7 @@ export default function AdminNavbar(props: AdminNavbarProps) {
       router.push("/admin");
       alert("Berhasil logout!");
     } catch (error) {
-      console.error("Gagal logout:", error);
+      // console.error("Gagal logout:", error);
     }
   };
 

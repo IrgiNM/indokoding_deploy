@@ -50,7 +50,7 @@ export default function Navbar({
           setToken("");
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
     };
@@ -75,7 +75,7 @@ export default function Navbar({
         // ✅ Apapun kondisi token, popup login akan ditutup
         setShowAuth(false);
       } catch (error) {
-        console.error("Gagal membaca cookies:", error);
+        // console.error("Gagal membaca cookies:", error);
         setShowAuth(false); // Tetap ditutup walau ada error
       }
     };
@@ -121,7 +121,7 @@ export default function Navbar({
         draggable: true
       });
     } catch (error) {
-      console.error("Gagal logout:", error);
+      // console.error("Gagal logout:", error);
     }
   };
 
@@ -197,6 +197,9 @@ export default function Navbar({
     },
   ];
 
+  const handleClose = () => {
+    setShowAuth(false);
+  }
   return (
     <>
       <div
@@ -405,8 +408,9 @@ export default function Navbar({
                 className="w-3"
               />
             </button>
+            
             <PopUpLogin
-              onClick={() => setShowAuth(false)}
+              onClick={() => handleClose()}
               isClose={false}
               isRole="guest"
             />

@@ -57,7 +57,7 @@ export default function AdminDashboard() {
             router.push("/admin");
           }
         } catch (error) {
-          console.error("Gagal mengambil cookies:", error);
+          // console.error("Gagal mengambil cookies:", error);
           setToken(undefined);
         }
       };
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
 
                 setContacts(dataContacts);
             } catch (err) {
-                console.error("Gagal fetch Data:", err);
+                // console.error("Gagal fetch Data:", err);
             }
         };
         fetchData();
@@ -91,7 +91,7 @@ export default function AdminDashboard() {
                 
                 setCareers(data);
             } catch (err) {
-                console.error("Gagal fetch Careers:", err);
+                // console.error("Gagal fetch Careers:", err);
             }
         };
         fetchCareers();
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
                 
                 setUsers(data);
             } catch (err) {
-                console.error("Gagal fetch contacts:", err);
+                // console.error("Gagal fetch contacts:", err);
             }
         };
         fetchContacts();

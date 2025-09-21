@@ -50,7 +50,7 @@ export default async function handler(
         message: "Semua data contacts berhasil diperbarui",
       });
     } catch (error) {
-      console.error("Error processing contacts:", error);
+      // console.error("Error processing contacts:", error);
       return res.status(500).json({ error: "Internal server error" });
     }
   } else {

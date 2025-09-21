@@ -57,7 +57,7 @@ export default function AdminUsers() {
                 router.push("/admin");
               }
             } catch (error) {
-              console.error("Gagal mengambil cookies:", error);
+              // // console.error("Gagal mengambil cookies:", error);
             //   setToken(undefined);
             }
           };
@@ -91,7 +91,7 @@ export default function AdminUsers() {
             const sortedData = sortAboutImage(data, urutan);
             setAboutImage(sortedData);
           } catch (err) {
-            console.error("Gagal fetch AboutImage:", err);
+            // // console.error("Gagal fetch AboutImage:", err);
           } finally {
             setLoading(false);
           }
@@ -109,7 +109,7 @@ export default function AdminUsers() {
             setValuesShow(data);
             // setShowArray(data[0]?.values ?? []);
           } catch (err) {
-            console.error("Gagal fetch AboutText:", err);
+            // console.error("Gagal fetch AboutText:", err);
           } finally {
             setLoading(false);
           }
@@ -194,7 +194,7 @@ export default function AdminUsers() {
             alert("Error: " + data.error);
           }
         } catch (err) {
-          console.error("Upload error:", err);
+          // console.error("Upload error:", err);
           alert("Gagal upload!");
         } finally {
           setLoading(false);
@@ -220,7 +220,7 @@ export default function AdminUsers() {
             alert("Error: " + data.error);
           }
         } catch (err) {
-          console.error("Upload error:", err);
+          // console.error("Upload error:", err);
           alert("Gagal disimpan!");
         } finally {
           setLoading(false);
@@ -246,7 +246,7 @@ export default function AdminUsers() {
           setHapusNama("none");
           alert("OurWork message berhasil dihapus");
         } catch (error) {
-          console.error("Error:", error);
+          // console.error("Error:", error);
           alert("Gagal menghapus. Silakan coba lagi nanti.");
         } finally {
           setLoading(false);
@@ -268,7 +268,7 @@ export default function AdminUsers() {
           alert("OurWork berhasil dihapus semua");
           setHapus(false);
         } catch (error) {
-          console.error("Error:", error);
+          // console.error("Error:", error);
           alert("Gagal menghapus semua OurWork. Silakan coba lagi nanti.");
         } finally {
           setLoading(false);

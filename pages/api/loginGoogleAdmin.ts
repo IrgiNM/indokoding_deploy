@@ -63,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       role: userData.role,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }
 }

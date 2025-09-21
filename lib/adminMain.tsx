@@ -17,7 +17,7 @@ export default function AdminMain() {
       const data = await response.text();
       alert(data);
     } catch (error) {
-      console.error('Login error:', error);
+      // console.error('Login error:', error);
     }
   };
 

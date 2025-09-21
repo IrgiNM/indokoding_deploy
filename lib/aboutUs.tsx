@@ -34,7 +34,7 @@ function AboutUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDiv
       
         setAboutImage(data);
       } catch (err) {
-        console.error("Gagal fetch AboutImage:", err);
+        // // console.error("Gagal fetch AboutImage:", err);
       }
     };
     fetchAboutImage();
@@ -50,7 +50,7 @@ function AboutUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDiv
         setValuesShow(data);
         // setShowArray(data[0]?.values ?? []);
       } catch (err) {
-        console.error("Gagal fetch AboutText:", err);
+        // // console.error("Gagal fetch AboutText:", err);
       }
     };
     fetchAboutText();

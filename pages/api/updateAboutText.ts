@@ -46,7 +46,7 @@ export default async function handler(
         values,
       });
     } catch (error) {
-      console.error("Server error:", error);
+      // console.error("Server error:", error);
       return res.status(500).json({ error: error });
     }
   } else {

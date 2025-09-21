@@ -28,7 +28,7 @@ const AdminPage = () => {
           // setToken(undefined);
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // // console.error("Gagal mengambil cookies:", error);
         // setToken(undefined);
       }
     };

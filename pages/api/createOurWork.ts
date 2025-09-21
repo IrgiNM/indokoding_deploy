@@ -77,7 +77,7 @@ export default async function handler(
         },
       });
     } catch (error) {
-      console.error("Error processing request:", error);
+      // console.error("Error processing request:", error);
       return res.status(500).json({ error: error });
     }
   } else {

@@ -54,7 +54,7 @@ export default function AdminOurWork() {
             router.push("/admin");
           }
         } catch (error) {
-          console.error("Gagal mengambil cookies:", error);
+          // console.error("Gagal mengambil cookies:", error);
         //   setToken(undefined);
         }
       };
@@ -96,7 +96,7 @@ export default function AdminOurWork() {
           const sortedData = sortOurWorks(data, urutan);
           setOurWorks(sortedData);
         } catch (err) {
-          console.error("Gagal fetch OurWorks:", err);
+          // console.error("Gagal fetch OurWorks:", err);
         } finally {
           setLoading(false);
         }
@@ -208,7 +208,7 @@ export default function AdminOurWork() {
           alert("Error: " + data.error);
         }
       } catch (err) {
-        console.error("Upload error:", err);
+        // console.error("Upload error:", err);
         alert("Gagal upload!");
       } finally {
         setLoading(false);
@@ -251,7 +251,7 @@ export default function AdminOurWork() {
           // Refresh data jika diperlukan
         } else {
           const data = await res.json();
-          console.error("Upload failed:", data);
+          // console.error("Upload failed:", data);
           alert("Error: " + (data.error || "Terjadi kesalahan"));
         }
       } catch {
@@ -280,7 +280,7 @@ export default function AdminOurWork() {
         setDeleteData("none");
         alert("OurWork message berhasil dihapus");
       } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         alert("Gagal menghapus. Silakan coba lagi nanti.");
       } finally {
         setLoading(false);
@@ -302,7 +302,7 @@ export default function AdminOurWork() {
         alert("OurWork berhasil dihapus semua");
         setDeleteAll(false);
       } catch (error) {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         alert("Gagal menghapus semua OurWork. Silakan coba lagi nanti.");
       } finally {
         setLoading(false);

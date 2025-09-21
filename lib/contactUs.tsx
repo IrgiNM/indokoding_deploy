@@ -30,7 +30,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
           setToken("");
         }
       } catch (error) {
-        console.error("Gagal mengambil cookies:", error);
+        // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
     };
@@ -84,7 +84,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         const res = await fetch("/api/getUsers");
         await res.json();
       } catch (err) {
-        console.error("Gagal fetch users:", err);
+        // console.error("Gagal fetch users:", err);
       } finally {
         setIsLoading(false);
       }
@@ -180,7 +180,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         message: "",
       });
     } catch (error: unknown) {
-      console.error("Error saat mengirim kontak:", error);
+      // console.error("Error saat mengirim kontak:", error);
 
       if (error instanceof Error) {
         Swal.fire({
