@@ -53,7 +53,7 @@ export default async function handler(
       const qEmail = query(collection(db, "users"), where("email", "==", email), where("role", "==", 'guest'));
       const snapEmail = await getDocs(qEmail);
 
-      // if (!snapEmail.empty) {
+      // if (!snapAdminEmail.empty) {
       //   return res.status(400).json({ error: "Email sudah dipakai akun lain" });
       // }
       

@@ -37,33 +37,42 @@ export default function AdminUsers() {
     const [filePreview, setFilePreview] = useState<string | null>(null);
     
     // const [token, setToken] = useState<User>();
-        const router = useRouter();
+    const router = useRouter();
         
-        useEffect(() => {
-          const fetchCookies = async () => {
-            try {
-              const savedToken = await getCookies(); // <- pakai await
-        
-              if (savedToken) {
-                // Parse JSON kalau cookies disimpan sebagai string
-                const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
-                // Ambil token dan simpan ke state
-                // setToken(parsed);
-                if(parsed.role==="guest"){
-                    router.push("/");
-                }
-              } else {
-                // setToken(undefined);
-                router.push("/admin");
-              }
-            } catch (error) {
-              // // console.error("Gagal mengambil cookies:", error);
-            //   setToken(undefined);
+    useEffect(() => {
+      const fetchCookies = async () => {
+        try {
+          const savedToken = await getCookies(); // <- pakai await
+    
+          if (savedToken) {
+            // Parse JSON kalau cookies disimpan sebagai string
+            const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
+            // Ambil token dan simpan ke state
+
+            const res = await fetch("/api/cekAdminUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                email: parsed.email,
+                role: parsed.role,
+                }),
+            });
+
+            if(!res.ok){
+                router.push("/");
             }
-          };
-        
-          fetchCookies();
-        }, [router]);
+          } else {
+            router.push("/admin");
+          }
+        } catch (error) {
+          // console.error("Gagal mengambil cookies:", error);
+        }
+      };
+    
+      fetchCookies();
+    }, [router]);
 
     const [urutan, setUrutan] = useState("New");
     const [urutanActive, setUrutanActive] = useState(false);

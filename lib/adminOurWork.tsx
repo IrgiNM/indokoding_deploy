@@ -45,17 +45,26 @@ export default function AdminOurWork() {
             // Parse JSON kalau cookies disimpan sebagai string
             const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
-            // setToken(parsed);
-            if(parsed.role==="guest"){
+
+            const res = await fetch("/api/cekAdminUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                email: parsed.email,
+                role: parsed.role,
+                }),
+            });
+
+            if(!res.ok){
                 router.push("/");
             }
           } else {
-            // setToken(undefined);
             router.push("/admin");
           }
         } catch (error) {
           // console.error("Gagal mengambil cookies:", error);
-        //   setToken(undefined);
         }
       };
     

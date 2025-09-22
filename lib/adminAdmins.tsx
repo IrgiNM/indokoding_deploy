@@ -1,27 +1,11 @@
+import { User } from "@/type/userType";
 import { getCookies } from "@/utils/tokenController";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from 'react';
 
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  confirm_password?: string;
-  level?: string;
-  position?: string;
-  fired?: string;
-  phone?: string;
-  sick?: number;
-  createdAt: string;
-  permission?: number;
-  not_reason?: number;
-  role_job?: string[];
-  role: string;
-}
-
 export default function AdminAdmins() {
+    const router = useRouter();
     const [edit, setEdit] = useState('none');
     const [hapus, setHapus] = useState(false);
     const [addAdmin, setAddAdmin] = useState(false);
@@ -53,8 +37,6 @@ export default function AdminAdmins() {
         setUrutanActive(false);
     }
     
-    // const [token, setToken] = useState<User>();
-    const router = useRouter();
     
     useEffect(() => {
       const fetchCookies = async () => {
@@ -65,17 +47,26 @@ export default function AdminAdmins() {
             // Parse JSON kalau cookies disimpan sebagai string
             const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
-            // setToken(parsed);
-            if(parsed.role==="guest"){
+
+            const res = await fetch("/api/cekAdminUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                email: parsed.email,
+                role: parsed.role,
+                }),
+            });
+
+            if(!res.ok){
                 router.push("/");
             }
           } else {
-            // setToken(undefined);
             router.push("/admin");
           }
         } catch (error) {
           // console.error("Gagal mengambil cookies:", error);
-        //   setToken(undefined);
         }
       };
     
@@ -387,76 +378,77 @@ export default function AdminAdmins() {
 
             {/* EDIT USER */}
             {hapus || hapusNama !== "none" || addAdmin ?
-            <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'>n</div>
+            <div className='fixed z-4 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
             : null
             }
             {hapus || hapusNama !== "none" || addAdmin ?
-            <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'>n</div>
+            <div className='fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
             : null
             }
             {hapus &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
-                <button onClick={()=>handleDeleteAll('admin')} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                    {isLoading ? "delete..." : "Yes"}
-                </button>
-                <button onClick={() => setHapus(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+                <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                    <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                    <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
+                    <button onClick={()=>handleDeleteAll('admin')} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                        {isLoading ? "delete..." : "Yes"}
+                    </button>
+                    <button onClick={() => setHapus(false)} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                        <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                    </button>
+                </div>
             </div>
             }
             {addAdmin &&
-            <div className='fixed z-6 top-30 left-100 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <p className='w-full text-left text-lg font-bold text-[#710093]'>Add admin</p>
-                <input type="text"
-                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' name="username"
-                    placeholder="Username"
-                    value={formDataAdmin.username}
-                    onChange={handleChangeAdmin}/>
-                <input type="email"
-                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500'
-                    name="email"
-                    placeholder="Email"
-                    value={formDataAdmin.email}
-                    onChange={handleChangeAdmin}/>
-                <input type="password"
-                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500'
-                    name="password"
-                    placeholder="Password"
-                    value={formDataAdmin.password}
-                    onChange={handleChangeAdmin}/>
-                <input type="password"
-                    className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500'
-                    name="confirm_password"
-                    placeholder="Confirm Password"
-                    value={formDataAdmin.confirm_password}
-                    onChange={handleChangeAdmin}/>
-                <button onClick={() => (handleCreateAdmin())} className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>
-                    {isLoading ? "Creating..." : "Create"}
-                </button>
-                <button onClick={() => (setAddAdmin(false),formDataAdmin.username = '',formDataAdmin.email = '',formDataAdmin.update = false)} className={`fixed z-6 top-27 right-103 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+                <div className='relative z-6 -top-30 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                    <p className='w-full text-left text-lg font-bold text-[#710093]'>Add admin</p>
+                    <input type="text"
+                        className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500' name="username"
+                        placeholder="Username"
+                        value={formDataAdmin.username}
+                        onChange={handleChangeAdmin}/>
+                    <input type="email"
+                        className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-50 border-purple-500'
+                        name="email"
+                        placeholder="Email"
+                        value={formDataAdmin.email}
+                        onChange={handleChangeAdmin}/>
+                    <input type="password"
+                        className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500'
+                        name="password"
+                        placeholder="Password"
+                        value={formDataAdmin.password}
+                        onChange={handleChangeAdmin}/>
+                    <input type="password"
+                        className='p-2 px-4 text-[12px] border rounded-lg w-100 bg-purple-100 border-purple-500'
+                        name="confirm_password"
+                        placeholder="Confirm Password"
+                        value={formDataAdmin.confirm_password}
+                        onChange={handleChangeAdmin}/>
+                    <button onClick={() => (handleCreateAdmin())} className='p-2 w-full rounded-md bg-purple-700 hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-white hover:text-white font-bold'>
+                        {isLoading ? "Creating..." : "Create"}
+                    </button>
+                    <button onClick={() => (setAddAdmin(false),formDataAdmin.username = '',formDataAdmin.email = '',formDataAdmin.update = false)} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                        <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                    </button>
+                </div>
             </div>
             }
             {hapusNama !== "none" &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{hapusNama}</span> dihapus ?</p>
-                <button onClick={()=>(handleDelete(idUser))} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                    {isLoading ? "Delete..." : "Yes"}
-                </button>
-                <button onClick={() => setHapusNama("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+                <div className='relative z-6 -top-30 left-0 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                    <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                    <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{hapusNama}</span> dihapus ?</p>
+                    <button onClick={()=>(handleDelete(idUser))} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                        {isLoading ? "Delete..." : "Yes"}
+                    </button>
+                    <button onClick={() => setHapusNama("none")} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                        <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                    </button>
+                </div>
             </div>
             }
-            {/* <div className='fixed z-6 top-30 p-5 border-1 rounded-lg border-[#710093] bg-white flex flex-col gap-3'>
-                <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
-                <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
-                <input type="text" className='border-1 hover:border-[1.5px] border-[#710093] bg-[#fcf1ff] p-2 pl-4 text-[12px] w-70 rounded-full' placeholder='Search'/>
-            </div> */}
         </div>
     </>
   )

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/config";
-import { User } from "./adminDashboard";
+import { User } from "@/type/userType";
 
 export interface Career {
   id: string;
@@ -42,17 +42,24 @@ export default function AdminCareer() {
     const fetchCookies = async () => {
       try {
         const savedToken = await getCookies(); // <- pakai await
-
+  
         if (savedToken) {
           // Parse JSON kalau cookies disimpan sebagai string
-          const parsed =
-            typeof savedToken === "string"
-              ? JSON.parse(savedToken)
-              : savedToken;
+          const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
           // Ambil token dan simpan ke state
           setToken(parsed);
-          if (parsed.role === "guest") {
-            router.push("/");
+          const res = await fetch("/api/cekAdminUser", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+              email: parsed.email,
+              role: parsed.role,
+              }),
+          });
+          if(!res.ok){
+              router.push("/");
           }
         } else {
           setToken(undefined);
@@ -63,6 +70,7 @@ export default function AdminCareer() {
         setToken(undefined);
       }
     };
+  
     fetchCookies();
   }, [router]);
 

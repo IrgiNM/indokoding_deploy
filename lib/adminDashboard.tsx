@@ -3,37 +3,8 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Career } from './adminCareer';
 import { useRouter } from 'next/navigation';
-
-
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  confirm_password?: string;
-  level?: string;
-  position?: string;
-  fired?: string;
-  phone?: string;
-  sick?: number;
-  createdAt: string;
-  permission?: number;
-  not_reason?: number;
-  role_job?: string[];
-  role: string;
-}
-
-export interface Contact {
-  id: string;   
-  createdAt: string;       
-  dibaca: string;          
-  dibaca_oleh: string[]; 
-  email: string;    
-  favorite: string[];
-  message: string;              
-  subject: string;             
-  username: string;              
-}
+import { User } from '@/type/userType';
+import { Contact } from '@/type/contact';
 
 export default function AdminDashboard() {
     const [token, setToken] = useState<User>();
@@ -49,7 +20,19 @@ export default function AdminDashboard() {
             const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
             // Ambil token dan simpan ke state
             setToken(parsed);
-            if(parsed.role==="guest"){
+
+            const res = await fetch("/api/cekAdminUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                email: parsed.email,
+                role: parsed.role,
+                }),
+            });
+
+            if(!res.ok){
                 router.push("/");
             }
           } else {

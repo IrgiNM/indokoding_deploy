@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { User } from "./adminDashboard";
 import { useRouter } from "next/navigation";
 import { getCookies } from "@/utils/tokenController";
+import { User } from "@/type/userType";
 
 export interface Contact {
   id: string;
@@ -31,17 +31,24 @@ export default function Admincontacts() {
     const fetchCookies = async () => {
       try {
         const savedToken = await getCookies(); // <- pakai await
-
+  
         if (savedToken) {
           // Parse JSON kalau cookies disimpan sebagai string
-          const parsed =
-            typeof savedToken === "string"
-              ? JSON.parse(savedToken)
-              : savedToken;
+          const parsed = typeof savedToken === "string" ? JSON.parse(savedToken) : savedToken;
           // Ambil token dan simpan ke state
           setToken(parsed);
-          if (parsed.role === "guest") {
-            router.push("/");
+          const res = await fetch("/api/cekAdminUser", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+              email: parsed.email,
+              role: parsed.role,
+              }),
+          });
+          if(!res.ok){
+              router.push("/");
           }
         } else {
           setToken(undefined);
@@ -52,7 +59,7 @@ export default function Admincontacts() {
         setToken(undefined);
       }
     };
-
+  
     fetchCookies();
   }, [router]);
 

@@ -12,18 +12,9 @@ import {
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { db } from "@/firebase/config";
+import { UserData } from "@/type/userDataType";
 
 const SECRET_KEY = process.env.JWT_SECRET || "rahasia-super-aman";
-
-interface UserData {
-  update: boolean;
-  id?: string;
-  username: string;
-  email: string;
-  password?: string;
-  confirm_password?: string;
-  role: string;
-}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // ✅ Allow CORS
@@ -57,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // ✅ Validasi role
-    const allowedRoles = ["admin", "user"];
+    const allowedRoles = ["admin", "guest"];
     if (!allowedRoles.includes(role)) {
       return res.status(400).json({ error: "Role tidak valid" });
     }
@@ -121,7 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 🔍 Pastikan email belum terdaftar
-    const qEmail = query(collection(db, "users"), where("email", "==", email));
+    const qEmail = query(collection(db, "users"), where("email", "==", email), where("role", "==", "admin"));
     const snapEmail = await getDocs(qEmail);
     if (!snapEmail.empty) {
       return res.status(400).json({ error: "Email sudah terdaftar" });
