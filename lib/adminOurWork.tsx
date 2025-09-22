@@ -496,7 +496,7 @@ export default function AdminOurWork() {
             {editData &&
             <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
                 {filePreview && (
-                    <div className="relative z-6 top-0 w-100 h-full flex flex-col items-center justify-center bg-opacity-50">
+                    <div className="relative bg-white  z-6  top-0 w-100 p-10 border-1 rounded-lg mr-5 border-[#930062] flex flex-col items-center justify-center bg-opacity-50">
                         <p className='font-semibold text-purple-900 w-full'>old file :</p>
                         <div className="w-full">
                           <Image 
