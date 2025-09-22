@@ -1,4 +1,5 @@
 import { db } from "@/firebase/config";
+import { User } from "@/type/userType";
 import {
   addDoc,
   collection,
@@ -11,15 +12,6 @@ import jwt from "jsonwebtoken";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const SECRET_KEY = "rahasia-super-aman";
-
-interface UserData {
-  username: string;
-  email: string;
-  role: string;
-  total_contact?: number;
-  total_join?: number;
-  total_career?: number;
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -42,7 +34,7 @@ export default async function handler(
         total_contact,
         total_join,
         total_career,
-      }: UserData = req.body;
+      }: User = req.body;
 
       if (!username || !email) {
         return res
@@ -50,7 +42,7 @@ export default async function handler(
           .json({ error: "Username dan email wajib diisi" });
       }
 
-      const qEmail = query(collection(db, "users"), where("email", "==", email), where("role", "==", 'guest'));
+      const qEmail = query(collection(db, "users"), where("email", "==", email));
       const snapEmail = await getDocs(qEmail);
 
       // if (!snapAdminEmail.empty) {
@@ -61,6 +53,7 @@ export default async function handler(
         await addDoc(collection(db, "users"), {
           username,
           email,
+          password: "",
           role,
           total_contact: total_contact || 0,
           total_join: total_join || 0,

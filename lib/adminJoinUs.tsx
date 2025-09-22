@@ -593,7 +593,8 @@ export default function AdminJoinUs() {
           <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
         ) : null}
         {hapus && (
-          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -612,7 +613,7 @@ export default function AdminJoinUs() {
             </button>
             <button
               onClick={() => setHapus(false)}
-              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -623,9 +624,11 @@ export default function AdminJoinUs() {
               />
             </button>
           </div>
+        </div>
         )}
         {hapusNama !== "none" && (
-          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -645,7 +648,7 @@ export default function AdminJoinUs() {
             </button>
             <button
               onClick={() => setHapusNama("none")}
-              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -656,9 +659,12 @@ export default function AdminJoinUs() {
               />
             </button>
           </div>
+        </div>
         )}
+
         {readMessage && (
-          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -677,7 +683,7 @@ export default function AdminJoinUs() {
             </button>
             <button
               onClick={() => setReadMessage(false)}
-              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -688,9 +694,12 @@ export default function AdminJoinUs() {
               />
             </button>
           </div>
+        </div>
         )}
+
         {detail && (
-          <div className="fixed w-150 z-6 top-20 left-90 p-7 border-1 rounded-lg border-[#930062] bg-white flex flex-col justify-center items-start">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative w-150 z-6 -top-20 p-7 border-1 rounded-lg border-[#930062] bg-white flex flex-col justify-center items-start">
             <div className="flex flex-row gap-2 mb-7 items-center">
               <div className="w-13 h-13 bg-blue-100 flex justify-center items-center rounded-full font-bold text-[25px] text-blue-700">
                 {pickNama.charAt(0)}
@@ -753,7 +762,7 @@ export default function AdminJoinUs() {
 
             <button
               onClick={() => klikDetail()}
-              className={`fixed z-6 top-16 right-73 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -764,6 +773,7 @@ export default function AdminJoinUs() {
               />
             </button>
           </div>
+        </div>
         )}
       </div>
     </>

@@ -423,31 +423,35 @@ export default function AdminOurWork() {
             : null
             }
             {deleteAll &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
-                <button onClick={() => handleDeleteAll()} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                  {loading ? "delete..." : "Yes"}
-                </button>
-                <button onClick={() => setDeleteAll(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                  <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                  <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
+                  <button onClick={() => handleDeleteAll()} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {loading ? "delete..." : "Yes"}
+                  </button>
+                  <button onClick={() => setDeleteAll(false)} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                      <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                  </button>
+              </div>
             </div>
             }
             {deleteData !== "none" &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{deleteData}</span> dihapus ?</p>
-                <button onClick={() => handleDelete(id,filePreview??"")} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                  {loading ? "delete..." : "Yes"}
-                </button>
-                <button onClick={() => setDeleteData("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                  <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                  <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{deleteData}</span> dihapus ?</p>
+                  <button onClick={() => handleDelete(id,filePreview??"")} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                    {loading ? "delete..." : "Yes"}
+                  </button>
+                  <button onClick={() => setDeleteData("none")} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                      <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                  </button>
+              </div>
             </div>
             }
             {tambahData &&
-            <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
                 {filePreview && (
                     <div className="fixed z-6 top-0 left-230 w-100 h-full flex flex-col items-center justify-center bg-opacity-50" onClick={() => setFilePreview(null)}>
                         <p className='font-semibold text-purple-900 w-full'>old file :</p>
@@ -492,7 +496,7 @@ export default function AdminOurWork() {
             {editData &&
             <div className='fixed z-6 top-0 left-0 w-full h-full flex items-center justify-center'>
                 {filePreview && (
-                    <div className="fixed z-6 top-0 left-230 w-100 h-full flex flex-col items-center justify-center bg-opacity-50">
+                    <div className="relative z-6 top-0 w-100 h-full flex flex-col items-center justify-center bg-opacity-50">
                         <p className='font-semibold text-purple-900 w-full'>old file :</p>
                         <div className="w-full">
                           <Image 

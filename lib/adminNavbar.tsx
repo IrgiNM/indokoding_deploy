@@ -72,13 +72,15 @@ export default function AdminNavbar(props: AdminNavbarProps) {
           <>
             <div className='fixed z-98 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center'></div>
             <div className='fixed z-99 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center'></div>
-            <div className='fixed z-100 lg:top-40 lg:left-140 top-40 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-purple-900 w-30 text-center'>Are you sure you want to log out?</p>
-                <button onClick={() => (logout(),setShowLogOut(false))} className='text-[12px] font-bold text-[#f00070] w-full border py-1 rounded-md hover:bg-red-50'>Log Out</button>
-                <button onClick={() => (setShowLogOut(false))} className={`fixed z-6 lg:top-37 lg:right-133 lg:mr-0 -mr-40 top-36 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-100 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative -top-20 p-5 border-1 rounded-lg border-purple-900 bg-white flex flex-col gap-3 justify-center items-center'>
+                  <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                  <p className='text-[12px] text-purple-900 w-30 text-center'>Are you sure you want to log out?</p>
+                  <button onClick={() => (logout(),setShowLogOut(false))} className='text-[12px] font-bold text-[#f00070] w-full border py-1 rounded-md hover:bg-red-50'>Log Out</button>
+                  <button onClick={() => (setShowLogOut(false))} className={`absolute -top-4 -right-4 lg:mr-0 -mr-40 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                      <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                  </button>
+              </div>
             </div>
           </>
           : null

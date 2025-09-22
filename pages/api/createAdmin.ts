@@ -13,6 +13,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { db } from "@/firebase/config";
 import { UserData } from "@/type/userDataType";
+import { User } from "@/type/userType";
 
 const SECRET_KEY = process.env.JWT_SECRET || "rahasia-super-aman";
 
@@ -40,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       password,
       confirm_password,
       role,
-    }: UserData = req.body;
+    }: User = req.body;
 
     // ✅ Validasi input dasar
     if (!username || !email) {
@@ -49,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // ✅ Validasi role
     const allowedRoles = ["admin", "guest"];
-    if (!allowedRoles.includes(role)) {
+    if (!allowedRoles.includes(role||"")) {
       return res.status(400).json({ error: "Role tidak valid" });
     }
 
@@ -135,6 +136,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       email,
       password: hashedPassword,
       role,
+      total_contact: 0,
+      total_join: 0,
+      total_career: 0,
       createdAt: serverTimestamp(),
     });
 

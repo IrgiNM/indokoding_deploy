@@ -395,27 +395,31 @@ export default function AdminUsers() {
             : null
             }
             {hapus &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[10px] text-[#930062] w-50 text-center  font-bold'>Remove All Images? <span className='font-normal'>You won’t be able to recover them</span></p>
-                <button onClick={() => handleDeleteAll()} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                    {loading ? "Removing all..." : `Remove`}
-                </button>
-                <button onClick={() => setHapus(false)} className={`fixed z-6 top-37 right-115 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                  <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                  <p className='text-[10px] text-[#930062] w-50 text-center  font-bold'>Remove All Images? <span className='font-normal'>You won’t be able to recover them</span></p>
+                  <button onClick={() => handleDeleteAll()} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                      {loading ? "Removing all..." : `Remove`}
+                  </button>
+                  <button onClick={() => setHapus(false)} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                      <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                  </button>
+              </div>
             </div>
             }
             {hapusNama !== "none" &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Confirm deletion?</p>
-                <button onClick={() => handleDelete(id,filePreview??"")} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                    {loading ? "Removing..." : `Yes`}
-                </button>
-                <button onClick={() => setHapusNama("none")} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                  <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                  <p className='text-[12px] text-[#930062] w-30 text-center'>Confirm deletion?</p>
+                  <button onClick={() => handleDelete(id,filePreview??"")} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                      {loading ? "Removing..." : `Yes`}
+                  </button>
+                  <button onClick={() => setHapusNama("none")} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                      <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                  </button>
+              </div>
             </div>
             }
             {show &&
@@ -431,36 +435,40 @@ export default function AdminUsers() {
             </div>
             }
             {full &&
-            <div className='fixed w-180  z-6 top-5 left-65 p-5 flex flex-col gap-3 justify-center items-center'>
-                <Image width={200} height={200} src={`/assets/image/aboutus/${fullGambar}`} alt="Dashboard" className='w-full '/>
-                <button onClick={() => setFull(false)} className={`fixed z-6 top-8 right-60 w-10 h-10 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3 "/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative w-180 z-6 -top-20 p-5 flex flex-col gap-3 justify-center items-center'>
+                  <Image width={200} height={200} src={`/uploads/aboutUs/${fullGambar}`} alt="Dashboard" className='w-full '/>
+                  <button onClick={() => setFull(false)} className={`absolute z-6 top-5 -right-7 w-10 h-10 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                      <Image width={140} height={140} src="/close.svg" alt="" className="w-3 "/>
+                  </button>
+              </div>
             </div>
             }
             {tambah &&
-            <div className='fixed z-6 -top-20 left-0 w-full h-full flex items-center justify-center'>
-                <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col items-center gap-4 relative w-[500px]'>
-                    <h2 className="text-lg font-bold text-[#710093] mb-2">Tambah Data</h2>
-                    {filePreview && (
-                        <Image 
-                            width={300} 
-                            height={300} 
-                            src={filePreview ? filePreview : "/default-image.png"} 
-                            alt="our work" 
-                            className='rounded-sm mb-2 w-auto h-40'
-                        />
-                    )}
-                    <input 
-                        onChange={handleFileChange}
-                        type="file" accept="image/*" className="mb-2 border w-full border-[#8eb0e5] rounded-lg p-2" />
-                    <button onClick={handleAboutImage} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                        {loading ? "Saving..." : "Save"}
-                    </button>
-                    <button onClick={() => setTambah(false)} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
-                        <Image width={20} height={20} src="/close.svg" alt="Close" className="w-4"/>
-                    </button>
-                </div>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className='relative z-6 -top-20 w-full h-full flex items-center justify-center'>
+                  <div className='bg-white border-1 border-[#930062] rounded-lg p-8 flex flex-col items-center gap-4 relative w-[500px]'>
+                      <h2 className="text-lg font-bold text-[#710093] mb-2">Tambah Data</h2>
+                      {filePreview && (
+                          <Image 
+                              width={300} 
+                              height={300} 
+                              src={filePreview ? filePreview : "/default-image.png"} 
+                              alt="our work" 
+                              className='rounded-sm mb-2 w-auto h-40'
+                          />
+                      )}
+                      <input 
+                          onChange={handleFileChange}
+                          type="file" accept="image/*" className="mb-2 border w-full border-[#8eb0e5] rounded-lg p-2" />
+                      <button onClick={handleAboutImage} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                          {loading ? "Saving..." : "Save"}
+                      </button>
+                      <button onClick={() => setTambah(false)} className='absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]'>
+                          <Image width={20} height={20} src="/close.svg" alt="Close" className="w-4"/>
+                      </button>
+                  </div>
+              </div>
             </div>
             }
             {/* <div className='fixed z-6 top-30 p-5 border-1 rounded-lg border-[#710093] bg-white flex flex-col gap-3'>

@@ -630,7 +630,7 @@ export default function AdminCareer() {
         </div>
 
         {/* LIST USERS */}
-        <div className="flex flex-row flex-wrap h-full overflow-auto gap-x-5 gap-y-1 p-5 pt-5">
+        <div className="flex flex-row flex-wrap max-h-full overflow-auto gap-x-5 gap-y-1 p-5 pt-5">
           <div className="flex flex-row items-start gap-2 pl-1 w-full mb-3">
             <p className="font-bold text-xl text-[#710093]">{pickTitle}</p>
             {pickTitle !== "All" ? (
@@ -827,7 +827,8 @@ export default function AdminCareer() {
           <div className="fixed z-5 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
         ) : null}
         {hapus && (
-          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -846,7 +847,7 @@ export default function AdminCareer() {
             </button>
             <button
               onClick={() => setHapus(false)}
-              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -857,9 +858,11 @@ export default function AdminCareer() {
               />
             </button>
           </div>
+        </div>
         )}
         {hapusNama !== "none" && (
-          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -879,7 +882,7 @@ export default function AdminCareer() {
             </button>
             <button
               onClick={() => setHapusNama("none")}
-              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -890,47 +893,51 @@ export default function AdminCareer() {
               />
             </button>
           </div>
+        </div>
         )}
         {hapusRequirement && (
           <>
             <div className="fixed z-7 rounded-lg top-0 right-0 left-0 bottom-0 backdrop-blur-sm flex flex-col justify-center items-center"></div>
             <div className="fixed z-8 rounded-lg top-0 right-0 left-0 bottom-0 bg-purple-950 opacity-30 flex flex-col justify-center items-center"></div>
-            <div className="fixed z-9 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
-              <Image
-                width={140}
-                height={140}
-                src="/warning-red.svg"
-                alt=""
-                className="w-10"
-              />
-              <p className="text-[12px] text-[#930062] w-30 text-center">
-                Yakin <span className="font-bold">{pickTitle}</span> dihapus ?
-              </p>
-              <button
-                onClick={() => {
-                  handleDeleteRequirement(pickTitle);
-                }}
-                className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold"
-              >
-                {isLoading ? "delete..." : "Yes"}
-              </button>
-              <button
-                onClick={() => setHapusRequirement(false)}
-                className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
-              >
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+              <div className="relative z-9 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
                 <Image
                   width={140}
                   height={140}
-                  src="/close.svg"
+                  src="/warning-red.svg"
                   alt=""
-                  className="w-3"
+                  className="w-10"
                 />
-              </button>
+                <p className="text-[12px] text-[#930062] w-30 text-center">
+                  Yakin <span className="font-bold">{pickTitle}</span> dihapus ?
+                </p>
+                <button
+                  onClick={() => {
+                    handleDeleteRequirement(pickTitle);
+                  }}
+                  className="p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold"
+                >
+                  {isLoading ? "delete..." : "Yes"}
+                </button>
+                <button
+                  onClick={() => setHapusRequirement(false)}
+                  className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+                >
+                  <Image
+                    width={140}
+                    height={140}
+                    src="/close.svg"
+                    alt=""
+                    className="w-3"
+                  />
+                </button>
+              </div>
             </div>
           </>
         )}
         {readMessage && (
-          <div className="fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <Image
               width={140}
               height={140}
@@ -949,7 +956,7 @@ export default function AdminCareer() {
             </button>
             <button
               onClick={() => setReadMessage(false)}
-              className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -960,9 +967,11 @@ export default function AdminCareer() {
               />
             </button>
           </div>
+        </div>
         )}
         {detail && (
-          <div className="fixed w-150 z-6 top-20 left-90 p-7 border-1 rounded-lg border-[#930062] bg-white flex flex-col justify-center items-start">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative w-150 z-6 -top-20 p-7 border-1 rounded-lg border-[#930062] bg-white flex flex-col justify-center items-start">
             <div className="flex flex-row gap-2 mb-7 items-center">
               <div className="w-13 h-13 bg-blue-100 flex justify-center items-center rounded-full font-bold text-[25px] text-blue-700">
                 {pickNama.charAt(0)}
@@ -1025,7 +1034,7 @@ export default function AdminCareer() {
 
             <button
               onClick={() => klikDetail()}
-              className={`fixed z-6 top-16 right-73 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -1036,10 +1045,11 @@ export default function AdminCareer() {
               />
             </button>
           </div>
+        </div>
         )}
         {detailRequest && (
-          <div className="fixed w-full z-6 top-20 left-0 p-7 flex flex-row justify-center items-start">
-            <div className="w-200 bg-white p-7 rounded-lg border-1 border-[#930062] flex flex-col gap-3">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+            <div className="relative z-6 -top-20 w-200 bg-white p-7 rounded-lg border-1 border-[#930062] flex flex-col gap-3">
               <h1 className="font-bold text-xl text-[#710093]">{pickTitle}</h1>
               <p className="text-[12px]">{pickDescription}</p>
               <ul className="pl-7">
@@ -1049,56 +1059,57 @@ export default function AdminCareer() {
                   </li>
                 ))}
               </ul>
+              <button
+                onClick={() => {
+                  setDetailRequest(!detailRequest);
+                }}
+                className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
+                >
+                <Image
+                  width={140}
+                  height={140}
+                  src="/close.svg"
+                  alt=""
+                  className="w-3"
+                />
+              </button>
+              <button
+                onClick={() => {
+                  setDetailRequest(!detailRequest);
+                  setTitleForm(pickTitle);
+                  setDescriptionForm(pickDescription);
+                  setListForm(picklistRequirement);
+                  setRequest(true);
+                  setIsUpdate(true);
+                }}
+                className={`absolute z-6 top-5 -right-4 w-8 h-8 rounded-full bg-[#ffc56f] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#ffc56f] hover:to-[#ff7a32] border-1 border-[#c34a09]`}
+                >
+                <Image
+                  width={140}
+                  height={140}
+                  src="/edit-yellow.svg"
+                  alt=""
+                  className="w-3"
+                  />
+              </button>
+              <button
+                onClick={() => setHapusRequirement(true)}
+                className="h-8 w-8 absolute -right-4 top-14 flex justify-center items-center rounded-full bg-[#ff4586] text-[#cf008a] border-[1px] border-[#930062] hover:bg-gradient-to-b hover:from-[#ff4586] hover:to-[#d4005c] cursor-pointer"
+                >
+                <Image
+                  width={30}
+                  height={30}
+                  src="/trash.svg"
+                  alt="Dashboard"
+                  className="w-3 h-3"
+                  />
+              </button>
             </div>
-            <button
-              onClick={() => {
-                setDetailRequest(!detailRequest);
-              }}
-              className={`fixed z-6 top-23 right-55 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}
-            >
-              <Image
-                width={140}
-                height={140}
-                src="/close.svg"
-                alt=""
-                className="w-3"
-              />
-            </button>
-            <button
-              onClick={() => {
-                setDetailRequest(!detailRequest);
-                setTitleForm(pickTitle);
-                setDescriptionForm(pickDescription);
-                setListForm(picklistRequirement);
-                setRequest(true);
-                setIsUpdate(true);
-              }}
-              className={`fixed z-6 top-32 right-55 w-8 h-8 rounded-full bg-[#ffc56f] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#ffc56f] hover:to-[#ff7a32] border-1 border-[#c34a09]`}
-            >
-              <Image
-                width={140}
-                height={140}
-                src="/edit-yellow.svg"
-                alt=""
-                className="w-3"
-              />
-            </button>
-            <button
-              onClick={() => setHapusRequirement(true)}
-              className="h-8 w-8 absolute right-55 top-22 flex justify-center items-center rounded-full bg-[#ff4586] text-[#cf008a] border-[1px] border-[#930062] hover:bg-gradient-to-b hover:from-[#ff4586] hover:to-[#d4005c] cursor-pointer"
-            >
-              <Image
-                width={30}
-                height={30}
-                src="/trash.svg"
-                alt="Dashboard"
-                className="w-3 h-3"
-              />
-            </button>
           </div>
         )}
         {request && (
-          <div className="fixed z-6 top-20 left-100 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
+        <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+          <div className="relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center">
             <p className="w-full text-left text-lg font-bold text-[#710093]">
               Add Requirement
             </p>
@@ -1255,7 +1266,7 @@ export default function AdminCareer() {
                 setDescriptionForm("");
                 setListForm([]);
               }}
-              className={`fixed z-6 top-17 right-98 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
+              className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
             >
               <Image
                 width={140}
@@ -1266,6 +1277,7 @@ export default function AdminCareer() {
               />
             </button>
           </div>
+        </div>
         )}
       </div>
     </>

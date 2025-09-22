@@ -2,18 +2,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { getCookies } from '@/utils/tokenController';
-
-
-interface User {
-  id: string;
-  username: string;
-  email?: string;
-  role?: string;
-  createdAt: string;
-  total_join: number;
-  total_career: number;
-  total_contact: number;
-}
+import { User } from '@/type/userType';
 
 export default function AdminUsers() {
     const [edit, setEdit] = useState('none');
@@ -233,7 +222,7 @@ export default function AdminUsers() {
             </div>
 
             {/* LIST USERS */}
-            <div className='flex flex-row flex-wrap h-full overflow-auto gap-x-5 gap-y-5 p-5 pt-5'>
+            <div className='flex flex-row flex-wrap max-h-full overflow-auto gap-x-5 gap-y-5 p-5 pt-5'>
                 {listUsers.map((user, index) => (
                     <div key={index} className='w-80 flex flex-row justify-start items-center p-3 px-4 pr-10 bg-white rounded-lg border-1 border-[#cb48f3] shadow-md gap-2 relative'>
                     <div className='w-15 h-15 bg-blue-100 flex justify-center items-center rounded-full font-bold text-2xl text-blue-700'>{user.username?.charAt(0)}</div>
@@ -276,25 +265,29 @@ export default function AdminUsers() {
             : null
             }
             {hapus &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
-                <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
-                <button onClick={() => setHapus(false)} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+                <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                    <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                    <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>dihapus</span> semua ?</p>
+                    <button className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>Yes</button>
+                    <button onClick={() => setHapus(false)} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}>
+                        <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                    </button>
+                </div>
             </div>
             }
             {hapusNama !== "none" &&
-            <div className='fixed z-6 top-40 left-140 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
-                <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
-                <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{hapusNama}</span> dihapus ?</p>
-                <button onClick={()=>(handleDelete(id))} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
-                    {isLoading ? "Delete..." : "Yes"}
-                </button>
-                <button onClick={() => (setHapusNama("none"))} className={`fixed z-6 top-37 right-133 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
-                    <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
-                </button>
+            <div className="fixed z-6 top-0 right-0 left-0 bottom-0 flex flex-col justify-center items-center">
+                <div className='relative z-6 -top-20 p-5 border-1 rounded-lg border-[#930062] bg-white flex flex-col gap-3 justify-center items-center'>
+                    <Image width={140} height={140} src="/warning-red.svg" alt="" className="w-10"/>
+                    <p className='text-[12px] text-[#930062] w-30 text-center'>Yakin <span className='font-bold'>{hapusNama}</span> dihapus ?</p>
+                    <button onClick={()=>(handleDelete(id))} className='p-2 w-full rounded-md bg-[#e49fff] hover:bg-[#b700ff] active:bg-[#930062] text-[12px] text-[#9400cf] hover:text-white font-bold'>
+                        {isLoading ? "Delete..." : "Yes"}
+                    </button>
+                    <button onClick={() => (setHapusNama("none"))} className={`absolute z-6 -top-4 -right-4 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3] border-1 border-[#6f09c3]`}>
+                        <Image width={140} height={140} src="/close.svg" alt="" className="w-3"/>
+                    </button>
+                </div>
             </div>
             }
             {/* <div className='fixed z-6 top-30 p-5 border-1 rounded-lg border-[#710093] bg-white flex flex-col gap-3'>

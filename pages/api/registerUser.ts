@@ -1,21 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/firebase/config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { User } from "@/type/userType";
 
 const SECRET_KEY = "rahasia-super-aman";
-
-interface UserData {
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  total_contact?: number;
-  total_join?: number;
-  total_career?: number;
-  captcha: string;
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -40,7 +30,7 @@ export default async function handler(
         total_join,
         total_career,
         captcha
-      }: UserData = req.body;
+      }: User = req.body;
 
       if (!username || !email || !password) {
         return res
@@ -65,6 +55,20 @@ export default async function handler(
       const captchaData = await captchaRes.json();
       if (!captchaData.success) {
         return res.status(400).json({ error: "reCAPTCHA verification failed" });
+      }
+
+      // 🔍 Pastikan username belum terdaftar
+      const qUser = query(collection(db, "users"), where("username", "==", username));
+      const snapUser = await getDocs(qUser);
+      if (!snapUser.empty) {
+        return res.status(400).json({ error: "Username sudah terdaftar" });
+      }
+  
+      // 🔍 Pastikan email belum terdaftar
+      const qEmail = query(collection(db, "users"), where("email", "==", email));
+      const snapEmail = await getDocs(qEmail);
+      if (!snapEmail.empty) {
+        return res.status(400).json({ error: "Email sudah terdaftar" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);

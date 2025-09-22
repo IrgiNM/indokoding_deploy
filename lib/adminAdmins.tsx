@@ -96,6 +96,9 @@ export default function AdminAdmins() {
       not_reason: 0,
       role_job: [], 
       role: "admin",
+      total_join: 0,
+      total_career: 0,
+      total_contact: 0,
     });   
 
     const handleChangeAdmin = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,6 +148,9 @@ export default function AdminAdmins() {
                 not_reason: 0,
                 role_job: [],
                 role: "admin",
+                total_join: 0,
+                total_career: 0,
+                total_contact: 0,
             });
     
             setAddAdmin(false);
@@ -320,7 +326,7 @@ export default function AdminAdmins() {
                     <div className='w-25 h-25 bg-blue-100 flex justify-center items-center rounded-full font-bold text-6xl text-blue-700'>{firstUser?.username.charAt(0) || "-"}</div>
                     <p className='font-bold text-[#710093] text-xl mt-2'>{firstUser?.username}</p>
                     <p className='w-60 text-[10px] mt-3'>Hire Date & Termination Date</p>
-                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>{firstUser?.createdAt} - {firstUser?.fired}</p>
+                    <p className='w-60 text-[12px] font-semibold text-[#710093]'>{firstUser?.createdAt} - Now</p>
                     <p className='w-60 text-[10px] mt-3'>Email Address</p>
                     <p className='w-60 text-[12px] font-semibold text-[#710093]'>{firstUser?.email || '-'}</p>
                     
@@ -360,7 +366,7 @@ export default function AdminAdmins() {
                                     setEdit('none');
                                 }
                                 formDataAdmin.username = user.username;
-                                formDataAdmin.email = user.email;
+                                formDataAdmin.email = user.email || "";
                                 formDataAdmin.update = true;
                                 formDataAdmin.id = user.id;
                                 setAddAdmin(true);

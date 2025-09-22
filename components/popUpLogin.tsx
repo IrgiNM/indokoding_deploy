@@ -420,16 +420,19 @@ export default function PopUpLogin({isClose, isRole, onClick }: PopUpLoginProps)
                 />
                 LogIn with Google
               </button>
-              <p className="text-[12px] mt-1 text-justify">
-                Don&apos;t have an account? Please{" "}
-                <button
-                  onClick={() => setShowSignUp(!showSignUp)}
-                  className="font-bold cursor-pointer"
-                >
-                  sign up
-                </button>{" "}
-                first.
-              </p>
+              {isAdmin === "guest" ?
+                <p className="text-[12px] mt-1 text-justify">
+                  Don&apos;t have an account? Please{" "}
+                  <button
+                    onClick={() => setShowSignUp(!showSignUp)}
+                    className="font-bold cursor-pointer"
+                    >
+                    sign up
+                  </button>{" "}
+                  first.
+                </p>
+                : null
+              }
               {/* <button
                 onClick={() => setShowLogIn(false)}
                 className={`absolute z-8 lg:-top-4 lg:-right-4 -top-4 -right-3 w-8 h-8 rounded-full bg-[#AD48FF] flex justify-center items-center hover:bg-gradient-to-b hover:from-[#AD48FF] hover:to-[#6f09c3]`}
