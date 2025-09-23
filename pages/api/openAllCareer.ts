@@ -49,7 +49,7 @@ export default async function handler(
       return res.status(200).json({
         message: "Semua data Careers berhasil diperbarui",
       });
-    } catch (error) {
+    } catch {
       // console.error("Error processing Careers:", error);
       return res.status(500).json({ error: "Internal server error" });
     }

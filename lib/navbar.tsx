@@ -49,7 +49,7 @@ export default function Navbar({
         } else {
           setToken("");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
@@ -74,7 +74,7 @@ export default function Navbar({
         }
         // ✅ Apapun kondisi token, popup login akan ditutup
         setShowAuth(false);
-      } catch (error) {
+      } catch {
         // console.error("Gagal membaca cookies:", error);
         setShowAuth(false); // Tetap ditutup walau ada error
       }
@@ -120,7 +120,7 @@ export default function Navbar({
         icon: "success",
         draggable: true
       });
-    } catch (error) {
+    } catch {
       // console.error("Gagal logout:", error);
     }
   };

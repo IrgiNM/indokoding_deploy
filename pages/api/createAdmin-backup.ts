@@ -107,7 +107,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         role,
         token,
       });
-    } catch (error) {
+    } catch {
       // console.error("Error di CreateAdmin:", error);
       return res.status(500).json({ error: "Terjadi kesalahan server" });
     }

@@ -27,7 +27,7 @@ const AdminPage = () => {
         } else {
           // setToken(undefined);
         }
-      } catch (error) {
+      } catch {
         // // console.error("Gagal mengambil cookies:", error);
         // setToken(undefined);
       }

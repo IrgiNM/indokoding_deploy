@@ -43,7 +43,7 @@ export default function PopUpLogin({isClose, isRole, onClick }: PopUpLoginProps)
           } else {
             setToken("");
           }
-        } catch (error) {
+        } catch {
           // // console.error("Gagal mengambil cookies:", error);
           setToken("");
         }
@@ -126,7 +126,7 @@ export default function PopUpLogin({isClose, isRole, onClick }: PopUpLoginProps)
                   });
                 // alert(data.message || "Registrasi gagal");
                 }
-            } catch (error) {
+            } catch {
                 // // console.error("Error saat registrasi:", error);
                 Swal.fire({
                   icon: "error",
@@ -200,7 +200,7 @@ export default function PopUpLogin({isClose, isRole, onClick }: PopUpLoginProps)
           });
           // alert(data.error || "Login gagal");
         }
-      } catch (error) {
+      } catch {
         // // console.error("Error saat login:", error);
         // // console.error("username saat login:", formDataLogin.username);
         // // console.error("password saat login:", formDataLogin.password);

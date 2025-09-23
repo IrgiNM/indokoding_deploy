@@ -12,7 +12,6 @@ import {
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { db } from "@/firebase/config";
-import { UserData } from "@/type/userDataType";
 import { User } from "@/type/userType";
 
 const SECRET_KEY = process.env.JWT_SECRET || "rahasia-super-aman";
@@ -162,7 +161,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       role,
       token,
     });
-  } catch (error) {
+  } catch {
     // console.error("Error di Create/Update Admin:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }

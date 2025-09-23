@@ -23,7 +23,7 @@ export async function setCookies(
       httpOnly: true,
       path: "/", // pastikan cookie bisa diakses di seluruh path
     });
-  } catch (error) {
+  } catch {
     // console.error("Gagal menyimpan cookies:", error);
     throw new Error("Terjadi kesalahan saat menyimpan cookies");
   }
@@ -35,7 +35,7 @@ export async function getCookies() {
     const tokenCookie = cookieStore.get("token")?.value;
 
     return tokenCookie ? JSON.parse(tokenCookie) : null;
-  } catch (error) {
+  } catch {
     // console.error("Gagal mengambil cookies:", error);
     return null;
   }

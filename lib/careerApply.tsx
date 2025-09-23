@@ -33,7 +33,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         } else {
           setToken("");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
@@ -54,7 +54,7 @@ function CareerApplyComponent(props: { id: string } & object, ref: React.Ref<HTM
         );
         const data = await res.json();
         setRequirementsCareer(data);
-      } catch (err) {
+      } catch {
         // console.error("Gagal fetch RequirementsCareer:", err);
       } finally {
         setIsLoading(false);

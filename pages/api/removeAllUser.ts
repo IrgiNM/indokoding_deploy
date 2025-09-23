@@ -50,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         message: `${snapshot.size} messages berhasil dihapus`,
         deletedCount: snapshot.size
     });
-  } catch (error) {
+  } catch {
     // console.error("Error hapus semua message:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }

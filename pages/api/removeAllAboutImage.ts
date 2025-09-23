@@ -53,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         message: `${snapshot.size} About image berhasil dihapus`,
         deletedCount: snapshot.size
     });
-  } catch (error) {
+  } catch {
     // console.error("Error hapus semua about image:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }

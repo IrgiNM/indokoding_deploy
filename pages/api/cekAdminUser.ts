@@ -51,7 +51,7 @@ export default async function handler(
           email,
           role
       });
-    } catch (error) {
+    } catch {
       // console.error(error);
       return res.status(500).json({ error: "Terjadi kesalahan server" });
     }

@@ -41,7 +41,6 @@ export default async function handler(
         return res.status(400).json({ error: "All fields are required", fields, files, title, tags, description, fileData });
       }
 
-      // ✅ Upload file ke Firebase Storage
       const storage = getStorage(app);
       const fileBuffer = fs.readFileSync(fileData.filepath);
       const fileName = `ourWorks/${Date.now()}-${fileData.newFilename}`;
@@ -76,9 +75,9 @@ export default async function handler(
           fileUrl: downloadURL,
         },
       });
-    } catch (error) {
+    } catch {
       // console.error("Error processing request:", error);
-      return res.status(500).json({ error: error });
+      return res.status(500).json({ error: 'Internal server error' });
     }
   } else {
     res.setHeader("Allow", ["POST", "OPTIONS"]);

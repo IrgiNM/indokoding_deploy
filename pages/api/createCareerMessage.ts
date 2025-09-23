@@ -101,7 +101,7 @@ export default async function handler(
         },
         contactCount: newTotalCareer,
       });
-    } catch (error) {
+    } catch {
       // console.error("Error processing career:", error);
       return res.status(500).json({ error: "Internal server error" });
     }

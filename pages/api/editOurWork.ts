@@ -102,8 +102,8 @@ export default async function handler(
         fileUrl: `/uploads/${newFileName}`,
       },
     });
-  } catch (error) {
+  } catch {
     // console.error("Update error:", error);
-    return res.status(500).json({ error: error });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }

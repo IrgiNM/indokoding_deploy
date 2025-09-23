@@ -29,7 +29,7 @@ export default function JoinUsPage() {
         } else {
           setToken("");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }

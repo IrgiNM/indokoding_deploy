@@ -49,7 +49,7 @@ export default function AdminJoinUs() {
           setToken(undefined);
           router.push("/admin");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken(undefined);
       }
@@ -102,7 +102,7 @@ export default function AdminJoinUs() {
         // Urutkan data berdasarkan pilihan sorting
         const sortedData = sortJoins(data, urutan);
         setJoins(sortedData);
-      } catch (err) {
+      } catch {
         // console.error("Gagal fetch Joins:", err);
       } finally {
         setIsLoading(false);
@@ -145,7 +145,7 @@ export default function AdminJoinUs() {
       });
 
       await res.json();
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }
   }
@@ -162,7 +162,7 @@ export default function AdminJoinUs() {
       });
 
       await res.json();
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }finally {
       setIsLoading(false);
@@ -180,7 +180,7 @@ export default function AdminJoinUs() {
         },
         body: JSON.stringify({ id: id }),
       });
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     } finally {
       setIsLoading(false);
@@ -205,7 +205,7 @@ export default function AdminJoinUs() {
         // console.error("Error:", data.error);
         setJoins([]);
       }
-    } catch (error) {
+    } catch {
       // console.error("Request error:", error);
       setJoins([]);
     }
@@ -232,7 +232,7 @@ export default function AdminJoinUs() {
         // console.error("Error:", data.error);
         setJoins([]);
       }
-    } catch (error) {
+    } catch {
       // console.error("Request error:", error);
       setJoins([]);
     }
@@ -256,7 +256,7 @@ export default function AdminJoinUs() {
       await res.json();
       alert("Career message berhasil dihapus");
       setHapusNama("none");
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus message. Silakan coba lagi nanti.");
     } finally {
@@ -278,7 +278,7 @@ export default function AdminJoinUs() {
       await res.json();
       alert("Career message berhasil dihapus semua");
       setHapus(false);
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
     } finally {

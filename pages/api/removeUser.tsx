@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({
       message: `User dengan id ${id} berhasil dihapus`,
     });
-  } catch (error) {
+  } catch {
     // console.error("Error hapus user:", error);
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }

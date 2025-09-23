@@ -17,7 +17,7 @@ export default function AdminNavbar(props: AdminNavbarProps) {
       deleteCookies();
       router.push("/admin");
       alert("Berhasil logout!");
-    } catch (error) {
+    } catch {
       // console.error("Gagal logout:", error);
     }
   };

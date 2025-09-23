@@ -65,7 +65,7 @@ export default function AdminCareer() {
           setToken(undefined);
           router.push("/admin");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken(undefined);
       }
@@ -140,7 +140,7 @@ export default function AdminCareer() {
         );
         const data = await res.json();
         setRequirementsCareer(data);
-      } catch (err) {
+      } catch {
         // console.error("Gagal fetch RequirementsCareer:", err);
       } finally {
         setIsLoading(false);
@@ -172,7 +172,7 @@ export default function AdminCareer() {
       setHapusRequirement(false);
       setDetailRequest(false);
       setPickTitle("All");
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus Requirement. Silakan coba lagi nanti.");
     } finally {
@@ -198,7 +198,7 @@ export default function AdminCareer() {
         // Urutkan data berdasarkan pilihan sorting
         const sortedData = sortCareers(data, urutan);
         setCareers(sortedData);
-      } catch (err) {
+      } catch {
         // console.error("Gagal fetch Careers:", err);
       } finally {
         setIsLoading(false);
@@ -248,7 +248,7 @@ export default function AdminCareer() {
         // console.error("Error:", data.error);
         setCareers([]);
       }
-    } catch (error) {
+    } catch {
       // console.error("Request error:", error);
       setCareers([]);
     }
@@ -314,7 +314,7 @@ export default function AdminCareer() {
         } else {
           alert(data.error || "Create Requirement Career gagal");
         }
-      } catch (error) {
+      } catch {
         // console.error("Error saat Create Requirement Career:", error);
         alert("Terjadi kesalahan saat Create Requirement Career");
       } finally {
@@ -334,7 +334,7 @@ export default function AdminCareer() {
         },
         body: JSON.stringify({ id: id }),
       });
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }
   }
@@ -350,7 +350,7 @@ export default function AdminCareer() {
       });
 
       await res.json();
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }
   }
@@ -376,7 +376,7 @@ export default function AdminCareer() {
         // console.error("Error:", data.error);
         setCareers([]);
       }
-    } catch (error) {
+    } catch {
       // console.error("Request error:", error);
       setCareers([]);
     }
@@ -393,7 +393,7 @@ export default function AdminCareer() {
       });
 
       await res.json();
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }
   }
@@ -416,7 +416,7 @@ export default function AdminCareer() {
       await res.json();
       alert("Career message berhasil dihapus");
       setHapusNama("none");
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus message. Silakan coba lagi nanti.");
     } finally {
@@ -438,7 +438,7 @@ export default function AdminCareer() {
       await res.json();
       alert("Career message berhasil dihapus semua");
       setHapus(false);
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
     } finally {

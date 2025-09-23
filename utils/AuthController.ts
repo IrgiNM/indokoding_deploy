@@ -43,7 +43,7 @@ export const loginAuth = async (
         message: data.error || "Login gagal",
       };
     }
-  } catch (error) {
+  } catch {
     // console.error("Error saat login:", error);
     // Jika terjadi error, tetap kembalikan data dengan tipe yang sama
     return {

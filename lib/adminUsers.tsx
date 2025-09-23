@@ -42,7 +42,7 @@ export default function AdminUsers() {
           } else {
             router.push("/admin");
           }
-        } catch (error) {
+        } catch {
           // console.error("Gagal mengambil cookies:", error);
         }
       };
@@ -91,7 +91,7 @@ export default function AdminUsers() {
                 // Urutkan data berdasarkan pilihan sorting
                 const sortedData = sortContacts(data, urutan);
                 setUsers(sortedData);
-            } catch (err) {
+            } catch {
                 // console.error("Gagal fetch contacts:", err);
             } finally {
                 setIsLoading(false);
@@ -150,7 +150,7 @@ export default function AdminUsers() {
           // console.error("Error:", data.error);
           setUsers([]);
         }
-      } catch (error) {
+      } catch {
         // console.error("Request error:", error);
         setUsers([]);
       }
@@ -174,7 +174,7 @@ export default function AdminUsers() {
         await res.json();
         alert("User berhasil dihapus");
         setHapusNama("none");
-      } catch (error) {
+      } catch {
         // console.error("Error:", error);
         alert("Gagal menghapus user. Silakan coba lagi nanti.");
       }finally {

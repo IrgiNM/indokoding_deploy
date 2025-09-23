@@ -94,7 +94,7 @@ export default async function handler(
         },
         contactCount: newTotalContact,
       });
-    } catch (error) {
+    } catch {
       // console.error("Error processing contact:", error);
       return res.status(500).json({ error: "Internal server error" });
     }

@@ -46,7 +46,7 @@ export default async function handler(
         message: `Career successfully ${!currentFavorite ? 'added to' : 'removed from'} favorites`,
         favorite: !currentFavorite
       });
-    } catch (error) {
+    } catch {
       // console.error("Error processing Career:", error);
       return res.status(500).json({ error: "Internal server error" });
     }

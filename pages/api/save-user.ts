@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await connection.execute('INSERT IGNORE INTO users (email) VALUES (?)', [email]);
     await connection.end();
     return res.status(200).send('User saved successfully');
-  } catch (error) {
+  } catch {
     // console.error('DB Error:', error);
     return res.status(500).send('Failed to save user');
   }
