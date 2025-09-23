@@ -105,7 +105,7 @@ export default async function handler(
           role,
           token
       });
-    } catch (error) {
+    } catch {
       // console.error(error);
       return res.status(500).json({ error: "Terjadi kesalahan server" });
     }

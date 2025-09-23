@@ -66,7 +66,7 @@ export default function AdminUsers() {
           } else {
             router.push("/admin");
           }
-        } catch (error) {
+        } catch {
           // console.error("Gagal mengambil cookies:", error);
         }
       };
@@ -99,7 +99,7 @@ export default function AdminUsers() {
             // Urutkan data berdasarkan pilihan sorting
             const sortedData = sortAboutImage(data, urutan);
             setAboutImage(sortedData);
-          } catch (err) {
+          } catch {
             // // console.error("Gagal fetch AboutImage:", err);
           } finally {
             setLoading(false);
@@ -117,7 +117,7 @@ export default function AdminUsers() {
             // Urutkan data berdasarkan pilihan sorting
             setValuesShow(data);
             // setShowArray(data[0]?.values ?? []);
-          } catch (err) {
+          } catch {
             // console.error("Gagal fetch AboutText:", err);
           } finally {
             setLoading(false);
@@ -202,7 +202,7 @@ export default function AdminUsers() {
             const data = await res.json();
             alert("Error: " + data.error);
           }
-        } catch (err) {
+        } catch {
           // console.error("Upload error:", err);
           alert("Gagal upload!");
         } finally {
@@ -228,7 +228,7 @@ export default function AdminUsers() {
             const data = await res.json();
             alert("Error: " + data.error);
           }
-        } catch (err) {
+        } catch {
           // console.error("Upload error:", err);
           alert("Gagal disimpan!");
         } finally {
@@ -254,7 +254,7 @@ export default function AdminUsers() {
           await res.json();
           setHapusNama("none");
           alert("OurWork message berhasil dihapus");
-        } catch (error) {
+        } catch {
           // console.error("Error:", error);
           alert("Gagal menghapus. Silakan coba lagi nanti.");
         } finally {
@@ -276,7 +276,7 @@ export default function AdminUsers() {
           await res.json();
           alert("OurWork berhasil dihapus semua");
           setHapus(false);
-        } catch (error) {
+        } catch {
           // console.error("Error:", error);
           alert("Gagal menghapus semua OurWork. Silakan coba lagi nanti.");
         } finally {

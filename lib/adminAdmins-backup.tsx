@@ -196,7 +196,7 @@
 //                 } else {
 //                 alert(data.message || "Create Admin gagal");
 //                 }
-//             } catch (error) {
+//             } catch {
 //                 // console.error("Error saat Create Admin:", error);
 //                 alert("Terjadi kesalahan saat Create Admin");
 //             } finally {
@@ -223,7 +223,7 @@
 //           if (data.length > 0 && !firstUser) {
 //             setFirstUser(data[0]);
 //           }
-//         } catch (err) {
+//         } catch {
 //           // console.error("Gagal fetch users:", err);
 //         } finally {
 //           setLoading(false);
@@ -253,7 +253,7 @@
 //         console.log("User berhasil dihapus:", data);
 //         alert("User berhasil dihapus");
 //         setHapusNama("none");
-//       } catch (error) {
+//       } catch {
 //         // console.error("Error:", error);
 //         alert("Gagal menghapus user. Silakan coba lagi nanti.");
 //       }finally {

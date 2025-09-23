@@ -61,7 +61,7 @@ export default async function handler(
         fileUrl: `/uploads/aboutUs/${newFileName}`, // bisa dipakai di frontend
       },
     });
-  } catch (error) {
+  } catch {
     // console.error("Upload error:", error);
     return res.status(500).json({ error: "Internal server error" });
   }

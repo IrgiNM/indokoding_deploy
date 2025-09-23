@@ -33,7 +33,7 @@ function AboutUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDiv
         const data = await res.json();
       
         setAboutImage(data);
-      } catch (err) {
+      } catch {
         // // console.error("Gagal fetch AboutImage:", err);
       }
     };
@@ -49,7 +49,7 @@ function AboutUsComponent(props: { id: string } & object, ref: React.Ref<HTMLDiv
         // Urutkan data berdasarkan pilihan sorting
         setValuesShow(data);
         // setShowArray(data[0]?.values ?? []);
-      } catch (err) {
+      } catch {
         // // console.error("Gagal fetch AboutText:", err);
       }
     };

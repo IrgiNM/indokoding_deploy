@@ -63,7 +63,7 @@ export default function AdminOurWork() {
           } else {
             router.push("/admin");
           }
-        } catch (error) {
+        } catch {
           // console.error("Gagal mengambil cookies:", error);
         }
       };
@@ -104,7 +104,7 @@ export default function AdminOurWork() {
           // Urutkan data berdasarkan pilihan sorting
           const sortedData = sortOurWorks(data, urutan);
           setOurWorks(sortedData);
-        } catch (err) {
+        } catch {
           // console.error("Gagal fetch OurWorks:", err);
         } finally {
           setLoading(false);
@@ -216,7 +216,7 @@ export default function AdminOurWork() {
           const data = await res.json();
           alert("Error: " + data.error);
         }
-      } catch (err) {
+      } catch {
         // console.error("Upload error:", err);
         alert("Gagal upload!");
       } finally {
@@ -288,7 +288,7 @@ export default function AdminOurWork() {
         await res.json();
         setDeleteData("none");
         alert("OurWork message berhasil dihapus");
-      } catch (error) {
+      } catch {
         // console.error("Error:", error);
         alert("Gagal menghapus. Silakan coba lagi nanti.");
       } finally {
@@ -310,7 +310,7 @@ export default function AdminOurWork() {
         await res.json();
         alert("OurWork berhasil dihapus semua");
         setDeleteAll(false);
-      } catch (error) {
+      } catch {
         // console.error("Error:", error);
         alert("Gagal menghapus semua OurWork. Silakan coba lagi nanti.");
       } finally {

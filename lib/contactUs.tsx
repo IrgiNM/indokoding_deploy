@@ -29,7 +29,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         } else {
           setToken("");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken("");
       }
@@ -83,7 +83,7 @@ function ContactUsComponent(props: { id: string } & object, ref: React.Ref<HTMLD
         // panggil backend API
         const res = await fetch("/api/getUsers");
         await res.json();
-      } catch (err) {
+      } catch {
         // console.error("Gagal fetch users:", err);
       } finally {
         setIsLoading(false);

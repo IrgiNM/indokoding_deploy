@@ -39,7 +39,7 @@ export default function AdminDashboard() {
             setToken(undefined);
             router.push("/admin");
           }
-        } catch (error) {
+        } catch {
           // console.error("Gagal mengambil cookies:", error);
           setToken(undefined);
         }
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
                 const dataContacts = await res.json();
 
                 setContacts(dataContacts);
-            } catch (err) {
+            } catch {
                 // console.error("Gagal fetch Data:", err);
             }
         };
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
                 const data = await res.json();
                 
                 setCareers(data);
-            } catch (err) {
+            } catch {
                 // console.error("Gagal fetch Careers:", err);
             }
         };
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
                 const data = await res.json();
                 
                 setUsers(data);
-            } catch (err) {
+            } catch {
                 // console.error("Gagal fetch contacts:", err);
             }
         };

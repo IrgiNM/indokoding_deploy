@@ -77,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           list,
         });
       }
-    } catch (error) {
+    } catch {
       // console.error("Error di CreateRequirementsCareer:", error);
       return res.status(500).json({ error: "Terjadi kesalahan server" });
     }

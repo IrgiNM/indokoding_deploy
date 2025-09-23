@@ -54,7 +54,7 @@ export default function Admincontacts() {
           setToken(undefined);
           router.push("/admin");
         }
-      } catch (error) {
+      } catch {
         // console.error("Gagal mengambil cookies:", error);
         setToken(undefined);
       }
@@ -113,7 +113,7 @@ export default function Admincontacts() {
         // Urutkan data berdasarkan pilihan sorting
         const sortedData = sortContacts(data, urutan);
         setContacts(sortedData);
-      } catch (err) {
+      } catch {
         // console.error("Gagal fetch contacts:", err);
       } finally {
         setIsLoading(false);
@@ -174,7 +174,7 @@ export default function Admincontacts() {
         // console.error("Error:", data.error);
         setContacts([]);
       }
-    } catch (error) {
+    } catch {
       // console.error("Request error:", error);
       setContacts([]);
     }
@@ -198,7 +198,7 @@ export default function Admincontacts() {
       await res.json();
       alert("Contact message berhasil dihapus");
       setHapusMessage("none");
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus message. Silakan coba lagi nanti.");
     } finally {
@@ -220,7 +220,7 @@ export default function Admincontacts() {
       await res.json();
       alert("Contact message berhasil dihapus semua");
       setHapusMessage("none");
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
       alert("Gagal menghapus semua message. Silakan coba lagi nanti.");
     } finally {
@@ -239,7 +239,7 @@ export default function Admincontacts() {
       });
 
       await res.json();
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }
   }
@@ -255,7 +255,7 @@ export default function Admincontacts() {
       });
 
       await res.json();
-    } catch (error) {
+    } catch {
       // console.error("Error:", error);
     }
   }
