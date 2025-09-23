@@ -3,7 +3,7 @@ import { collection, query, where, getDocs, doc, updateDoc } from "firebase/fire
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { db } from "@/firebase/config";
-import NextCors from "nextjs-cors";
+// import NextCors from "nextjs-cors";
 
 const SECRET_KEY = process.env.JWT_SECRET || "rahasia-super-aman";
 
@@ -15,11 +15,16 @@ interface LoginRequestBody {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // 🔹 Tambahin CORS
-  await NextCors(req, res, {
-    methods: ["GET", "POST", "OPTIONS"],
-    origin: "*", // bisa diganti spesifik misalnya "http://localhost:3000"
-    optionsSuccessStatus: 200,
-  });
+  // await NextCors(req, res, {
+  //   methods: ["GET", "POST", "OPTIONS"],
+  //   origin: "*", // bisa diganti spesifik misalnya "http://localhost:3000"
+  //   optionsSuccessStatus: 200,
+  // });
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
