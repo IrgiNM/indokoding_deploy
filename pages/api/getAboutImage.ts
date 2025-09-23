@@ -50,3 +50,68 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500).json({ error: "Terjadi kesalahan server" });
   }
 }
+
+
+
+
+// import { db } from "@/firebase/config";
+// import { collection, DocumentData, getDocs } from "firebase/firestore";
+// import { NextResponse } from "next/server";
+
+// // Response type
+// interface Contact {
+//   id: string;
+//   [key: string]: string | number | boolean | null | undefined | object;
+// }
+
+// function convertTimestamps(data: DocumentData): Record<string, string | number | boolean | null | undefined | object> {
+//   const result: Record<string, string | number | boolean | null | undefined | object> = {};
+//   for (const key in data) {
+//     const value = data[key];
+//     if (value && typeof value === "object" && "seconds" in value && "nanoseconds" in value) {
+//       // 🔹 convert Timestamp ke string ISO
+//       result[key] = new Date(value.seconds * 1000).toISOString();
+//     } else {
+//       result[key] = value;
+//     }
+//   }
+//   return result;
+// }
+
+// // Handle GET
+// export async function GET() {
+//   try {
+//     const snap = await getDocs(collection(db, "AboutImage"));
+//     const ourWorks: Contact[] = snap.docs.map((doc) => ({
+//       id: doc.id,
+//       ...convertTimestamps(doc.data()),
+//     }));
+
+//     return NextResponse.json(ourWorks, {
+//       status: 200,
+//       headers: {
+//         "Access-Control-Allow-Origin": "*",
+//         "Access-Control-Allow-Methods": "GET, OPTIONS",
+//         "Access-Control-Allow-Headers": "Content-Type, Authorization",
+//       },
+//     });
+//   } catch {
+//     return NextResponse.json(
+//       { error: "Terjadi kesalahan server" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+// // Handle OPTIONS (preflight CORS)
+// export async function OPTIONS() {
+//   return NextResponse.json({}, {
+//     status: 200,
+//     headers: {
+//       "Access-Control-Allow-Origin": "*",
+//       "Access-Control-Allow-Methods": "GET, OPTIONS",
+//       "Access-Control-Allow-Headers": "Content-Type, Authorization",
+//     },
+//   });
+// }
+
