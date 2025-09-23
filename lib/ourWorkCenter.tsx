@@ -1,58 +1,16 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 // import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+// import "./styles.css";
+// import required modules
 import Image from "next/image";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import "./styles.css";
-
-const dataCard = [
-    {
-      id: 1,
-      title: 'Equusbook',
-      description: 'Kami pernah mengembangkan Equusbook, marketplace berbasis Next.js dan Tailwind CSS untuk jual beli kuda, horsebox, dan properti equestrian di Inggris. Platform ini mendukung iklan gratis dan navigasi yang mudah bagi komunitas berkuda.',
-      image: '/assets/image/ourwork/porto1.avif',
-      tags: ['next js', 'tailwindcss', 'market place'],
-    },
-    {
-      id: 2,
-      title: 'Home and Gift Center',
-      description: 'Kami pernah mengembangkan Home and Gift Center, sebuah platform e-commerce berbasis Next.js dan Tailwind CSS yang dirancang untuk menjual produk dekorasi rumah dan hadiah. Toko online ini menawarkan fitur pencarian produk, kategori, filter harga, serta tampilan galeri yang ramah pengguna.',
-      image: '/assets/image/ourwork/porto2.avif',
-      tags: ['next js', 'tailwindcss', 'e-commerce']
-    },
-    {
-      id: 3,
-      title: 'Thirsty Camel',
-      description: 'Kami pernah mengembangkan Thirsty Camel, sebuah platform katalog produk dan sistem pemesanan internal berbasis Next.js dan Tailwind CSS. Platform ini memungkinkan pengguna untuk melihat detail produk seperti ukuran, harga, dan stok secara real-time, serta mempermudah proses pemesanan barang seperti seragam atau merchandise.',
-      image: '/assets/image/ourwork/porto3.avif',
-      tags: ['next js', 'tailwindcss', 'product catalog'],
-    },
-    {
-      id: 4,
-      title: 'Greene King Venue Finder',
-      description: 'Kami pernah membangun Greene King Venue Finder, sebuah platform pencarian lokasi pub dan restoran di Inggris. Dibuat dengan Next.js dan Tailwind CSS, sistem ini memungkinkan pengguna mencari venue berdasarkan lokasi saat ini, radius jarak, dan ukuran grup. Platform ini terintegrasi dengan Google Maps untuk pengalaman pencarian yang interaktif dan mudah digunakan.',
-      image: '/assets/image/ourwork/porto4.avif',
-      tags: ['next js', 'tailwindcss', 'map integration'],
-    },
-    {
-      id: 5,
-      title: 'ASCC Artist-in-Residence Program',
-      description: 'Kami turut mengembangkan situs program Artist-in-Residence untuk Sheikh Abdullah Al-Salem Cultural Centre di Kuwait. Platform ini dibangun dengan Next.js dan Tailwind CSS, dirancang untuk memfasilitasi pendaftaran dan penyebaran informasi program residensi seni. Situs ini menyediakan informasi fasilitas studio, tujuan program, dan akses pendaftaran daring yang mudah.',
-      image: '/assets/image/ourwork/porto5.avif',
-      tags: ['next js', 'tailwindcss', 'culture', 'residency'],
-    },
-    {
-      id: 6,
-      title: 'Thermo Fisher - Who The One?',
-      description: 'Kami pernah mengembangkan proyek interaktif untuk Thermo Fisher Scientific berjudul “Who The One?”. Dalam proyek ini, pengguna dapat mengunggah foto dan melihat diri mereka dipadukan dengan ilmuwan terkenal secara humoris. Aplikasi berbasis Next.js dan Tailwind CSS ini bertujuan untuk membangun keterlibatan audiens secara kreatif dan menyenangkan.',
-      image: '/assets/image/ourwork/porto6.avif',
-      tags: ['next js', 'tailwindcss', 'interactive', 'science'],
-    },
-  ]
+import { OurWorkData } from "./adminOurWork";
 
   const warnaTag = [
         {
@@ -72,16 +30,33 @@ const dataCard = [
             bg: 'bg-[#F1D6FF] text-[#4F006C]'
         },
     ]
- function OurWorkCenterComponent(props: object, ref: React.Ref<HTMLDivElement>) {
+
+  function OurWorkCenterComponent(props: { id: string } & object, ref: React.Ref<HTMLDivElement>) {
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [ourWorks, setOurWorks] = useState<OurWorkData[]>([]);
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        // panggil backend API
+        const res = await fetch("/api/getOurWorks");
+        const data = await res.json();
+
+        // Urutkan data berdasarkan pilihan sorting
+        setOurWorks(data);
+      } catch (err) {
+        // console.error("Gagal fetch ourWorks:", err);
+      }
+    };
+    fetchContacts();
+  }, []);
 
   return (
     <>
-    <div ref={ref} className="relative -top-30 right-0"></div>
-    <div className=' lg:w-full lg:relative lg:flex lg:flex-col lg:items-start lg:justify-center w-full relative flex flex-col items-start justify-center mt-0'>
-      <div className=' lg:w-full lg:flex lg:flex-col lg:items-end lg:justify-end w-full flex flex-col items-end justify-end'>
-        <h1 className=' lg:text-4xl lg:text-[#128900] lg:font-extrabold lg:mr-50 text-xl text-[#128900] font-extrabold mr-10'>Our Work</h1>
+    <div ref={ref} id={props.id} className="relative -top-30 right-0"></div>
+    <div className='lg:w-full lg:relative lg:flex lg:flex-col lg:items-start lg:justify-center w-full relative flex flex-col items-start justify-center mt-0'>
+      <div className='lg:w-full lg:flex lg:flex-col lg:items-end lg:justify-end w-full flex flex-col items-end justify-end'>
+        <h1 className='lg:text-4xl lg:text-[#128900] lg:font-extrabold lg:mr-50 text-xl text-[#128900] font-extrabold mr-10'>Our Work</h1>
         <p className='lg:mr-50 mr-10 text-right lg:text-[16px] text-[12px]'>A collection of website we&apos;ve made with passion</p>
       </div>
     </div>
@@ -112,28 +87,15 @@ const dataCard = [
         modules={[EffectCoverflow, Pagination, Autoplay]}
         className="mySwiper"
       >
-        <SwiperSlide className="w-50">
-          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto1.avif" className="rounded border-2 border-[#128900]"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto2.avif" className="rounded border-2 border-[#128900]"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto3.avif" className="rounded border-2 border-[#128900]"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto4.avif" className="rounded border-2 border-[#128900]"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto5.avif" className="rounded border-2 border-[#128900]"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image width={140} height={140} alt={dataCard[0].title} src="/assets/image/ourwork/porto6.avif" className="rounded border-2 border-[#128900]"/>
-        </SwiperSlide>
+        {ourWorks.map((work, index) => (
+          <SwiperSlide key={index} className="w-50">
+            <Image width={140} height={140} alt={work.title} src={`/uploads/${work.fileName}`} className="rounded border-2 border-[#128900]"/>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <div className="flex flex-col relative lg:w-120 lg:mb-30 lg:bottom-5 w-60 mb-100 bottom-5">
         {
-          dataCard.map((item, index) => (
+          ourWorks.map((item, index) => (
             <div key={index} className={`absolute transition-opacity duration-500 ease-in-out ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`}>
               <h2 className="lg:text-xl text-md font-bold mb-3 text-[#128900]">{item.title}</h2>
               <div className="flex flex-row flex-wrap justify-start items-end gap-2 mb-3">

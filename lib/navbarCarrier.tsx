@@ -15,7 +15,6 @@ export default function NavbarCarrier() {
       active: "text-[#4F006C] bg-[#D9C6FF] font-bold",
       bg: "hover:bg-[#D9C6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Home clicked");
         setBgNav("Home");
         router.push("/");
       },
@@ -26,7 +25,6 @@ export default function NavbarCarrier() {
       active: "text-[#128900] bg-[#D4FFDB] font-bold",
       bg: "hover:bg-[#D4FFDB] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Our Work clicked");
         setBgNav("Our Work");
       },
     },
@@ -36,7 +34,6 @@ export default function NavbarCarrier() {
       active: "text-[#004C6C] bg-[#D4F6FF] font-bold",
       bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("About Us clicked");
         setBgNav("About Us");
       },
     },
@@ -46,7 +43,6 @@ export default function NavbarCarrier() {
       active: "text-[#6C4E00] bg-[#FEFFD4] font-bold",
       bg: "hover:bg-[#FEFFD4] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Contact clicked");
         setBgNav("Contact");
       },
     },
@@ -56,7 +52,6 @@ export default function NavbarCarrier() {
       active: "text-[#004C6C] bg-[#D4F6FF] font-bold",
       bg: "hover:bg-[#D4F6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Career clicked");
         setBgNav("Career");
         router.push("/career");
       },
@@ -67,7 +62,6 @@ export default function NavbarCarrier() {
       active: "text-[#4F006C] bg-[#D9C6FF] font-bold",
       bg: "hover:bg-[#D9C6FF] hover:font-bold active:bg-[#BFA4FF]",
       link: () => {
-        console.log("Book Online clicked");
         setBgNav("Book Online");
       },
     },

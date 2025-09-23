@@ -4,27 +4,32 @@ import Navbar from '@/lib/navbar';
 import Service from '@/lib/ourServices';
 
 import AboutUs from '@/lib/aboutUs';
-import Footer from '@/lib/footer';
+import React, { useState } from 'react';
+import ContactUs from '@/lib/contactUs';
 import OurSkills from '@/lib/ourSkills';
 import OurWorkCenter from '@/lib/ourWorkCenter';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
+import Footer from '@/lib/footer';
 
 
 export default function Page() {
   const ourWorkRef = useRef<HTMLDivElement>(null);
   const aboutUsRef = useRef<HTMLDivElement>(null);
   const contactUsRef = useRef<HTMLDivElement>(null);
+  const ourSkillRef = useRef<HTMLDivElement>(null);
+  const serviceRef = useRef<HTMLDivElement>(null);
 
   const scrollToRef = (ref: React.RefObject<HTMLElement | null>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
+  const [page, setPage] = useState("home");
   return (
     <div className='w-full flex flex-col items-center justify-center overflow-hidden'>
       <Navbar
-        page="home"
+        link="home"
+        page={page}
         onNavClick={{
           ourWork: () => scrollToRef(ourWorkRef),
           aboutUs: () => scrollToRef(aboutUsRef),
@@ -32,12 +37,38 @@ export default function Page() {
         }}
       />
       <Home/>
-      <OurWorkCenter ref={ourWorkRef}/>
-      <AboutUs null='' ref={aboutUsRef}/>
-      <OurSkills  />
-      <Service  />
-      {/* <ContactUs ref={contactUsRef} /> */}
-      <Footer />
+      <OurWorkCenter id="OurWork" ref={ourWorkRef}/>
+      <AboutUs id="AboutUs" ref={aboutUsRef}/>
+      <OurSkills id="OurSkill" ref={ourSkillRef} />
+      <Service id="Service" ref={serviceRef} />
+      <ContactUs id="ContactUs" ref={contactUsRef} />
+      <Footer
+        link="home"
+        page={page}
+        onNavClick={{
+          ourWork: () => {
+            scrollToRef(ourWorkRef);
+            setPage("Our Work");
+          },
+          aboutUs: () => {
+            scrollToRef(aboutUsRef);
+            setPage("About Us");
+          },
+          contactUs: () => {
+            scrollToRef(contactUsRef);
+            setPage("Contact Us");
+          },
+          ourSkill: () => {
+            scrollToRef(ourSkillRef);
+            setPage("About Us");
+          },
+          ourService: () => {
+            scrollToRef(serviceRef);
+            setPage("About Us");
+          },
+        }}
+      />
+
     </div>
   )
 }

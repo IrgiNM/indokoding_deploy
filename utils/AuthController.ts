@@ -7,7 +7,7 @@ export const loginAuth = async (
   password: string
 ): Promise<CookiesType> => {
   try {
-    const res = await fetch("http://localhost:3001/api/loginUser", {
+    const res = await fetch("/api/loginUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const loginAuth = async (
       };
     }
   } catch (error) {
-    console.error("Error saat login:", error);
+    // console.error("Error saat login:", error);
     // Jika terjadi error, tetap kembalikan data dengan tipe yang sama
     return {
       token: "",

@@ -30,7 +30,7 @@ export function BookOnline() {
             <div className="lg:flex lg:flex-col lg:items-start lg:justify-center flex flex-col items-center justify-center">
                 <h1 className="lg:text-6xl lg:text-start lg:font-extrabold lg:text-[#00466C] lg:mb-4 text-4xl text-center font-extrabold text-[#00466C] mb-4">BOOK ONLINE</h1>
                 <p className="lg:font-semibold lg:text-[#00466C] lg:text-[18px] lg:text-start font-semibold text-[#00466C] text-[12px] tracking-wide text-center">Free Online Consultation</p>
-                <p className="lg:text-[#00466C] lg:text-[18px] lg:tracking-wide lg:text-start lg:custom-word-spacing lg:mb-4 text-[#00466C] text-[12px] text-center mb-4">1hr Consultation | Skype or email at <br></br> info@indokoding.com</p>
+                <p className="lg:text-[#00466C] lg:text-[18px] lg:tracking-wide lg:text-start lg:custom-word-spacing lg:mb-4 text-[#00466C] text-[12px] text-center mb-4">1hr Consultation | Exmail at <br></br> info@indokoding.com</p>
                 {/* <button className="bg-[#FFBC48] w-35 text-white font-semibold px-4 py-2 rounded-md hover:bg-gradient-to-b hover:from-[#FFBC48] hover:to-[#ff8903] hover:font-bold transition duration-200 mt-3">
                     BOOK NOW
                 </button> */}
@@ -90,13 +90,13 @@ export function BookOnline() {
              <p className="text-md pl-6 pb-6">Check out our availability and book the date and time that works for you</p>
              
             <iframe
-                    allowFullScreen
-                    height="717"
-                    width="100%"
-                    frameBorder="0"
-                    title="Iframe embed"
-                    src="https://irginm.neetocal.com/embed/651ea267-c42b-41e9-a593-7c7aaf42dff8"
-                />
+                allowFullScreen
+                height="717"
+                width="100%"
+                frameBorder="0"
+                title="Iframe embed"
+                src="https://indokoding-sukses-makmur.neetocal.com/embed/de8e7897-9847-40d8-b8b4-40e90010194a"
+            />
         </Dialog>
         </>
     )

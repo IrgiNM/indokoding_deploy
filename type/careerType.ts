@@ -16,6 +16,6 @@ export interface RequirementCareer {
     id: string,
     title: string,
     description: string,
-    list: string[],
+    list: [],
     update: boolean
 }

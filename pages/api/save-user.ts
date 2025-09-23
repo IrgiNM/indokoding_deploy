@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await connection.end();
     return res.status(200).send('User saved successfully');
   } catch (error) {
-    console.error('DB Error:', error);
+    // console.error('DB Error:', error);
     return res.status(500).send('Failed to save user');
   }
 }

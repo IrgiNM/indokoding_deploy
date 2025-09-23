@@ -1,7 +1,6 @@
 import { Service } from "@/type/Service";
 
 export function ServiceCard(props: Service) {
-    console.log(props.id);
     return (
         <>
             <div className={`w-72 flex flex-col justify-center items-center gap-3 p-4  `}>
