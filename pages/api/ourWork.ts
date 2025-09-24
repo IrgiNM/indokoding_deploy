@@ -19,6 +19,13 @@ export default async function handler(
     return res.status(405).end(`Method ${req.method} not allowed`);
   }
 
+  function getFieldValue(field: unknown) {
+    if (!field) return "";
+    if (Array.isArray(field)) return field[0]; // ambil elemen pertama
+    if (typeof field === "object" && "value" in field) return field.value;
+    return field.toString();
+  }
+
   try {
     // Parsing form-data
     const form = formidable({ multiples: false });
@@ -29,9 +36,12 @@ export default async function handler(
       });
     });
 
-    const title = fields.title?.[0] || fields.title;
-    const tags = fields.tags?.[0] || fields.tags;
-    const description = fields.description?.[0] || fields.description;
+    const title = getFieldValue(fields.title);
+    const tags = getFieldValue(fields.tags);
+    const description = getFieldValue(fields.description);
+    // const title = fields.title?.[0] || fields.title;
+    // const tags = fields.tags?.[0] || fields.tags;
+    // const description = fields.description?.[0] || fields.description;
     const fileData = Array.isArray(files.file) ? files.file[0] : files.file;
 
     if (!title || !tags || !description || !fileData) {
