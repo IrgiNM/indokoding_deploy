@@ -215,6 +215,7 @@ export default function AdminOurWork() {
         } else {
           const data = await res.json();
           alert("Error: " + data.error);
+          console.log("Error: " + data.error);
         }
       } catch {
         // console.error("Upload error:", err);
